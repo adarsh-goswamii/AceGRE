@@ -13,7 +13,7 @@ const CONNECTION_STRING= 'mongodb+srv://adarsh:ARPq3NQ0HtkCqOxG@cluster0.xsgwb.m
 app.use(bodyParser.json());
 
 // all routes
-app.use('/api/words', wordsRoutes);
+app.use('/words', wordsRoutes);
 
 app.use((req, res, next) => {
     throw new HttpError('Could Not locate the route', 404);

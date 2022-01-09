@@ -1,44 +1,34 @@
+const Word = require('../models/wordSchema');
+const HttpError = require('../models/http-error');
 
+const addWord = async (req, res, next) => {
+    // add validations.
+    console.log("adding word");
+    
+    const { title, fun_fact, meanings, mneumonics, sentences } = req.body;
 
-
-const createPlace = async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return next(
-        new HttpError('Invalid inputs passed, please check your data.', 422)
-      );
-    }
-  
-    const { title, description, address, creator } = req.body;
-  
-    let coordinates;
-    try {
-      coordinates = await getCoordsForAddress(address);
-    } catch (error) {
-      return next(error);
-    }
-  
-    // const title = req.body.title;
-    const createdPlace = new Place({
-      title,
-      description,
-      address,
-      location: coordinates,
-      image:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',
-      creator
+    const word = new Word({
+        title,
+        fun_fact,
+        meanings,
+        mneumonics,
+        sentences,
+        "date_added": new Date()
     });
-  
+
     try {
-      await createdPlace.save();
+        console.log(word);
+        await word.save();
     } catch (err) {
-      const error = new HttpError(
-        'Creating place failed, please try again.',
-        500
-      );
-      return next(error);
+        const error = new HttpError(
+            'Could not create word, please try again.',
+            500
+        );
+        return next(error);
     }
-  
-    res.status(201).json({ place: createdPlace });
-  };
-  
+
+    res.status(201).json({ word: word });
+};
+
+
+exports.addWord = addWord; 
