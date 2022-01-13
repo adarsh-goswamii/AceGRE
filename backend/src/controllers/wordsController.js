@@ -21,7 +21,7 @@ const addWord = async (req, res, next) => {
         await word.save();
     } catch (err) {
         const error = new HttpError(
-            'Could not create word, please try again.',
+            err,
             500
         );
         return next(error);

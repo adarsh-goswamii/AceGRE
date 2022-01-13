@@ -7,7 +7,7 @@ const sentenceSchema= new Schema({ sentence: String});
 
 const wordSchema = new Schema({
     title: { type: String, required: true },
-    fun_fact: { type: String, required: true },
+    fun_fact: { type: String },
     meanings: [meaningSchema],
     mneumonics: [mneumonicSchema],
     sentences: [sentenceSchema],

@@ -4,10 +4,11 @@ import { Input } from '@chakra-ui/react';
 const InputField= (props)=> {
     return (
         <Input 
+            id={props.id}
             placeholder={props.placeholder}
             size={props.size}
             value={props.value}
-            onChange={props.onChange}
+            onChange={(e)=> props.onChange(`${e.target.value}`, props.id)}
             type={props.type}
             variant={'outline'}
             border={'1px solid'}

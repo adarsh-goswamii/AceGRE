@@ -4,10 +4,21 @@ import Input from '../Atoms/InputField';
 import Button from '../Atoms/Button';
 
 const DynamicInput = (props) => {
-    let [input, setInput] = useState([<Input placeholder={props.placeholder} type={props.type} key={0} />]);
+    let [input, setInput] = useState([]);
+
+    function onChange(value, id) {
+        props.setValue(prev=> {
+            const temp= [...prev];
+            temp[id][props.property]= value;
+            return temp;
+        });
+    }
 
     function addInput() {
-        setInput(prev => [...prev, <Input placeholder={props.placeholder} type={props.type} key={prev.length} />]);
+        setInput(prev => [...prev, <Input placeholder={props.placeholder} type={props.type} key={prev.length} onChange={onChange} id={prev.length} />]);
+        const obj= {};
+        obj[props.property]= ''; 
+        props.setValue(prev=> [...prev, obj]);
     }
 
     return (

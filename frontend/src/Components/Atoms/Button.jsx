@@ -6,7 +6,7 @@ const SolidButton = (props) => {
         <Button
             rightIcon={props.rightIcon}
             leftIcon={props.leftIcon}
-            onClick={props.onClick}
+            onClick={()=> props.onClick()}
             bgColor={'dark_blue'}
             px={[8]}
             py={[2]}
