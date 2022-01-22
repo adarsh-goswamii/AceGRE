@@ -10,7 +10,7 @@ const App = () => {
 
             <Box width={'100%'} pl={'340px'} pr={'100px'} py={'40px'}>
 
-                <Form />
+                <Form  />
 
             </Box>
         </Flex>

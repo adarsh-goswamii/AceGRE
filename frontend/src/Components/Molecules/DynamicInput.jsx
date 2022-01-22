@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { Flex, Text, Box } from '@chakra-ui/react';
 import Input from '../Atoms/InputField';
 import Button from '../Atoms/Button';
+import { useEffect } from 'react';
 
 const DynamicInput = (props) => {
     let [input, setInput] = useState([]);
 
+    useEffect(() => {
+        if (props.value.length === 0) setInput([])
+    }, [props.value]);
+
     function onChange(value, id) {
-        props.setValue(prev=> {
-            const temp= [...prev];
-            temp[id][props.property]= value;
+        props.setValue(prev => {
+            const temp = [...prev];
+            temp[id][props.property] = value;
             return temp;
         });
     }
 
     function addInput() {
-        setInput(prev => [...prev, <Input placeholder={props.placeholder} type={props.type} key={prev.length} onChange={onChange} id={prev.length} />]);
-        const obj= {};
-        obj[props.property]= ''; 
-        props.setValue(prev=> [...prev, obj]);
+        setInput(prev => [...prev, <Input placeholder={props.placeholder} type={props.type} key={prev.length} onChange={onChange} id={prev.length}/> ]);
+        const obj = {};
+        obj[props.property] = '';
+        props.setValue(prev => [...prev, obj]);
     }
 
     return (

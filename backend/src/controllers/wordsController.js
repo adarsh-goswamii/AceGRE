@@ -5,10 +5,11 @@ const addWord = async (req, res, next) => {
     // add validations.
     console.log("adding word");
     
-    const { title, fun_fact, meanings, mneumonics, sentences } = req.body;
+    const { title, part_of_speech, fun_fact, meanings, mneumonics, sentences } = req.body;
 
     const word = new Word({
         title,
+        part_of_speech,
         fun_fact,
         meanings,
         mneumonics,

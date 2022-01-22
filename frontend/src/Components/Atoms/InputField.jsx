@@ -1,23 +1,30 @@
 import React from 'react';
-import { Input } from '@chakra-ui/react';
+import { TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const InputField= (props)=> {
+const useStyles = makeStyles((theme) => ({
+    container: {
+        border: '1px soluid #2E2E48',
+        background: '#fff',
+        margin: '16px 0px', 
+        width: '100%'
+    }
+}));
+
+const InputField = (props) => {
+    const classes = useStyles();
+
     return (
-        <Input 
+        <TextField 
             id={props.id}
-            placeholder={props.placeholder}
-            size={props.size}
+            className={classes.container}
+            autoComplete='off'
+            label={props.placeholder}
+            size='small'
             value={props.value}
             onChange={(e)=> props.onChange(`${e.target.value}`, props.id)}
             type={props.type}
-            variant={'outline'}
-            border={'1px solid'}
-            borderColor={'#2E2E48'}
-            fontFamily={'light'}
-            bg='#fff'
-            py={'8px'}
-            px={'32px'}
-            my={2}
+            variant={'outlined'}
             />
     );
 };
