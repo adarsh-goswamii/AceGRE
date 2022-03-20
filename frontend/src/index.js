@@ -1,18 +1,23 @@
 import React from 'react';
-import App from './Pages/App';
-import { ChakraProvider, ColorModeScript} from '@chakra-ui/react';
-import Fonts from './Fonts';
-import theme from './Theme';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './styles/main.scss';
+import InputField from './components/shared/inputField/InputField';
 
 const Index = () => {
   return (
-    <ChakraProvider theme={theme} >
-      <Fonts />
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <App />
-    </ChakraProvider>
+    <>
+      Hello
+      <div style={{ padding: '100px', background: '#eeeeee' }}>
+        <InputField 
+          value={"null"}
+          onChange={()=> {}}
+          placeholder="TYpe here"
+          label="Testing"
+          error={true}
+          helperText={"Start typing"}
+          type="text"/>
+      </div>
+    </>
   );
 };
 
