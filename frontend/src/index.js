@@ -1,21 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/main.scss';
-import InputField from './components/shared/inputField/InputField';
+import Button from './components/shared/button/Button';
 
 const Index = () => {
   return (
     <>
       Hello
       <div style={{ padding: '100px', background: '#eeeeee' }}>
-        <InputField 
-          value={"null"}
-          onChange={()=> {}}
-          placeholder="TYpe here"
-          label="Testing"
-          error={true}
-          helperText={"Start typing"}
-          type="text"/>
+        <Button fullWidth={false} variant="outlined">
+          Click me 
+        </Button>
       </div>
     </>
   );
