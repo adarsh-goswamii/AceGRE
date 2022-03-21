@@ -1,0 +1,11 @@
+@import "../../styles/main.scss";
+
+.page-container {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 40px 94px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: $offWhite;
+}

@@ -7,20 +7,22 @@ import theme from './styles/theme';
 import InputField from './components/shared/inputField/InputField';
 import { Body, H1, H3, Heading } from './components/shared/typography/Typogrpahy';
 import Popover from "./components/shared/popover/Popover";
-
+import Modal from "./components/shared/modal/Modal"
+import Paper from './components/shared/paper/Paper';
 const Index = () => {
+  const [btnState, setBtnState] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   return (
     <ThemeProvider theme={theme}>
       <div style={{ padding: '100px', background: '#eeeeee' }}>
         <Button
           id={"sample"}
-          fullWidth={false} 
-          variant="contained" 
+          fullWidth={false}
+          variant="contained"
           onClick={(event) => {
-            console.log(event.currentTarget);
-            setAnchorEl(event.currentTarget)
-            }}>
+            setBtnState(prev => !prev);
+            // setAnchorEl(event.currentTarget)
+          }}>
           Click me
         </Button>
         <div style={{ height: "10px", width: "100%" }}></div>
@@ -31,14 +33,11 @@ const Index = () => {
           type="text"
         />
         <div style={{ height: "10px", width: "100%" }}></div>
-        <Popover id={"sample"} anchorEl={anchorEl} setAnchorEl={setAnchorEl}>
-          <div>
-            <H1>Hello World! H1</H1>
-            <H3 variant="h3">Hello World! H3</H3>
-            <Heading variant="body1">Hello World! Body1</Heading>
-            <Body variant="body2">Hello World! Body2</Body>
-          </div>
-        </Popover>
+        <Modal open={btnState} toggleState={setBtnState}>
+          <Paper className={"modal-paper"}>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus aperiam accusamus ipsam repudiandae placeat quod nulla consectetur molestiae, amet maiores ipsum officiis facere odit, optio itaque obcaecati cum illum reprehenderit!</p>
+          </Paper>
+        </Modal>
       </div>
     </ThemeProvider>
   );
