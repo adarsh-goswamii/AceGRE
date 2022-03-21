@@ -1,5 +1,9 @@
 .MuiInputBase-input {
-    font-family: "Poppins" !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
 }
 
-// TODO: override buttons css for different variants and disabled as well.
+.MuiButtonBase-root  {
+    text-transform: none !important;
+    padding: 4px 16px ;
+}
