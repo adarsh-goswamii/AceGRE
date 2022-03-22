@@ -11,6 +11,7 @@ const FilledButton = ({
     startIcon,
     size = "small",
     children,
+    onClick,
 }) => {
     return (
         <Button
@@ -22,6 +23,7 @@ const FilledButton = ({
             size={size}
             startIcon={startIcon}
             variant={variant}
+            onClick={onClick}
         >
             {children}
         </Button>
@@ -36,6 +38,7 @@ FilledButton.propTypes = {
         PropTypes.node,
         PropTypes.string,
     ]).isRequired,
+    onClick: PropTypes.func, 
 
     // optional fields
     color: PropTypes.string,
@@ -47,5 +50,3 @@ FilledButton.propTypes = {
     size: PropTypes.string,
     variant: PropTypes.string
 }
-
-// started working today

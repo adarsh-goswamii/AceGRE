@@ -2,7 +2,7 @@ import { PropTypes } from "prop-types";
 import { TextField } from '@material-ui/core';
 
 const InputField = ({
-    value,
+    value, 
     onChange,
     className,
     placeholder,
