@@ -1,4 +1,5 @@
 import { Modal } from "@material-ui/core";
+import { PropTypes } from "prop-types";
 
 const Modals = ({ children, open, toggleState }) => {
     return (
