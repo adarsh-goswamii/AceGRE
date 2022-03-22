@@ -48,5 +48,5 @@ InputField.propTypes = {
     helperText: PropTypes.string,
     error: PropTypes.bool,
     label: PropTypes.string,
-    variant: PropTypes.string,
+    variant: PropTypes.string
 };
