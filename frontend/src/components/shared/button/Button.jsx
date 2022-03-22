@@ -38,7 +38,7 @@ FilledButton.propTypes = {
         PropTypes.node,
         PropTypes.string,
     ]).isRequired,
-    onClick: PropTypes.func, 
+    onClick: PropTypes.func.isRequired, 
 
     // optional fields
     color: PropTypes.string,
@@ -49,4 +49,4 @@ FilledButton.propTypes = {
     fullWidth: PropTypes.bool,
     size: PropTypes.string,
     variant: PropTypes.string
-}
+};

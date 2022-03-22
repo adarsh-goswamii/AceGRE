@@ -15,4 +15,8 @@ const Modals = ({ children, open, toggleState }) => {
 
 export default Modals;
 
-// TODO: all are necess...
+Modals.propTypes={
+    children: PropTypes.element.isRequired,
+    open: PropTypes.bool.isRequired,
+    toggleState: PropTypes.bool.isRequired
+};

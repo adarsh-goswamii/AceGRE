@@ -9,3 +9,7 @@ const Papers = ({ className, children }) => {
 };
 
 export default Papers;
+Papers.propTypes={
+    children: PropTypes.node,
+    className: PropTypes.object
+};
