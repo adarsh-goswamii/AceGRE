@@ -1,7 +1,9 @@
 import { PropTypes } from "prop-types";
 import { Button } from "@material-ui/core";
+import "./Button.scss";
 
 const FilledButton = ({
+    className, 
     color = "primary",
     fullWidth = true,
     variant = "contained",
@@ -15,6 +17,7 @@ const FilledButton = ({
 }) => {
     return (
         <Button
+            className={`button ${className}`}
             color={color}
             disabled={disabled}
             disableElevation={disableElevation}
@@ -48,5 +51,6 @@ FilledButton.propTypes = {
     startIcon: PropTypes.node,
     fullWidth: PropTypes.bool,
     size: PropTypes.string,
-    variant: PropTypes.string
+    variant: PropTypes.string,
+    className: PropTypes.string
 };

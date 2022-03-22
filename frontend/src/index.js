@@ -18,7 +18,8 @@ const Index = () => {
         <Button
           id={"sample"}
           fullWidth={false}
-          variant="contained"
+          className="rounded-btn"
+          variant="outlined"
           onClick={(event) => {
             setBtnState(prev => !prev);
             // setAnchorEl(event.currentTarget)
