@@ -1,4 +1,4 @@
-import propTypes, { PropTypes } from "prop-types";
+import { PropTypes } from "prop-types";
 import { Button } from "@material-ui/core";
 
 const FilledButton = ({

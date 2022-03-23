@@ -1,4 +1,5 @@
 import "./Paper.scss";
+import { PropTypes } from "prop-types";
 
 const Papers = ({ className, children }) => {
     return (

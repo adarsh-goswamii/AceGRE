@@ -1,4 +1,5 @@
 import { Popover } from "@material-ui/core";
+import { PropTypes } from "prop-types";
 
 const PopOver = ({ id, anchorEl, setAnchorEl, children }) => {
     return (
