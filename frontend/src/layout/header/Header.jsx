@@ -1,13 +1,12 @@
 import { useState } from "react";
-// import { useLocation } from "react-router-dom";
 import { Avatar, ClickAwayListener, Popover } from "@material-ui/core";
 import "./Header.scss";
 import { H3, Heading } from "../../components/shared/typography/Typogrpahy";
 import Menu from "../../components/shared/menu/MenuList";
 import Button from "../../components/shared/button/Button";
+import data from "../../data/headerNav";
 
 const Header = ({ }) => {
-    // const location = useLocation();
     const [anchorEl, setAnchorEl] = useState(null);
     const [menu, setMenu] = useState([]);
     const handlePopOverClose = () => setAnchorEl(null);
@@ -15,8 +14,6 @@ const Header = ({ }) => {
         setAnchorEl(e.currentTarget);
         setMenu(menu);
     };
-
-    // console.log(location);
 
     // get this from redux.
     let loggedIn = false;
@@ -62,24 +59,3 @@ const Header = ({ }) => {
 };
 
 export default Header;
-
-
-// Dummy data 
-let data = [
-    {
-        heading: "Home",
-        submenu: null,
-    },
-    {
-        heading: "Explore",
-        submenu: null,
-    },
-    {
-        heading: "Quizzes",
-        submenu: null,
-    },
-    {
-        heading: "Leaderboard",
-        submenu: null,
-    }
-]
