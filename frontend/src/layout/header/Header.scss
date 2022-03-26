@@ -1,0 +1,37 @@
+@import "../../styles/main.scss";
+
+.header-container {
+  display: flex;
+  align-items: center;
+  padding: 8px 32px;
+  background-color: $primary;
+  color: $white;
+  justify-content: space-between;
+  height: fit-content;
+  
+  .navigation-tabs {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    .menu-heading {
+      margin-right: 32px;
+      cursor: pointer;
+    }
+  }
+
+  .call-for-actions {
+    display: flex;
+    align-items: center;
+
+    .login-btn {
+      margin-right: 16px;
+      color: $white;
+    }
+
+    .signup-btn {
+      color: $white;
+      border-color: $white;
+    }
+  }
+}

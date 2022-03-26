@@ -1,9 +1,10 @@
 import "./Container.scss";
 
-const Container = () => {
-    return (
-        <div className={`page-container ${className}`}>
-            {children}
-        </div>
-    );
+const Container = ({
+  className, 
+  children
+}) => {
+  return <div className={`page-container ${className}`}>{children}</div>;
 };
+
+export default Container;
