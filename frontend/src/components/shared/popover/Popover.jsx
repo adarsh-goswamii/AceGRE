@@ -25,8 +25,13 @@ const PopOver = ({ id, anchorEl, setAnchorEl, children }) => {
 export default PopOver;
 
 PopOver.protoTypes = {
-  anchorE1: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired,
-  children: PropTypes.node.isRequired,
-  setAnchorE1: PropTypes.func.isRequired,
-  id: PropTypes.number,
+    // necessary fields
+    anchorE1: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.func,
+    ]).isRequired,
+    children: PropTypes.node.isRequired,
+    setAnchorE1: PropTypes.func.isRequired,
+    // optional field
+    id:PropTypes.number
 };

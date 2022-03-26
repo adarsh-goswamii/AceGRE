@@ -6,7 +6,9 @@ const Papers = ({ className, children }) => {
 };
 
 export default Papers;
-Papers.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.object,
+
+Papers.propTypes={
+    //optional fields
+    children: PropTypes.node,
+    className: PropTypes.object
 };
