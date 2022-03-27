@@ -1,16 +1,17 @@
 import { Menu, MenuItem } from "@material-ui/core";
 
 const MenuList = ({
-  menu
+  menu, 
+  className
 }) => {
   return (
-    <Menu>
+    <>
       {
-        menu?.map(({ onClick, title }) => {
-          return <MenuItem onClick={onClick}>{title}</MenuItem>;
+        menu?.map(({ id, onClick, title }) => {
+          return (<MenuItem key={id} onClick={onClick} className={className}>{title}</MenuItem>);
         })
       }
-    </Menu>
+    </>
   );
 };
 

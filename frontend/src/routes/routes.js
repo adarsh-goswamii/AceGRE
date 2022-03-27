@@ -1,5 +1,6 @@
 import Error404 from '../components/pages/404/Error404';
 import Home from '../components/pages/home/Home';
+import Explore from '../components/pages/explore/Explore';
 
 export const routes= [
   {
@@ -14,7 +15,7 @@ export const routes= [
     className: "explore", 
     exact: true, 
     hideHeader: false, 
-    component: <></>, 
+    component: Explore, 
     id: 2, 
   },{
     path: "/quizzes", 
@@ -28,7 +29,7 @@ export const routes= [
     className: "leaderboard", 
     exact: true, 
     hideHeader: false, 
-    component: <></>, 
+    component: null, 
     id: 4, 
   },{
     path: "/user-profile", 

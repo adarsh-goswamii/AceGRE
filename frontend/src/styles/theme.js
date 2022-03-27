@@ -55,16 +55,16 @@ const theme = createTheme({
       },
     },
     body2: {
-      fontSize: "16px",
+      fontSize: "14px",
       fontWeight: 400,
       "@media (min-width:500px)": {
-        fontSize: "16px",
+        fontSize: "14px",
       },
       "@media (min-width:1000px)": {
-        fontSize: "16px",
+        fontSize: "14px",
       },
       "@media (min-width:1500px)": {
-        fontSize: "16px",
+        fontSize: "14px",
       },
     },
   },
