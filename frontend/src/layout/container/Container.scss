@@ -3,9 +3,19 @@
 .page-container {
     overflow-x: hidden;
     overflow-y: scroll;
-    padding: 40px 94px;
+    padding: 20px 32px;
     display: flex;
     flex-direction: column;
     position: relative;
     background-color: $offWhite;
+    min-height: calc(100vh - 50px);
+    width: 100%;
+}
+
+.page-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.page-container::-webkit-scrollbar-thumb {
+    background: #888;
 }

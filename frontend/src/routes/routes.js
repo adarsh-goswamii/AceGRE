@@ -12,7 +12,7 @@ export const routes= [
     id: 1, 
   },{
     path: "/explore",
-    className: "explore", 
+    className: "explore-page-container", 
     exact: true, 
     hideHeader: false, 
     component: Explore, 
