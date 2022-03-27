@@ -1,0 +1,54 @@
+@import "../../styles/main.scss";
+
+.header-container {
+  display: flex;
+  height: 50px;
+  align-items: center;
+  padding: 0px 32px;
+  background-color: $primary;
+  color: $white;
+  justify-content: space-between;
+  
+  .navigation-tabs {
+    display: flex;
+    align-items: center;
+    height: inherit;
+
+    .heading-container {
+      height: calc(100% - 3px);
+      padding: 0px 12px;
+      display: flex;
+      align-items: center;
+      margin-right: 32px;
+      cursor: pointer;
+      padding-bottom: 3px;
+    }
+
+    .active {
+      border-bottom: 3px solid $white;
+      padding-bottom: 0px;
+    }
+  }
+
+  .call-for-actions {
+    display: flex;
+    align-items: center;
+
+    .login-btn {
+      margin-right: 16px;
+      color: $white;
+    }
+
+    .signup-btn {
+      color: $white;
+      border-color: $white;
+    }
+  }
+}
+
+.header-menu-container {
+  padding: 6px 0px ;
+  .submenu {
+    font-weight: 400;
+  }
+}
