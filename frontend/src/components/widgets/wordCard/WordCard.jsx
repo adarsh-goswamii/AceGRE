@@ -22,9 +22,9 @@ const WordCard = ({
             <Heading>{title}</Heading>
             <MenuIcon onClick={(e) => setAnchorEl(e.currentTarget)} className="menu-icon" />
           </div>
-          <Body className="meaning">
+          <p className="meaning">
             {meaning}
-          </Body>
+          </p>
         </div>
       </div>
       <Popover
