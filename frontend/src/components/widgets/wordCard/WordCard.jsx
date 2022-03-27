@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Heading, Body } from "../../../components/shared/typography/Typogrpahy";
 import { ReactComponent as MenuIcon } from "../../../assets/images/menu.svg";
+import { ReactComponent as Completed } from "../../../assets/images/completed.svg";
+import { ReactComponent as CompletedActive } from "../../../assets/images/completedActive.svg";
+import { ReactComponent as Review } from "../../../assets/images/review.svg";
+import { ReactComponent as ReviewActive } from "../../../assets/images/reviewActive.svg";
 import { wordMenu } from "../../../data/words";
 import Popover from "../../../components/shared/popover/Popover";
 import "./WordCard.scss";
@@ -13,10 +17,21 @@ const WordCard = ({
   meaning,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [wordStatus, setWordStatus] = useState(null);
+
+  useEffect(() => {
+    setWordStatus(status);
+  }, [status]);
+
+  function handleStatusChange(id, title) {
+    if (title === wordStatus) setWordStatus(null);
+    else setWordStatus(title);
+    setAnchorEl(null);
+  }
 
   return (
     <>
-      <div className={`word-container ${status} ${className}`}>
+      <div className={`word-container ${wordStatus} ${className}`}>
         <div className="word-info">
           <div className="word-title">
             <Heading>{title}</Heading>
@@ -33,10 +48,14 @@ const WordCard = ({
         setAnchorEl={setAnchorEl}>
         <div className="menu-container">
           {
-            wordMenu?.map(({id, title}) => {
+            wordMenu?.map(({ id, title }) => {
               return (
-                <MenuItem key={id}>
-                  <Body className="light">{title}</Body>
+                <MenuItem key={id} onClick={() => handleStatusChange(id, title)}>
+                  {id === 1 ? (wordStatus === title ? <CompletedActive /> : <Completed />)
+                    :
+                    (wordStatus === title ? <ReviewActive /> : <Review />)
+                  }
+                  <Body className={`light wordMenu-title ${title === wordStatus ? wordStatus : ""}`} >{title}</Body>
                 </MenuItem>
               )
             })

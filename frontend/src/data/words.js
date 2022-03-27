@@ -1,7 +1,7 @@
 export const word = {
   title: "Audacious",
   meaning: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim voluptate ab iure quisquam sint qui sit magni minus voluptatibus facilis repudiandae laborum nam soluta id minima animi, dolorum sed error?",
-  status: "completed",
+  status: "Completed",
 };
 
 export const wordMenu= [
@@ -13,12 +13,12 @@ export const words = [
   {
     title: "Audacious",
     meaning: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim voluptate ab iure quisquam sint qui sit magni minus voluptatibus facilis repudiandae laborum nam soluta id minima animi, dolorum sed error?",
-    status: "completed"
+    status: "Completed"
   },
   {
     title: "Audacious",
     meaning: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim voluptate ab iure quisquam sint qui sit magni minus voluptatibus facilis repudiandae laborum nam soluta id minima animi, dolorum sed error?",
-    status: "reviewLater"
+    status: "Review Later"
   },
   {
     title: "Audacious",
