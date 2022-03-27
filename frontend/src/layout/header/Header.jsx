@@ -74,7 +74,6 @@ const Header = ({ }) => {
                 open={Boolean(anchorEl)} 
                 anchorEl={anchorEl} 
                 setAnchorEl={setAnchorEl}
-                
                 >
                 <ClickAwayListener onClickAway={handlePopOverClose}>
                     <div className="menu-container">
