@@ -17,7 +17,8 @@ const MenuList = ({
 
 export default MenuList;
 MenuList.propTypes={
-  //optional fields
-  menu: PropTypes.array,
+  //necesary field
+  menu: PropTypes.array.isRequired,
+  //optional field
   className: PropTypes.string
 };

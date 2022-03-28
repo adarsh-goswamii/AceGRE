@@ -49,10 +49,10 @@ const WordCard = ({
 
 export default WordCard;
 WordCard.propTypes={
-
-  status: PropTypes.string,
-  className:PropTypes.string,
-  title:PropTypes.string,
-  meaning:PropTypes.string
-  
+//necesarry fields
+  status: PropTypes.string.isRequired,
+  title:PropTypes.string.isRequired,
+  meaning:PropTypes.string.isRequired,
+//optional field
+  className:PropTypes.string
 };
