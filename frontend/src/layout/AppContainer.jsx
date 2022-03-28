@@ -1,16 +1,19 @@
+import {useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import { routes } from "../routes/routes";
 import Container from "./container/Container";
 import Header from "./header/Header";
-import Error404 from "../components/pages/404/Error404";
+import RightDrawer from "./rightDrawer/RightDrawer";
+import { Button } from "@material-ui/core";
 
 const AppContainer = () => {
+  const [open, setOpen]= useState(false);
   return (
     <>
       <Header />
-      {/* <Toaster />
-      <RightDrawer />
-      <Modal />
+      {/* <Toaster /> */}
+      <RightDrawer open={open} setOpen={setOpen}/>
+      {/* <Modal />
       <Footer /> */}
       <Routes>
         {

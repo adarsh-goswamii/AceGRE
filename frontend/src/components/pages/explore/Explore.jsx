@@ -11,7 +11,6 @@ const Explore = () => {
         }
       </div>
       <div className="pagination">
-
       </div>
     </>
   )
