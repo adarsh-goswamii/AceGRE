@@ -16,3 +16,8 @@ const MenuList = ({
 };
 
 export default MenuList;
+MenuList.propTypes={
+  //optional fields
+  menu: PropTypes.array,
+  className: PropTypes.string
+};
