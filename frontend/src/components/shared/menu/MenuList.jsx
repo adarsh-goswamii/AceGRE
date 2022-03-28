@@ -8,7 +8,7 @@ const MenuList = ({
     <>
       {
         menu?.map(({ id, onClick, title }) => {
-          return (<MenuItem key={id} onClick={onClick} className={className}>{title}</MenuItem>);
+          return (<MenuItem key={id} onClick={onClick} className={`${className} light`}>{title}</MenuItem>);
         })
       }
     </>
