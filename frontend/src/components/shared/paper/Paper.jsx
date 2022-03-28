@@ -10,5 +10,5 @@ export default Papers;
 Papers.propTypes={
     //optional fields
     children: PropTypes.node,
-    className: PropTypes.object
+    className: PropTypes.string
 };
