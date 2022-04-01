@@ -9,6 +9,7 @@ import { wordMenu } from "../../../data/words";
 import Popover from "../../../components/shared/popover/Popover";
 import "./WordCard.scss";
 import { MenuItem } from "@material-ui/core";
+import {PropTypes} from "prop-types";
 
 const WordCard = ({
   status, // can have three values ["review later", "completed", "none"]
