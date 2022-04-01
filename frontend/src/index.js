@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import theme from "./styles/theme";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppContainer from "./layout/AppContainer";
-import store from "./store/reducers/index";
+import store from "./store/index";
 import "./styles/main.scss";
 
 const Index = () => {

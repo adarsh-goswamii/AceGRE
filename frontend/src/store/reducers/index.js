@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import commonReducerFn from "./common";
 
-export default combineReducers({
+const rootReducer= combineReducers({
   commonReducerFn
 });
+
+export default rootReducer;
