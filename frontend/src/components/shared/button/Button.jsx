@@ -49,5 +49,5 @@ FilledButton.propTypes = {
   fullWidth: PropTypes.bool,
   size: PropTypes.string,
   variant: PropTypes.string,
-  className: PropTypes.string,
+  className: PropTypes.string
 };
