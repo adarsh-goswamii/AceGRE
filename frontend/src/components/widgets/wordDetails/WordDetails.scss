@@ -1,0 +1,22 @@
+@import "../../../styles/main.scss";
+
+.word-details-pane {
+  .header {
+    height: $header_height;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid $borderColor;
+    background-color: $offWhite;
+
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .hero-section {
+    padding: 24px 16px;
+  }
+}

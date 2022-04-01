@@ -2,18 +2,7 @@ import * as actionType from "../actionType/index";
 
 const INIT_INITIAL_STATE = {
   rightDrawer: {
-    open: false, 
-    wordDetails: {
-      id: null,
-      word: "", 
-      meanings: [],
-      status: {}, 
-      rootWord: "", 
-      partOfSpeech: "", 
-      mneumonics: [], 
-      sentences: [], 
-      funFact: "",
-    }
+    open: false
   }
 };
 

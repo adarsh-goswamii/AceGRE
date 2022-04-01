@@ -1,13 +1,14 @@
 import { useState } from "react";
-import Drawer from '@material-ui/core/Drawer';
+import {Drawer, ClickAwayListener} from '@material-ui/core';
 import { useCallback, useEffect } from 'react';
 import "./RightDrawer.scss";
 
 const RightDrawer = ({
-  children, 
-  className, 
-  open, 
-  setOpen
+  children,
+  className,
+  open,
+  setOpen,
+  close, 
 }) => {
 
   useEffect(() => {
@@ -16,16 +17,22 @@ const RightDrawer = ({
   }, []);
 
   const closeDrawer = useCallback((event) => {
-    if(event?.target?.classList?.contains("MuiBackdrop-root")) {
+    if (event?.target?.classList?.contains("MuiBackdrop-root")) {
       setOpen(false);
     }
   }, []);
 
   return (
-      <Drawer anchor={"right"} open={open} onClose={()=> {}} >
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est culpa enim commodi beatae, similique animi voluptatum tempore incidunt consequatur odio esse quod voluptatibus in aliquid ea obcaecati blanditiis laborum magnam.
-      </Drawer>
+    <Drawer anchor={"right"} open={open}>
+      <ClickAwayListener onClickAway={close}>
+        <div>
+          {children}
+        </div>
+      </ClickAwayListener>
+    </Drawer>
   );
 };
 
 export default RightDrawer;
+
+// open necessary

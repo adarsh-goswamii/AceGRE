@@ -15,6 +15,7 @@ const WordCard = ({
   className,
   title,
   meaning,
+  onClick
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [wordStatus, setWordStatus] = useState(null);
@@ -31,7 +32,9 @@ const WordCard = ({
 
   return (
     <>
-      <div className={`word-container ${wordStatus} ${className}`}>
+      <div
+        onClick={onClick}
+        className={`word-container ${wordStatus} ${className}`}>
         <div className="word-info">
           <div className="word-title">
             <Heading>{title}</Heading>
