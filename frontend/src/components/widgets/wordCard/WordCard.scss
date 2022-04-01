@@ -41,10 +41,22 @@
     }
   }
 
-  &.completed {
+  &.Completed {
     background-color: $green;
   }
-  &.reviewLater {
+  &.Review {
     background-color: $red;
+  }
+}
+
+.menu-container {
+  .wordMenu-title {
+    margin-left: 8px;
+  }
+  .Completed {
+    color: $green;
+  }
+  .Review {
+    color: $red;
   }
 }
