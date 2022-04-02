@@ -1,0 +1,66 @@
+@import "../../../styles/main.scss";
+
+.word-details-pane {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .MuiDrawer-root {
+    height: 100%;
+  }
+  .word-details-container {
+
+    .header {
+      height: $header_height;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid $borderColor;
+      background-color: $offWhite;
+
+      .icon {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .hero-section {
+      padding: 24px 16px;
+
+      .top-row {
+        display: flex;
+        align-items: center;
+        .icon {
+          margin-left: 16px;
+          width: 35px;
+          height: 35px;
+          cursor: pointer;
+        }
+      }
+
+      .fun-fact {
+        margin-top: 16px;
+
+        .fun-fact-content {
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+
+  .footer {
+    padding: 16px;
+    border-top: 1px solid $borderColor;
+    .MuiButton-root {
+      margin-right: 16px;
+      color: $white;
+      &:first-of-type {
+        background-color: $green;
+      }
+      &:nth-of-type(2) {
+        background-color: $red;
+      }
+    }
+  }
+}
