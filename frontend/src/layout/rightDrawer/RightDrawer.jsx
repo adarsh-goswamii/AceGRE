@@ -23,7 +23,7 @@ const RightDrawer = ({
   }, []);
 
   return (
-    <Drawer anchor={"right"} open={open}>
+    <Drawer anchor={"right"} open={open} classes={{root: className }}>
       <ClickAwayListener onClickAway={close}>
         <div>
           {children}
