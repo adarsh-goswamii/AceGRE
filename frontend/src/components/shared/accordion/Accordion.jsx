@@ -1,10 +1,11 @@
 import { Accordion, AccordionDetails } from "@material-ui/core";
+import { PropTypes } from "prop-types";
 import "./Accordion.scss";
 
 const CustomAccordion = ({
-  Heading, //n
-  Content, //n
-  defaultExpanded = false, // o
+  Heading, 
+  Content, 
+  defaultExpanded = false, 
   className
 }) => {
   return (
@@ -18,3 +19,11 @@ const CustomAccordion = ({
 };
 
 export default CustomAccordion;
+CustomAccordion.propTypes = {
+  // necessary fields
+  Heading: PropTypes.string.isRequired,
+  Content:PropTypes.string.isRequired,
+  // optional fields
+  defaultExpanded:PropTypes.bool,
+  className: PropTypes.string
+};

@@ -2,6 +2,7 @@ import { useState } from "react";
 import {Drawer, ClickAwayListener} from '@material-ui/core';
 import { useCallback, useEffect } from 'react';
 import "./RightDrawer.scss";
+import { PropTypes } from "prop-types";
 
 const RightDrawer = ({
   children,
@@ -34,5 +35,12 @@ const RightDrawer = ({
 };
 
 export default RightDrawer;
-
-// open necessary
+RightDrawer.propTypes={
+  //necesarry fields
+  open: PropTypes.bool.isRequired,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
+  //optional field
+  className:PropTypes.string,
+  setOpen:PropTypes.func,
+  close:PropTypes.bool
+  };

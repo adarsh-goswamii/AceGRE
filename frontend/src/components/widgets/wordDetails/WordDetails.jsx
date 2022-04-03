@@ -7,10 +7,10 @@ import { Heading, H3, Body } from "../../shared/typography/Typogrpahy";
 import { AccordionSummary } from "@material-ui/core";
 import Accordion from "../../shared/accordion/Accordion";
 import Button from "../../shared/button/Button";
-
+import {PropTypes} from "prop-types";
 
 const WordDetails = ({
-  id, // n
+  id, 
   className
 }) => {
 
@@ -115,3 +115,9 @@ const WordDetails = ({
 }
 
 export default WordDetails;
+WordDetails.propTypes = {
+  // necessary fields
+  id: PropTypes.number.isRequired,
+  // optional fields
+  className: PropTypes.string
+};
