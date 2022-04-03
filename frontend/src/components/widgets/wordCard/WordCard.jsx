@@ -74,12 +74,12 @@ const WordCard = ({
 }
 
 export default WordCard;
-
-WordCard.propTypes = {
-  //necesarry fields
-  status: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  meaning: PropTypes.string.isRequired,
-  //optional field
-  className: PropTypes.string
+WordCard.propTypes={
+//necesarry fields
+  status: PropTypes.oneOf(["review later", "completed", "none"]).isRequired,
+  title:PropTypes.string.isRequired,
+  meaning:PropTypes.string.isRequired,
+  onClick:PropTypes.func.isRequired,
+//optional field
+  className:PropTypes.string
 };
