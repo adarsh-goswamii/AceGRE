@@ -9,7 +9,7 @@ import { wordMenu } from "../../../data/words";
 import Popover from "../../../components/shared/popover/Popover";
 import "./WordCard.scss";
 import { MenuItem } from "@material-ui/core";
-import {PropTypes} from "prop-types";
+import { PropTypes } from "prop-types";
 
 const WordCard = ({
   status, // can have three values ["review later", "completed", "none"]
@@ -39,7 +39,10 @@ const WordCard = ({
         <div className="word-info">
           <div className="word-title">
             <Heading>{title}</Heading>
-            <MenuIcon onClick={(e) => setAnchorEl(e.currentTarget)} className="menu-icon" />
+            <MenuIcon onClick={(e) => {
+              e.stopPropagation();
+              setAnchorEl(e.currentTarget)
+            }} className="menu-icon" />
           </div>
           <p className="meaning">
             {meaning}
@@ -72,11 +75,11 @@ const WordCard = ({
 
 export default WordCard;
 
-WordCard.propTypes={
-//necesarry fields
+WordCard.propTypes = {
+  //necesarry fields
   status: PropTypes.string.isRequired,
-  title:PropTypes.string.isRequired,
-  meaning:PropTypes.string.isRequired,
-//optional field
-  className:PropTypes.string
+  title: PropTypes.string.isRequired,
+  meaning: PropTypes.string.isRequired,
+  //optional field
+  className: PropTypes.string
 };
