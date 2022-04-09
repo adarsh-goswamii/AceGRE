@@ -1,7 +1,7 @@
 import Error404 from '../components/pages/404/Error404';
 import Home from '../components/pages/home/Home';
 import Explore from '../components/pages/explore/Explore';
-import Login from '../components/pages/login/Login';
+import Authentication from '../components/pages/login/Authentication';
 
 export const routes = [
   {
@@ -50,7 +50,7 @@ export const routes = [
     path: "/login",
     exact: true,
     hideHeader: true,
-    component: Login,
+    component: Authentication,
     id: 8,
     protected: false,
     className: "login-screen",
