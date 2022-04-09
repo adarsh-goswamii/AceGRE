@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors= require('cors');
 
 const wordsRoutes = require('./routes/words-route');
+const authRoutes = require('./routes/auth-routes');
 const HttpError = require('./models/http-error');
 
 const app = express();
@@ -17,6 +18,8 @@ app.use(bodyParser.json());
 
 // all routes
 app.use('/words', wordsRoutes);
+
+app.use('/auth', authRoutes);
 
 app.use((req, res, next) => {
     throw new HttpError('Could Not locate the route', 404);
