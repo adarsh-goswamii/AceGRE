@@ -1,0 +1,63 @@
+@import "../../../styles/main.scss";
+
+.word-container {
+  height: fit-content;
+  border-radius: 4px;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: $boxShadow;
+  cursor: pointer;
+
+  .word-info {
+    margin-left: 6px;
+    background-color: $white;
+    border-radius: 4px;
+    height: 100%;
+    padding: 10px;
+
+    .word-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .menu-icon {
+        z-index: 2;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .meaning {
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-top: 8px;
+      font-weight: 300;
+      text-overflow: ellipsis;
+      @extend .bodyLight;
+    }
+  }
+
+  &.Completed {
+    background-color: $green;
+  }
+  &.Review {
+    background-color: $red;
+  }
+}
+
+.menu-container {
+  .wordMenu-title {
+    margin-left: 8px;
+  }
+  .Completed {
+    color: $green;
+  }
+  .Review {
+    color: $red;
+  }
+}

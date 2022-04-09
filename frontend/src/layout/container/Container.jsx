@@ -1,4 +1,5 @@
 import "./Container.scss";
+import { PropTypes } from "prop-types";
 
 const Container = ({
   className, 
@@ -8,3 +9,9 @@ const Container = ({
 };
 
 export default Container;
+Container.propTypes = {
+  // necessary fields
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
+  // optional fields
+  className: PropTypes.string
+};

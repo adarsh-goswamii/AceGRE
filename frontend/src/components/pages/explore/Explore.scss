@@ -1,0 +1,131 @@
+@import "../../../styles/main.scss";
+
+.explore-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .heading {
+    margin-bottom: 32px;
+  }
+
+  .filters {
+    width: 100%;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+
+    .search-autocomplete {
+      border-radius: 10px;
+      padding: 2px 18px;
+      background-color: $white;
+      width: 60%;
+      box-shadow: $boxShadow;
+
+      .MuiFormControl-root {
+        .MuiInputBase-root {
+          width: 100%;
+
+          .icon {
+            width: 24px;
+            height: 24px;
+          }
+
+          .MuiInputBase-input {
+            font-size: 14px !important;
+          }
+
+          .MuiOutlinedInput-notchedOutline {
+            border: none;
+            outline: none;
+            margin-left: 16px;
+          }
+
+        }
+      }
+    }
+
+    .status-select {
+      background-color: $white;
+      width: fit-content;
+      border-radius: 10px;
+      border: none;
+      padding: 0px;
+      box-shadow: $boxShadow;
+      margin-left: 16px;
+      width: 150px;
+
+      .MuiSelect-root {
+        padding: 0px;
+        font-size: 14px !important;
+        padding: 12px 14px;
+      }
+      .MuiSelect-root:focus {
+        background-color: white;
+        border-radius: 10px;
+      }
+      .MuiOutlinedInput-notchedOutline {
+        border: none;
+      }
+    }
+  }
+
+  .word-grid-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 16px;
+  }
+
+  .pagination {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 32px 0px;
+
+    .card-per-page {
+      display: flex;
+      align-items: center;
+
+      .Mui-focused {
+        .MuiOutlinedInput-notchedOutline {
+          border: 1px solid $borderColor;
+        }
+      }
+
+      .MuiInputBase-root {
+        margin-left: 8px;
+        background-color: $white;
+
+        .MuiOutlinedInput-notchedOutline {
+          border: none;
+        }
+        .MuiSelect-root {
+          padding: 0px 0px 0px 16px;
+          width: 70px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          font-size: 14px !important;
+        }
+        .MuiSelect-root:focus {
+          background-color: white;
+        }
+      }
+    }
+
+
+    .Mui-selected {
+      background-color: $primary;
+      color: white;
+    }
+
+    .MuiButtonBase-root:hover {
+      background-color: $primaryLight;
+    }
+
+    #card-per-page {}
+  }
+}

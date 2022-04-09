@@ -13,13 +13,13 @@ export const routes = [
     id: 1,
   }, {
     path: "/explore",
-    className: "explore",
-    exact: true,
-    hideHeader: false,
-    component: Explore,
-    id: 2,
-  }, {
-    path: "/quizzes",
+    className: "explore-page-container", 
+    exact: true, 
+    hideHeader: false, 
+    component: Explore, 
+    id: 2, 
+  },{
+    path: "/quizzes", 
     className: "quizzes",
     exact: true,
     hideHeader: false,

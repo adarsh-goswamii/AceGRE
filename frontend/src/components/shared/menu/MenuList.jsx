@@ -1,4 +1,5 @@
 import { Menu, MenuItem } from "@material-ui/core";
+import { PropTypes } from "prop-types";
 
 const MenuList = ({
   menu, 
@@ -8,7 +9,7 @@ const MenuList = ({
     <>
       {
         menu?.map(({ id, onClick, title }) => {
-          return (<MenuItem key={id} onClick={onClick} className={className}>{title}</MenuItem>);
+          return (<MenuItem key={id} onClick={onClick} className={`${className} light`}>{title}</MenuItem>);
         })
       }
     </>
@@ -16,3 +17,9 @@ const MenuList = ({
 };
 
 export default MenuList;
+MenuList.propTypes={
+  //necesary field
+  menu: PropTypes.array.isRequired,
+  //optional field
+  className: PropTypes.string
+};
