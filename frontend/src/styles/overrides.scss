@@ -1,18 +1,37 @@
+@import "./colors.scss";
+@import "./typography.scss";
+
 .MuiInputBase-input {
-    font-size: 16px !important;
+    font-size: 15px !important;
     font-weight: 400 !important;
 }
 
 .MuiFormLabel-root {
-    font-size: 16px !important;
+    font-size: 15px !important;
     font-weight: 400 !important;
 }
 
-.MuiButtonBase-root  {
+.MuiButtonBase-root {
     text-transform: none !important;
     padding: 4px 16px;
 }
 
 .MuiMenuItem-root {
     padding: 8px 24px !important;
+}
+
+.Mui-checked {
+    .MuiSvgIcon-root {
+        fill: $primary !important;
+    }
+}
+
+.necessary {
+    .MuiFormLabel-root::after {
+        content: "*";
+        top: -7px;
+        color: $red;
+        position: absolute;
+        @extend .bodyLight;
+    }
 }
