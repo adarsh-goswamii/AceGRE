@@ -1,0 +1,66 @@
+@import "../../../styles/main.scss";
+
+.login-screen {
+  padding: 0px !important;
+  .login-container {
+    width: 100%;
+    height: calc(100vh);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+
+    .watermark {
+      height: 100vh;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      transform: translateX(-300px);
+      box-shadow: $boxShadow;
+    }
+
+    .form {
+      margin-top: 100px;
+      margin-left: 500px;
+
+      .heading {
+        @extend .labelHeading;
+        margin-bottom: 32px;
+      }
+      .input-field {
+        margin-bottom: 24px;
+        @extend .bodyRegular;
+      }
+    }
+
+    .circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      position: absolute;
+      top: -80px;
+      right: -30px;
+      background-color: $primary;
+
+      &::after {
+        top: 150px;
+        right: 230px;
+        content: "";
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: $primary;
+      }
+      &::before {
+        top: 230px;
+        right: 80px;
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: $primary;
+      }
+    }
+  }
+}
