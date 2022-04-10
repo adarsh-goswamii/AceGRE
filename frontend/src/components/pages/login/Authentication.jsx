@@ -8,7 +8,7 @@ const Login = ({
 
 }) => {
   const circleRef = useRef();
-  const [showLoginForm, setShowLoginForm] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(true);
 
   return (
     <>

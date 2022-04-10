@@ -10,14 +10,12 @@ const AppContainer = () => {
   const [headerVisible, setHeaderVisible] = useState(false);
 
   useEffect(() => {
-    console.log(renderHeader());
     setHeaderVisible(renderHeader());
-  }, [window.location.pathname]);
+  }, [location.pathname]);
 
   function renderHeader() {
     const pathname = location.pathname;
     const currentRoute = routes.filter(route => route.path === pathname);
-    console.log(currentRoute, pathname);
     return currentRoute && !currentRoute[0].hideHeader;
   }
 
