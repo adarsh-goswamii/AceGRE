@@ -58,7 +58,7 @@ const Header = ({ }) => {
                             className={"login-btn"}
                             variant="cont
                             ained"
-                            onClick={() => { }}
+                            onClick={() => navigate("/login")}
                         >
                             Login
                         </Button>

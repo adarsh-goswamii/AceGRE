@@ -17,7 +17,7 @@ const InputField = ({
     <TextField
       fullWidth
       value={value || ""}
-      onChange={onChange}
+      onChange={(e) => onChange(e.target.value)}
       label={label}
       className={`textfield ${className}`}
       size="small"
