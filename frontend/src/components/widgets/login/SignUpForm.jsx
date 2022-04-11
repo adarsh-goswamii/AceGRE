@@ -2,6 +2,8 @@ import { useState } from "react";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
 import InputField from "../../shared/inputField/InputField";
 import Button from "../../shared/button/Button";
+import {PropTypes} from "prop-types";
+
 
 const SignUpForm = ({
   toggleForm
@@ -56,3 +58,7 @@ const SignUpForm = ({
 }
 
 export default SignUpForm;
+SignUpForm.propTypes = {
+  // necessary fields
+  toggleForm: PropTypes.func.isRequired,
+};

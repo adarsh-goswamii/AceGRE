@@ -2,13 +2,15 @@ import {useState} from "react";
 import Pagination from '@material-ui/lab/Pagination';
 import { Select, MenuItem } from '@material-ui/core';
 import { useEffect } from 'react';
+import {PropTypes} from "prop-types";
+
 
 const CustomPagination = ({
-  totalPage, // n number 
-  paginationOptions, // n array
-  limit, // n number
-  handleCardPerPageChange, // n funtion
-  handlePageNumberChange, // n function
+  totalPage,
+  paginationOptions,
+  limit,
+  handleCardPerPageChange,
+  handlePageNumberChange,
 }) => {
   const [cardPerPage, setCardPerPage] = useState(undefined);
   useEffect(() => {
@@ -48,3 +50,11 @@ const CustomPagination = ({
 };
 
 export default CustomPagination;
+CustomPagination.propTypes = {
+  // necessary fields
+  totalPage:PropTypes.number.isRequired,
+  paginationOptions :PropTypes.array.isRequired,
+  limit:PropTypes.number.isRequired,
+  handleCardPerPageChange:PropTypes.func.isRequired,
+  handlePageNumberChange :PropTypes.func.isRequired
+};
