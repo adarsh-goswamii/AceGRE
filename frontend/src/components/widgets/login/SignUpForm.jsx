@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
 import InputField from "../../shared/inputField/InputField";
 import Button from "../../shared/button/Button";
+import {PropTypes} from "prop-types";
 import Error from "../error/Error";
 import { emailValidate, passwordStrengthCheck } from "../../../utility/validations";
 import { PASSWORD_DONT_MATCH, SOMETHING_WENT_WRONG } from "../../../constants/errorMessage.consts";
@@ -163,3 +164,7 @@ const SignUpForm = ({
 }
 
 export default SignUpForm;
+SignUpForm.propTypes = {
+  // necessary fields
+  toggleForm: PropTypes.func.isRequired,
+};
