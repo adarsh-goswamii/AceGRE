@@ -19,8 +19,8 @@ const Header = ({ }) => {
             navigate(menu.pathname);
         } else {
             setAnchorEl(e.currentTarget);
-            let temp= menu?.submenu.map(data => { 
-                data.onClick= () => {
+            let temp = menu?.submenu.map(data => {
+                data.onClick = () => {
                     handlePopOverClose();
                     navigate(data.pathname);
                 };
@@ -58,26 +58,27 @@ const Header = ({ }) => {
                             className={"login-btn"}
                             variant="cont
                             ained"
-                            onClick={() => navigate("/login")}
+                            onClick={() => navigate("/auth?user=login")}
                         >
                             Login
                         </Button>
                         <Button
                             className={"signup-btn rounded-btn"}
-                            variant="outlined" onCLick={() => { }}>
+                            variant="outlined"
+                            onClick={() => navigate("/auth?user=register")}>
                             SignUp
                         </Button>
                     </div>
                 )}
             </div>
-            <Popover 
-                open={Boolean(anchorEl)} 
-                anchorEl={anchorEl} 
+            <Popover
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
-                >
+            >
                 <ClickAwayListener onClickAway={handlePopOverClose}>
                     <div className="menu-container">
-                        <Menu menu={menu} className="submenu"/>
+                        <Menu menu={menu} className="submenu" />
                     </div>
                 </ClickAwayListener>
             </Popover>

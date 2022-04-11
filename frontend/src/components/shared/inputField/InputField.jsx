@@ -12,6 +12,7 @@ const InputField = ({
   error = false,
   label,
   variant = "outlined",
+  ...rest
 }) => {
   return (
     <TextField
@@ -27,6 +28,7 @@ const InputField = ({
       defaultValue={defaultValue}
       helperText={helperText}
       error={error}
+      {...rest}
     />
   );
 };
