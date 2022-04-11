@@ -5,22 +5,30 @@ import Button from "../../shared/button/Button";
 import { login } from "../../../apis/auth";
 import { useNavigate } from "react-router-dom";
 import Error from "../error/Error";
+import { emailValidate } from "../../../utility/validations";
+import { SOMETHING_WENT_WRONG } from "../../../constants/errorMessage.consts";
+
+const initInputField = {
+  value: "",
+  helperText: "",
+  error: false,
+  disabled: false
+};
 
 const LoginForm = ({
   toggleForm,
 }) => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState(new Object(initInputField));
+  const [password, setPassword] = useState(new Object(initInputField));
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState({ show: false, message: "" });
 
   async function handleLogin() {
-    // TODO: add password and email constraints 
     try {
       const response = await login({
-        email: username,
-        password: password,
+        email: username.value,
+        password: password.value,
         rememberMe: rememberMe,
       });
 
@@ -30,27 +38,54 @@ const LoginForm = ({
       localStorage.setItem("role", response?.data?.role);
       navigate("/");
     } catch (error) {
-      console.log(error);
-      setError({ show: true, message: error?.response?.data?.data?.message });
+      let errorMessage = error?.response?.data?.data?.message;
+      errorMessage= errorMessage ? errorMessage : SOMETHING_WENT_WRONG;
+      setError({ show: true, message: errorMessage });
     }
-    setPassword("");
+    setPassword(initInputField);
   };
+
+  function handleUsernameOnBlur() {
+    const temp = emailValidate(username.value);
+    setUsername(prev => {
+      return Object.assign({}, prev, {
+        helperText: temp,
+        error: Boolean(temp),
+      });
+    });
+  };
+
+  function handleUsernameChange(value) {
+    const helperText = username.error ? emailValidate(value): "";
+    setUsername(prev => Object.assign({}, prev, {
+      helperText, 
+      value: value, 
+      error: Boolean(helperText)
+    }))
+  };
+
+  function handlePasswordOnChange(value) {
+    setPassword(prev => Object.assign({}, prev, { "value": value }));
+  }
 
   return (
     <>
       <div className="heading">LOGIN</div>
       <InputField
-        value={username}
+        value={username.value}
         className="input-field necessary"
         type="text"
+        helperText={username.helperText}
+        error={username.error}
         label="Username / Email"
-        onChange={setUsername} />
+        onBlur={handleUsernameOnBlur}
+        onChange={handleUsernameChange} />
       <InputField
-        value={password}
+        value={password.value}
         className="input-field necessary"
         type="password"
         label="Password"
-        onChange={setPassword} />
+        onChange={handlePasswordOnChange} />
       <FormControlLabel
         className="remember-me"
         control={<Checkbox
@@ -75,6 +110,7 @@ const LoginForm = ({
       <Button
         variant="contained"
         className="btn"
+        disabled={!username.value || username.error || !password.value}
         onClick={handleLogin}>
         Login
       </Button>

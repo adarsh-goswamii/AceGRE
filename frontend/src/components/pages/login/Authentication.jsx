@@ -8,7 +8,8 @@ const Login = ({
 
 }) => {
   const circleRef = useRef();
-  const [showLoginForm, setShowLoginForm] = useState(true);
+  const initForm= new URL(document.location).searchParams.get("user") === "login";
+  const [showLoginForm, setShowLoginForm] = useState(initForm);
 
   return (
     <>
