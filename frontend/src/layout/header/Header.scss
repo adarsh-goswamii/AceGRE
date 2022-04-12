@@ -15,7 +15,8 @@
     height: inherit;
 
     .heading-container {
-      height: calc(100% - 3px);
+      height: 100%;
+      // height: calc(100% - 3px);
       padding: 0px 12px;
       display: flex;
       align-items: center;
@@ -33,6 +34,7 @@
   .call-for-actions {
     display: flex;
     align-items: center;
+    @extend .bodyRegular;
 
     .login-btn {
       margin-right: 16px;

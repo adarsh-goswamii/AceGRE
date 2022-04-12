@@ -11,6 +11,7 @@ export const routes = [
     hideHeader: false,
     component: Home,
     id: 1,
+    className: "home-container"
   }, {
     path: "/explore",
     className: "explore-page-container", 

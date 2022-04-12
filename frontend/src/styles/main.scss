@@ -16,3 +16,13 @@ body {
     font-size: 14px;
     font-weight: 400;
 }
+
+body::-webkit-scrollbar {
+    width: 4px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+    border-radius: 3px;
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Avatar, ClickAwayListener } from "@material-ui/core";
-import { H3, Heading } from "../../components/shared/typography/Typogrpahy";
+import { Body, H3, Heading } from "../../components/shared/typography/Typogrpahy";
 import Menu from "../../components/shared/menu/MenuList";
 import Button from "../../components/shared/button/Button";
 import Popover from "../../components/shared/popover/Popover";
@@ -40,11 +40,11 @@ const Header = ({ }) => {
                     {data?.map((menu, index) => {
                         return (
                             <div className={`heading-container ${location.pathname === menu.pathname ? "active" : ""} `} onClick={(e) => handleMenuClick(e, menu)}>
-                                <Heading
+                                <Body
                                     key={index}
                                     className={`menu-heading`}>
                                     {menu?.heading}
-                                </Heading>
+                                </Body>
                             </div>
                         )
                     })}
