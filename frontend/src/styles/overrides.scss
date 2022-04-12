@@ -35,3 +35,11 @@
         @extend .bodyLight;
     }
 }
+
+.MuiFormControl-root {
+    .MuiFormHelperText-root.Mui-error {
+        margin: 0px;
+        font-size: 12px;
+        @extend .bodyLight;
+    }
+}

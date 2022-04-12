@@ -47,7 +47,7 @@ export const routes = [
     id: 6,
     protected: true,
   }, {
-    path: "/login",
+    path: "/auth",
     exact: true,
     hideHeader: true,
     component: Authentication,
