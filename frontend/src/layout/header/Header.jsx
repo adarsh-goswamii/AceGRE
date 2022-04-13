@@ -8,7 +8,7 @@ import data from "../../data/headerNav";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Header.scss";
 
-const Header = ({ }) => {
+const Header = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -34,7 +34,7 @@ const Header = ({ }) => {
     let loggedIn = false;
     return (
         <>
-            <div className="header-container">
+            <div className="header-container" ref={props.headerRef}>
                 <H3>AceGRE</H3>
                 <div className="navigation-tabs">
                     {data?.map((menu, index) => {
