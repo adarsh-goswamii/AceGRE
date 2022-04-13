@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Avatar, ClickAwayListener } from "@material-ui/core";
-import { H3, Heading } from "../../components/shared/typography/Typogrpahy";
+import { Body, H3, Heading } from "../../components/shared/typography/Typogrpahy";
 import Menu from "../../components/shared/menu/MenuList";
 import Button from "../../components/shared/button/Button";
 import Popover from "../../components/shared/popover/Popover";
@@ -8,7 +8,7 @@ import data from "../../data/headerNav";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Header.scss";
 
-const Header = ({ }) => {
+const Header = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -34,17 +34,17 @@ const Header = ({ }) => {
     let loggedIn = false;
     return (
         <>
-            <div className="header-container">
+            <div className="header-container" ref={props.headerRef}>
                 <H3>AceGRE</H3>
                 <div className="navigation-tabs">
                     {data?.map((menu, index) => {
                         return (
                             <div className={`heading-container ${location.pathname === menu.pathname ? "active" : ""} `} onClick={(e) => handleMenuClick(e, menu)}>
-                                <Heading
+                                <Body
                                     key={index}
                                     className={`menu-heading`}>
                                     {menu?.heading}
-                                </Heading>
+                                </Body>
                             </div>
                         )
                     })}

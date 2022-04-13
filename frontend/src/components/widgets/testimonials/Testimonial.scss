@@ -1,0 +1,25 @@
+@import "../../../styles/main.scss";
+
+.testimonial-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 40px;
+
+  .data {
+    width: 65%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .author {
+      margin-top: 32px;
+      font-weight: 500 !important;
+    }
+
+    .testimonial {
+      @extend .bodyLight;
+    }
+  }
+}
