@@ -15,8 +15,8 @@ const Token = require("../models/tokenSchema");
 const login = async (req, res, next) => {
   try {
     const { email, password, rememberMe } = req.body;
-    const userInfo = await User.findOne({email: email}).exec();
-    if(userInfo) {
+    const userInfo = await User.findOne({ email: email }).exec();
+    if (userInfo) {
       const validPass = await bcrypt.compare(password, userInfo.password);
       if(validPass) {
 
@@ -28,7 +28,7 @@ const login = async (req, res, next) => {
         newToken.save();
 
         res.status(200).json({
-          status: "success", 
+          status: "success",
           data: {
             email: email, 
             token: access_token, 
@@ -39,7 +39,7 @@ const login = async (req, res, next) => {
       } else {
         // user exists but password is wrong
         res.status(409).json({
-          status: "failure", 
+          status: "failure",
           data: {
             email: email, 
             message: "Email or password is wrong"
@@ -49,7 +49,7 @@ const login = async (req, res, next) => {
     } else {
       // no user with given email exists
       res.status(404).json({
-        status: "failure", 
+        status: "failure",
         data: {
           email: email, 
           message: "No user with given email exists"
@@ -69,6 +69,18 @@ const login = async (req, res, next) => {
 const register = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    const userInfo = await User.findOne({ email: email }).exec();
+
+    if (userInfo) {
+      res.status(400).json({
+        status: "failure",
+        data: {
+          email: email,
+          message: "A user with given email already exists"
+        }
+      });
+    }
+
     const hashedPass = await bcrypt.hash(password, 16);
     
     let newUser = new User({ email, password: hashedPass, admin: false });
