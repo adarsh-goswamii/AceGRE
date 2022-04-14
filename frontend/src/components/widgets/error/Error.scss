@@ -1,0 +1,16 @@
+@import "../../../styles/main.scss";
+
+.error-container {
+  display: flex;
+  background-color: $redBackground;
+  padding: 16px;
+  border-radius: 4px;
+  align-items: center;
+  color: $offBlack;
+
+  .icon {
+    margin-right: 32px;
+    width: 24px;
+    height: 24px;
+  }
+}

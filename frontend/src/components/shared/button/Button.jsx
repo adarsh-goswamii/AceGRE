@@ -17,7 +17,7 @@ const FilledButton = ({
 }) => {
   return (
     <Button
-      className={`button ${className}`}
+      className={`button ${className} ${disabled? "disabled": ""}`}
       color={color}
       disabled={disabled}
       disableElevation={disableElevation}

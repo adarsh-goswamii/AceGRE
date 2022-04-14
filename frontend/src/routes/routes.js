@@ -8,9 +8,10 @@ export const routes = [
     path: "/",
     className: "home",
     exact: true,
-    hideHeader: false,
+    hideHeader: true,
     component: Home,
     id: 1,
+    className: "home-container"
   }, {
     path: "/explore",
     className: "explore-page-container", 
@@ -47,7 +48,7 @@ export const routes = [
     id: 6,
     protected: true,
   }, {
-    path: "/login",
+    path: "/auth",
     exact: true,
     hideHeader: true,
     component: Authentication,

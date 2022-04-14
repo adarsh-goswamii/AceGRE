@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Avatar, ClickAwayListener } from "@material-ui/core";
-import { H3, Heading } from "../../components/shared/typography/Typogrpahy";
+import { Body, H3, Heading } from "../../components/shared/typography/Typogrpahy";
 import Menu from "../../components/shared/menu/MenuList";
 import Button from "../../components/shared/button/Button";
 import Popover from "../../components/shared/popover/Popover";
@@ -8,7 +8,7 @@ import data from "../../data/headerNav";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Header.scss";
 
-const Header = ({ }) => {
+const Header = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -19,8 +19,8 @@ const Header = ({ }) => {
             navigate(menu.pathname);
         } else {
             setAnchorEl(e.currentTarget);
-            let temp= menu?.submenu.map(data => { 
-                data.onClick= () => {
+            let temp = menu?.submenu.map(data => {
+                data.onClick = () => {
                     handlePopOverClose();
                     navigate(data.pathname);
                 };
@@ -34,17 +34,17 @@ const Header = ({ }) => {
     let loggedIn = false;
     return (
         <>
-            <div className="header-container">
+            <div className="header-container" ref={props.headerRef}>
                 <H3>AceGRE</H3>
                 <div className="navigation-tabs">
                     {data?.map((menu, index) => {
                         return (
                             <div className={`heading-container ${location.pathname === menu.pathname ? "active" : ""} `} onClick={(e) => handleMenuClick(e, menu)}>
-                                <Heading
+                                <Body
                                     key={index}
                                     className={`menu-heading`}>
                                     {menu?.heading}
-                                </Heading>
+                                </Body>
                             </div>
                         )
                     })}
@@ -58,26 +58,27 @@ const Header = ({ }) => {
                             className={"login-btn"}
                             variant="cont
                             ained"
-                            onClick={() => navigate("/login")}
+                            onClick={() => navigate("/auth?user=login")}
                         >
                             Login
                         </Button>
                         <Button
                             className={"signup-btn rounded-btn"}
-                            variant="outlined" onCLick={() => { }}>
+                            variant="outlined"
+                            onClick={() => navigate("/auth?user=register")}>
                             SignUp
                         </Button>
                     </div>
                 )}
             </div>
-            <Popover 
-                open={Boolean(anchorEl)} 
-                anchorEl={anchorEl} 
+            <Popover
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
-                >
+            >
                 <ClickAwayListener onClickAway={handlePopOverClose}>
                     <div className="menu-container">
-                        <Menu menu={menu} className="submenu"/>
+                        <Menu menu={menu} className="submenu" />
                     </div>
                 </ClickAwayListener>
             </Popover>

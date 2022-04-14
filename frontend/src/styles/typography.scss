@@ -39,16 +39,25 @@
     font-weight: 700;
     font-size: 24px;
 }
+
 .headerBlack {
     font-family: Poppins;
     font-weight: 700;
-    font-size: 54px;
+    font-size: 44px;
 }
+
+.headerSemiBold {
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 36px;
+}
+
 .bodyRegular {
     font-family: Poppins;
     font-weight: 400;
     font-size: 14px;
 }
+
 .light {
     font-weight: 300 !important;
 }
@@ -57,4 +66,10 @@
     font-weight: 300;
     font-size: 13px;
     line-height: 18px;
+}
+
+.labelSemibold {
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 18px;
 }
