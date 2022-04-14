@@ -74,7 +74,7 @@ const register = async (req, res, next) => {
     const userInfo = await User.findOne({ email: email }).exec();
 
     if (userInfo) {
-      res.status(400).json({
+      return res.status(400).json({
         status: "failure",
         data: {
           email: email,
@@ -132,10 +132,10 @@ const refreshToken = async (req, res, next) => {
       if(err) return res.status(403).json({ message: "Unauthorized Access", err});
 
       const {id, email} = data;
-      const {token} = await Token.findOne({email: email}).exec();
+      const {token} = await Token.findOne({id}).lean().exec();
       if(!token || token!== refresh_token) return res.status(403).json("Token expired, Unauthorized Access");
 
-      const newToken = jwt.sign({email, id}, process.env.ACCESS_TOKEN_KEY);
+      const newToken = jwt.sign({email, id}, process.env.ACCESS_TOKEN_KEY,{ expiresIn: "1h" });
 
       res.status(200).json({
         token: newToken, 

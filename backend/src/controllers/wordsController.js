@@ -4,6 +4,7 @@ const UserData = require('../models/userDataSchema');
 const HttpError = require('../models/http-error');
 const jwt = require("jsonwebtoken")
 
+// TODO: clean ur shit 
 const addWord = async (req, res, next) => {
     // add validations.
     console.log("adding word");
@@ -56,7 +57,7 @@ const getWords = async (req, res, next) => {
                     const status = userData.word_status[word._id.toString()] || null;
                     return Object.assign({}, word, { status });
                 });
-    
+
                 res.status(200).json({
                     status: "success",
                     data: wordList,
@@ -83,7 +84,34 @@ const getWords = async (req, res, next) => {
     }
 };
 
+const updateWordStatus = async (req, res, next) => {
+    try {
+        const { status, id: word_id } = req.body;
+        let access_token = req.headers["authorization"].split(" ")[1] || null;
+        if (access_token) {
+            jwt.verify(access_token, process.env.ACCESS_TOKEN_KEY, async (err, data) => {
+                if (err) return res.status(403).json(err);
+
+                const { word_status } = await UserData.findOne({ id: data.id }).lean().exec();
+                word_status[word_id] = status;
+                await UserData.updateOne({ id: data.id }, { word_status });
+
+                return res.status(200).json({
+                    status: "success",
+                    data: {
+                        id: word_id,
+                        status
+                    }
+                });
+            })
+        } else res.status(401).json("Unauthorized Access");
+    } catch (error) {
+        next(new HttpError(500, error));
+    }
+}
+
 module.exports = {
     addWord,
     getWords,
+    updateWordStatus,
 }; 
