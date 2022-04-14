@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userSchema");
 const Token = require("../models/tokenSchema");
+const UserData = require("../models/userDataSchema");
 
 /**
  * 1. Checks if a user exists with provided name
@@ -65,6 +66,7 @@ const login = async (req, res, next) => {
  * 1. Checks if a user already exists with provided email
  * 2. Creates an access token and refresh token.
  * 3. Save new refresh token into the database.
+ * 4. Create a userdata for the new user
  */
 const register = async (req, res, next) => {
   try {
@@ -79,6 +81,9 @@ const register = async (req, res, next) => {
 
     const newRefreshToken = new Token({ token:refresh_token, id: newUser._id.toString()});
     await newRefreshToken.save();
+
+    const userData = new UserData({ word_status: {} });
+    await userData.save();
 
     res.status(200).json({
       status: "success",
