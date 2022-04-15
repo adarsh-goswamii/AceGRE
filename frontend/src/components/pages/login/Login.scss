@@ -20,13 +20,23 @@
     }
 
     .greetings {
-      @extend .headerBlack;
-      color: $white;
+      width: calc(100vw - 80vw);
       left: 32px;
       top: 25%;
-      position: absolute;
       z-index: 100;
       text-align: left;
+      color: $white;
+
+      .header-greeting {
+        @extend .headerBlack;
+        margin-bottom: 16px;
+      }
+      position: absolute;
+
+      .sub-greeting {
+        @extend .bodyRegular;
+        line-height: 20px;
+      }
     }
 
     .form {
