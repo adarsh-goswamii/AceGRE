@@ -1,0 +1,155 @@
+@import "../../../styles/main.scss";
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0px !important;
+
+  
+  .hero-section {
+    .header-container {
+      position: fixed;
+      top: 0px;
+      left: 0px;
+    }
+    overflow: hidden;
+    display: flex;
+    padding: 64px;
+    padding-bottom: 0px;
+    flex-direction: column;
+    background-image: url(../../../assets/images/backgroundMesh.svg);
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+    height: fit-content;
+    width: 100%;
+    padding-top: 16px;
+
+    .content {
+      padding: 64px 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      height: 100%;
+
+      .overlay {
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+      }
+
+      .tagline {
+        font-size: 2.8vw;
+        font-weight: 500;
+        z-index: 2;
+        color: $primary;
+        width: 35%;
+      }
+
+      .girl {
+        width: 44%;
+        height: auto;
+        position: absolute;
+        bottom: 0px;
+        right: -2%;
+      }
+
+      .boy {
+        bottom: 0px;
+        right: 22%;
+        position: absolute;
+        height: auto;
+        width: 30%; 
+      }
+
+      .line {
+        position: absolute;
+
+        &.one {
+          width: 20%;
+          height: auto;
+          top: 20%;
+          left: 35%;
+
+        }
+
+        &.three {
+          height: auto;
+          width: 12%;
+          top: 14%;
+          right: -5%;
+        }
+
+        &.two {
+          bottom: 0%;
+          left: 9%;
+          height: auto;
+          width: 14%;
+        }
+      }
+
+      .sub-tagline {
+        @extend .bodyRegular;
+        width: 35%;
+        margin: 16px 0px 32px 0px;
+        color: $primary;
+      }
+
+      .outlined-btn {
+        width: fit-content;
+        z-index: 2;
+        padding: 8px 28px;
+      }
+    }
+  }
+
+  .testimonials-slider {
+    background-color: $white;
+    margin: 64px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .testimonials-container {
+      .carousel {
+        display: flex;
+        justify-content: space-around;
+        height: fit-content;
+
+        .slider-wrapper {
+          width: 80%;
+        }
+
+        .control-dots {
+          .dot {
+            background-color: $white;
+            border: 1px solid $black;
+
+            &.selected {
+              background-color: $black;
+            }
+          }
+        }
+      }
+
+      .right-arrow,
+      .left-arrow {
+        height: 24px;
+        cursor: pointer;
+        margin: 0px 32px;
+        align-self: center
+      }
+    }
+    .heading {
+      @extend .labelSemibold;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      align-self: center;
+      margin: 40px 0px 16px 0px;
+    }
+  }
+}

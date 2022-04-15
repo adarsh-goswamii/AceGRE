@@ -12,7 +12,8 @@ const wordSchema = new Schema({
     meanings: [meaningSchema],
     mneumonics: [mneumonicSchema],
     sentences: [sentenceSchema],
-    date_added: { type: Date, required: true }
+    date_added: { type: Date, required: true },
+    word_status: { type: Object }
 });
 
 module.exports = mongoose.model('Word', wordSchema);

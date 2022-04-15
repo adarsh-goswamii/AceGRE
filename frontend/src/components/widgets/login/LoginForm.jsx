@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
 import InputField from "../../shared/inputField/InputField";
 import Button from "../../shared/button/Button";
+import {PropTypes} from "prop-types";
 import { login } from "../../../apis/auth";
 import { useNavigate } from "react-router-dom";
 import Error from "../error/Error";
@@ -121,3 +122,7 @@ const LoginForm = ({
 }
 
 export default LoginForm;
+LoginForm.propTypes = {
+  // necessary fields
+  toggleForm: PropTypes.func.isRequired,
+};
