@@ -1,0 +1,33 @@
+@import "../../../styles/main.scss";
+
+.avatarMenu-container {
+  border-radius: 10px;
+
+  .icon {
+    width: 20px;
+    margin-right: 24px;
+  }
+
+  .menuItem {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    @extend .bodyLight;
+    padding: 6px 32px !important;
+  }
+
+  .username {
+    position: relative;
+  }
+
+  .username::after {
+    position: absolute;
+    content: "";
+    height: 1px;
+    width: 90%;
+    background-color: $grey;
+    bottom: 0px;
+    left: 5%;
+  }
+}

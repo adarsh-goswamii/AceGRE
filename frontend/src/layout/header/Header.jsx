@@ -7,13 +7,18 @@ import Popover from "../../components/shared/popover/Popover";
 import data from "../../data/headerNav";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Header.scss";
+import AvatarMenu from "../../components/widgets/avatarMenu/AvatarMenu";
+import { useSelector } from "react-redux";
 
 const Header = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const [menu, setMenu] = useState([]);
-    const handlePopOverClose = () => setAnchorEl(null);
+    const [popover, setPopover] = useState("");
+    const handlePopOverClose = () => {
+        setAnchorEl(null)
+    };
     const handleMenuClick = (e, menu) => {
         if (menu.pathname) {
             navigate(menu.pathname);
@@ -27,11 +32,17 @@ const Header = (props) => {
                 return data;
             });
             setMenu(temp);
+            setPopover("menu");
         }
     };
 
-    // get this from redux.
-    let loggedIn = false;
+    const handleAvatarClick = (e) => {
+        setPopover("avatar");
+        setAnchorEl(e.currentTarget);
+    }
+
+    let loggedIn = useSelector(state => state.auth.loggedIn);
+
     return (
         <>
             <div className="header-container" ref={props.headerRef}>
@@ -50,9 +61,11 @@ const Header = (props) => {
                     })}
                 </div>
                 {loggedIn ? (
-                    <Avatar />
+                    <div className="avatar-container" onClick={handleAvatarClick}>
+                        {localStorage.getItem("email")}
+                        <Avatar className="avatar"  />
+                    </div>
                 ) : (
-                    // TODO: Add login and signup functionality
                     <div className="call-for-actions">
                         <Button
                             className={"login-btn"}
@@ -78,7 +91,14 @@ const Header = (props) => {
             >
                 <ClickAwayListener onClickAway={handlePopOverClose}>
                     <div className="menu-container">
-                        <Menu menu={menu} className="submenu" />
+                        {
+                            popover === "menu" &&
+                            <Menu menu={menu} className="submenu" />
+                        }
+                        {
+                            popover === "avatar" &&
+                            <AvatarMenu />
+                        }
                     </div>
                 </ClickAwayListener>
             </Popover>
