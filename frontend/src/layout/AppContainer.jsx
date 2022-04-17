@@ -4,13 +4,16 @@ import { routes } from "../routes/routes";
 import Container from "./container/Container";
 import Header from "./header/Header";
 import Error404 from "../components/pages/404/Error404";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_USER_LOGGEDIN } from "../store/actionType";
+import Loader from "../components/widgets/loader/Loader";
 
 const AppContainer = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [headerVisible, setHeaderVisible] = useState(false);
+
+  const loaderVisible = useSelector(state => state.common.loader);
 
   useEffect(() => {
     const email= localStorage.getItem("email");
@@ -33,6 +36,7 @@ const AppContainer = () => {
   return (
     <>
       {headerVisible ? <Header /> : <></>}
+      {loaderVisible ? <Loader /> : <></>}
       {/* <Toaster />
       <RightDrawer />
       <Modal />

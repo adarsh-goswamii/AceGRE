@@ -16,7 +16,6 @@ const initInputField = {
   disabled: false
 };
 
-
 const SignUpForm = ({
   toggleForm
 }) => {
@@ -113,7 +112,7 @@ const SignUpForm = ({
     dispatch(handleRegisterUser(payload));
   }
 
-  const registerDisabled = !username.value || !password.value || username.error || password.error || confirmPassword.error;
+  const registerDisabled = !username.value || !password.value || username.error || password.error || confirmPassword.error || !confirmPassword.value;
 
   return (
     <>

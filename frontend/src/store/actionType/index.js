@@ -1,5 +1,6 @@
 // common 
 export const SHOW_RIGHT_DRAWER = "SHOW_RIGHT_DRAWER";
+export const CHANGE_GLOBAL_LOADER_VISIBILITY= "CHANGE_GLOBAL_LOADER_VISIBILITY";
 
 // explore
 
