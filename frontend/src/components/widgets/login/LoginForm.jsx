@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { FormControlLabel, Checkbox } from "@material-ui/core";
 import InputField from "../../shared/inputField/InputField";
 import Button from "../../shared/button/Button";
-import {PropTypes} from "prop-types";
-import { login } from "../../../apis/auth";
+import { PropTypes } from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Error from "../error/Error";
 import { emailValidate } from "../../../utility/validations";
-import { SOMETHING_WENT_WRONG } from "../../../constants/errorMessage.consts";
+import { handleLogin } from "../../../store/action/auth";
+import { useDispatch, useSelector } from "react-redux";
 
-const initInputField = {
+export const initInputField = {
   value: "",
   helperText: "",
   error: false,
@@ -20,31 +20,27 @@ const LoginForm = ({
   toggleForm,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [username, setUsername] = useState(new Object(initInputField));
   const [password, setPassword] = useState(new Object(initInputField));
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState({ show: false, message: "" });
 
-  async function handleLogin() {
-    try {
-      const response = await login({
-        email: username.value,
-        password: password.value,
-        rememberMe: rememberMe,
-      });
+  const loggedIn = useSelector(state => state.auth.loggedIn);
+  const failure = useSelector(state => state.auth.loginUserFailure);
 
-      localStorage.setItem("token", response?.data?.token);
-      localStorage.setItem("email", response?.data?.email);
-      localStorage.setItem("userId", response?.data?.id);
-      localStorage.setItem("role", response?.data?.role);
-      navigate("/");
-    } catch (error) {
-      let errorMessage = error?.response?.data?.data?.message;
-      errorMessage= errorMessage ? errorMessage : SOMETHING_WENT_WRONG;
-      setError({ show: true, message: errorMessage });
-    }
-    setPassword(initInputField);
-  };
+  useEffect(() => {
+    if (failure) {
+      setError({
+        show: true,
+        message: failure?.message
+      });
+    } else setError({ show: false, message: "" });
+  }, [failure])
+
+  useEffect(() => {
+    if (loggedIn) navigate("/");
+  }, [loggedIn])
 
   function handleUsernameOnBlur() {
     const temp = emailValidate(username.value);
@@ -57,16 +53,25 @@ const LoginForm = ({
   };
 
   function handleUsernameChange(value) {
-    const helperText = username.error ? emailValidate(value): "";
+    const helperText = username.error ? emailValidate(value) : "";
     setUsername(prev => Object.assign({}, prev, {
-      helperText, 
-      value: value, 
+      helperText,
+      value: value,
       error: Boolean(helperText)
     }))
   };
 
   function handlePasswordOnChange(value) {
     setPassword(prev => Object.assign({}, prev, { "value": value }));
+  }
+
+  function loginClickHandler() {
+    const payload = {
+      email: username.value,
+      password: password.value,
+      rememberMe: rememberMe
+    };
+    dispatch(handleLogin(payload))
   }
 
   return (
@@ -112,7 +117,7 @@ const LoginForm = ({
         variant="contained"
         className="btn"
         disabled={!username.value || username.error || !password.value}
-        onClick={handleLogin}>
+        onClick={loginClickHandler}>
         Login
       </Button>
 

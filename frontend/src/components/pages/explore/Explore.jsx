@@ -76,7 +76,7 @@ const Explore = () => {
             },
             transformOrigin: {
               vertical: "top",
-              horizontal: "left"
+              horizontal: "right"
             },
             getContentAnchorEl: null
           }} >

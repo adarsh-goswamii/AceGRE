@@ -16,6 +16,10 @@ body {
     font-size: 14px;
     font-weight: 400;
     position: relative;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding: 0px !important;
+
 }
 
 body::-webkit-scrollbar {
