@@ -15,7 +15,7 @@ const WordCard = ({
   status, // can have three values ["review later", "completed", "none"]
   className,
   title,
-  meaning,
+  meanings,
   onClick
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -31,6 +31,11 @@ const WordCard = ({
     setAnchorEl(null);
   }
 
+  let meaning = "";
+  meanings.forEach(value => {
+    meaning += `${value.meaning}, `;
+  });
+  meaning = meaning.substring(0, meaning.length - 2);
   return (
     <>
       <div
@@ -45,7 +50,9 @@ const WordCard = ({
             }} className="menu-icon" />
           </div>
           <p className="meaning">
-            {meaning}
+            {
+              meaning
+            }
           </p>
         </div>
       </div>
@@ -74,12 +81,12 @@ const WordCard = ({
 }
 
 export default WordCard;
-WordCard.propTypes={
-//necesarry fields
+WordCard.propTypes = {
+  //necesarry fields
   status: PropTypes.oneOf(["review later", "completed", "none"]).isRequired,
-  title:PropTypes.string.isRequired,
-  meaning:PropTypes.string.isRequired,
-  onClick:PropTypes.func.isRequired,
-//optional field
-  className:PropTypes.string
+  title: PropTypes.string.isRequired,
+  meaning: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  //optional field
+  className: PropTypes.string
 };
