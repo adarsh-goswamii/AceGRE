@@ -5,3 +5,9 @@ export const showRightDrawer = (payload) => ({
   payload: payload,
 });
 
+export const showLoader = (payload) => {
+  return {
+    type: actions.CHANGE_GLOBAL_LOADER_VISIBILITY, 
+    payload: payload
+  }
+}
