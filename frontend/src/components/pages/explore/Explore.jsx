@@ -62,6 +62,17 @@ const Explore = () => {
     }));
   }
 
+  function handleCardPerPageChange(value) {
+    dispatch(getWordList({
+      pagination: {
+        page_no: 1,
+        size: value
+      }
+    }));
+  }
+
+  console.log(pagination);
+
   return (
     <>
       <H3 className="heading">Search Vocabulary Words</H3>
@@ -109,7 +120,7 @@ const Explore = () => {
             },
             transformOrigin: {
               vertical: "top",
-              horizontal: "right"
+              horizontal: "left"
             },
             getContentAnchorEl: null
           }} >
@@ -133,9 +144,11 @@ const Explore = () => {
       </div>
       <div className="pagination">
         <Pagination
+          page={pagination.page_no}
           limit={pagination.size}
           paginationOptions={[20, 40, 60, 80, 100]}
           handlePageNumberChange={handlePageNumberChange}
+          handleCardPerPageChange={handleCardPerPageChange}
           totalPage={pagination.total_pages} />
       </div>
       <RightPane
