@@ -6,6 +6,7 @@ import {PropTypes} from "prop-types";
 
 
 const CustomPagination = ({
+  page,
   totalPage,
   paginationOptions,
   limit,
@@ -42,6 +43,7 @@ const CustomPagination = ({
       </div>
       <Pagination
         count={totalPage}
+        page={page}
         shape="rounded"
         onChange={handlePageNumberChange} />
       <div></div>
