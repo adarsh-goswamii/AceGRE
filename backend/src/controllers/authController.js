@@ -16,8 +16,8 @@ const UserData = require("../models/userDataSchema");
 const login = async (req, res, next) => {
   try {
     const { email, password, rememberMe } = req.body;
-    const userInfo = await User.findOne({email: email}).exec();
-    if(userInfo) {
+    const userInfo = await User.findOne({ email: email }).exec();
+    if (userInfo) {
       const validPass = await bcrypt.compare(password, userInfo.password);
       if(validPass) {
 
@@ -29,7 +29,7 @@ const login = async (req, res, next) => {
         newToken.save();
 
         res.status(200).json({
-          status: "success", 
+          status: "success",
           data: {
             email: email, 
             token: access_token, 
@@ -40,7 +40,7 @@ const login = async (req, res, next) => {
       } else {
         // user exists but password is wrong
         res.status(409).json({
-          status: "failure", 
+          status: "failure",
           data: {
             email: email, 
             message: "Email or password is wrong"
@@ -50,7 +50,7 @@ const login = async (req, res, next) => {
     } else {
       // no user with given email exists
       res.status(404).json({
-        status: "failure", 
+        status: "failure",
         data: {
           email: email, 
           message: "No user with given email exists"
@@ -66,11 +66,23 @@ const login = async (req, res, next) => {
  * 1. Checks if a user already exists with provided email
  * 2. Creates an access token and refresh token.
  * 3. Save new refresh token into the database.
- * 4. Create a userdata for the new user
+ * 4. Creates userdata for new user
  */
 const register = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    const userInfo = await User.findOne({ email: email }).exec();
+
+    if (userInfo) {
+      return res.status(400).json({
+        status: "failure",
+        data: {
+          email: email,
+          message: "A user with given email already exists"
+        }
+      });
+    }
+
     const hashedPass = await bcrypt.hash(password, 16);
     
     let newUser = new User({ email, password: hashedPass, admin: false });
@@ -82,7 +94,7 @@ const register = async (req, res, next) => {
     const newRefreshToken = new Token({ token:refresh_token, id: newUser._id.toString()});
     await newRefreshToken.save();
 
-    const userData = new UserData({ word_status: {} });
+    const userData = new UserData({id: newUser._id.toString(), word_status: {}});
     await userData.save();
 
     res.status(200).json({
@@ -120,10 +132,10 @@ const refreshToken = async (req, res, next) => {
       if(err) return res.status(403).json({ message: "Unauthorized Access", err});
 
       const {id, email} = data;
-      const {token} = await Token.findOne({email: email}).exec();
+      const {token} = await Token.findOne({id}).lean().exec();
       if(!token || token!== refresh_token) return res.status(403).json("Token expired, Unauthorized Access");
 
-      const newToken = jwt.sign({email, id}, process.env.ACCESS_TOKEN_KEY);
+      const newToken = jwt.sign({email, id}, process.env.ACCESS_TOKEN_KEY,{ expiresIn: "1h" });
 
       res.status(200).json({
         token: newToken, 

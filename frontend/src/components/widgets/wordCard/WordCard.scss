@@ -1,7 +1,7 @@
 @import "../../../styles/main.scss";
 
 .word-container {
-  height: fit-content;
+  height: 100%;
   border-radius: 4px;
   background-color: $white;
   display: flex;
@@ -11,6 +11,7 @@
   cursor: pointer;
 
   .word-info {
+    width: 100%;
     margin-left: 6px;
     background-color: $white;
     border-radius: 4px;
@@ -32,7 +33,7 @@
 
     .meaning {
       display: -webkit-box;
-      -webkit-line-clamp: 4;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
       margin-top: 8px;

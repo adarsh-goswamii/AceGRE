@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { words, wordMenu } from "../../../data/words";
+import { useEffect, useState } from "react";
+import { wordMenu } from "../../../data/words";
 import WordCard from "../../widgets/wordCard/WordCard";
 import "./Explore.scss";
 import RightPane from "../../../layout/rightDrawer/RightDrawer";
@@ -11,11 +11,35 @@ import { H3 } from "../../shared/typography/Typogrpahy";
 import { Autocomplete } from "@material-ui/lab";
 import { TextField, InputAdornment, Select, MenuItem } from "@material-ui/core";
 import { ReactComponent as SearchIcon } from "../../../assets/images/search.svg";
+import { getWordList, updatePagination } from "../../../store/action/explore";
+import { plainToClass } from 'class-transformer';
+import { Word } from "../../../model/Word";
 
 const Explore = () => {
   const [filterStatus, setFilterStatus] = useState(null);
+  const [words, setWords] = useState([]);
   const rightDrawer = useSelector(state => state.common.rightDrawer);
   const dispatch = useDispatch();
+
+  const pagination = useSelector(state => state.explore.pagination);
+  const wordList = useSelector(state => state.explore.words);
+
+  useEffect(() => {
+    const payload = {
+      pagination: {
+        size: pagination.size,
+        page_no: pagination.page_no
+      }
+    }
+    dispatch(getWordList(payload));
+  }, []);
+
+  useEffect(() => {
+    if (wordList) {
+      const temp = wordList.map(word => plainToClass(Word, word));
+      setWords(temp);
+    }
+  }, [wordList]);
 
   function handleRightPaneOpen(event) {
     dispatch(action.showRightDrawer({ open: true }));
@@ -28,6 +52,26 @@ const Explore = () => {
   function handleFilterStatusChange(event) {
     setFilterStatus(event.target.value);
   }
+
+  function handlePageNumberChange(event, currPage) {
+    dispatch(getWordList({
+      pagination: {
+        page_no: currPage,
+        size: pagination.size
+      }
+    }));
+  }
+
+  function handleCardPerPageChange(value) {
+    dispatch(getWordList({
+      pagination: {
+        page_no: 1,
+        size: value
+      }
+    }));
+  }
+
+  console.log(pagination);
 
   return (
     <>
@@ -100,9 +144,12 @@ const Explore = () => {
       </div>
       <div className="pagination">
         <Pagination
-          limit={20}
+          page={pagination.page_no}
+          limit={pagination.size}
           paginationOptions={[20, 40, 60, 80, 100]}
-          totalPage={10} />
+          handlePageNumberChange={handlePageNumberChange}
+          handleCardPerPageChange={handleCardPerPageChange}
+          totalPage={pagination.total_pages} />
       </div>
       <RightPane
         open={rightDrawer?.open}

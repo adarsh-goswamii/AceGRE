@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userDataSchema = new Schema({
-  word_status: { type: Object },
-});
+  id: { type: String, required: true },
+  word_status: { type: Object, required: true },
+},
+  { minimize: false });
 
-module.exports = mongoose.exports('UserData', userDataSchema);
+module.exports = mongoose.model('UserData', userDataSchema);

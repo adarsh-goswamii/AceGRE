@@ -4,6 +4,8 @@ const wordsController = require('../controllers/wordsController');
 
 router.post('/', wordsController.addWord);
 
-router.get('/', (req, res, next)=> res.send({"data": "nothing yet"}));
+router.get('/', wordsController.getWords);
+
+router.post('/status', wordsController.updateWordStatus);
 
 module.exports = router;
