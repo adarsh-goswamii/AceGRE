@@ -40,8 +40,7 @@ const getWords = async (req, res, next) => {
         let access_token = req.headers["authorization"];
         if (access_token) access_token = req.headers["authorization"].split(" ")[1];
 
-        console.log(access_token);
-        let { filter, pagination: { size, page_no } } = req.body;
+        let filter= req.query.filter, size= Number(req.query.size), page_no = Number(req.query.page);
         page_no--;
         const wordsCount = await Word.count();
         let wordList = await Word.find({}, null, { skip: size * page_no, limit: size }).lean().exec();

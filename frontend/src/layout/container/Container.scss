@@ -3,7 +3,7 @@
 .page-container {
     overflow-x: hidden;
     overflow-y: auto;
-    padding: 20px 64px;
+    padding: 20px $gutters;
     display: flex;
     flex-direction: column;
     position: relative;

@@ -11,13 +11,13 @@ import "./WordCard.scss";
 import { MenuItem } from "@material-ui/core";
 import { PropTypes } from "prop-types";
 
-const WordCard = ({
-  status, // can have three values ["review later", "completed", "none"]
-  className,
-  title,
-  meaning,
-  onClick
-}) => {
+const WordCard = ({word, onClick}) => {
+  const {
+    status,
+    className,
+    title,
+    meanings,
+  } = word;
   const [anchorEl, setAnchorEl] = useState(null);
   const [wordStatus, setWordStatus] = useState(null);
 
@@ -31,10 +31,15 @@ const WordCard = ({
     setAnchorEl(null);
   }
 
+  let meaning = "";
+  meanings.forEach(value => {
+    meaning += `${value.meaning}, `;
+  });
+  meaning = meaning.substring(0, meaning.length - 2);
   return (
     <>
       <div
-        onClick={onClick}
+        onClick={() => onClick(word)}
         className={`word-container ${wordStatus} ${className}`}>
         <div className="word-info">
           <div className="word-title">
@@ -45,7 +50,9 @@ const WordCard = ({
             }} className="menu-icon" />
           </div>
           <p className="meaning">
-            {meaning}
+            {
+              meaning
+            }
           </p>
         </div>
       </div>
@@ -74,12 +81,12 @@ const WordCard = ({
 }
 
 export default WordCard;
-WordCard.propTypes={
-//necesarry fields
+WordCard.propTypes = {
+  //necesarry fields
   status: PropTypes.oneOf(["review later", "completed", "none"]).isRequired,
-  title:PropTypes.string.isRequired,
-  meaning:PropTypes.string.isRequired,
-  onClick:PropTypes.func.isRequired,
-//optional field
-  className:PropTypes.string
+  title: PropTypes.string.isRequired,
+  meaning: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  //optional field
+  className: PropTypes.string
 };
