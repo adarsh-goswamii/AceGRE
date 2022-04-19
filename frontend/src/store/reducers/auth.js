@@ -8,7 +8,6 @@ const INIT_INITIAL_STATE = {
 };
 
 const reducerFn = (state= INIT_INITIAL_STATE, action) => {
-  console.log(action);
   switch(action.type) {
     case actionType.LOGIN_USER_FAILURE: 
       return Object.assign({}, INIT_INITIAL_STATE, { 

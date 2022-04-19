@@ -7,25 +7,25 @@ import { Heading, H3, Body } from "../../shared/typography/Typogrpahy";
 import { AccordionSummary } from "@material-ui/core";
 import Accordion from "../../shared/accordion/Accordion";
 import Button from "../../shared/button/Button";
-import {PropTypes} from "prop-types";
+import { PropTypes } from "prop-types";
+import { useDispatch } from "react-redux";
+import { showRightDrawer } from "../../../store/action/common";
 
 const WordDetails = ({
-  id, 
+  word,
   className
 }) => {
+  const dispatch = useDispatch();
 
   return (
     <div className="word-details-pane">
       <div className="word-details-container">
-        <div className="header">
-          <Heading>Word Details</Heading>
-          <CrossIcon className="icon" />
-        </div>
+        <CrossIcon className="cross-icon" onClick={() => dispatch(showRightDrawer({ open: false }))}/>
 
         <div className="hero-section">
           <div className="top-row">
-            <H3>{wordDetails.word}</H3>
-            <Volume className="icon" onClick={() => {}}/>
+            <H3>{word?.title}</H3>
+            <Volume className="icon" onClick={() => { }} />
           </div>
           <Accordion
             className="accordion"
@@ -40,7 +40,7 @@ const WordDetails = ({
             Content={
               <ul>
                 {
-                  wordDetails?.meanings?.map(({ id, meaning }) => {
+                  word?.meanings?.map(({ id, meaning }) => {
                     return (
                       <li key={id} className="meaning-li">
                         <Body>{meaning}</Body>
@@ -51,7 +51,7 @@ const WordDetails = ({
               </ul>
             }
           />
-          <Accordion
+          {word.mneumonics && word.mneumonics.length > 0 && <Accordion
             className="accordion"
             defaultExpanded={true}
             Heading={
@@ -64,7 +64,7 @@ const WordDetails = ({
             Content={
               <ul>
                 {
-                  wordDetails?.mneumonics?.map(({ id, mneumonic }) => {
+                  word?.mneumonics?.map(({ id, mneumonic }) => {
                     return (
                       <li key={id} className="meaning-li">
                         <Body>{mneumonic}</Body>
@@ -74,7 +74,7 @@ const WordDetails = ({
                 }
               </ul>
             }
-          />
+          />}
           <Accordion
             className="accordion"
             defaultExpanded={true}
@@ -88,7 +88,7 @@ const WordDetails = ({
             Content={
               <ul>
                 {
-                  wordDetails?.sentences?.map(({ id, sentence }) => {
+                  word?.sentences?.map(({ id, sentence }) => {
                     return (
                       <li key={id} className="meaning-li">
                         <Body>{sentence}</Body>
@@ -99,9 +99,9 @@ const WordDetails = ({
               </ul>
             }
           />
-          {wordDetails?.funFact && <div className="fun-fact">
+          {word?.funFact && <div className="fun-fact">
             <Heading>Fun Fact</Heading>
-            <Body className="fun-fact-content">{wordDetails.funFact}</Body>
+            <Body className="fun-fact-content">{word.funFact}</Body>
           </div>}
         </div>
       </div>

@@ -11,13 +11,13 @@ import "./WordCard.scss";
 import { MenuItem } from "@material-ui/core";
 import { PropTypes } from "prop-types";
 
-const WordCard = ({
-  status, // can have three values ["review later", "completed", "none"]
-  className,
-  title,
-  meanings,
-  onClick
-}) => {
+const WordCard = ({word, onClick}) => {
+  const {
+    status,
+    className,
+    title,
+    meanings,
+  } = word;
   const [anchorEl, setAnchorEl] = useState(null);
   const [wordStatus, setWordStatus] = useState(null);
 
@@ -39,7 +39,7 @@ const WordCard = ({
   return (
     <>
       <div
-        onClick={onClick}
+        onClick={() => onClick(word)}
         className={`word-container ${wordStatus} ${className}`}>
         <div className="word-info">
           <div className="word-title">

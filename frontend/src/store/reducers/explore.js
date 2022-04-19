@@ -11,7 +11,6 @@ const INIT_INITIAL_STATE = {
 };
 
 const reducerFn = (state = INIT_INITIAL_STATE, action) => {
-  console.log(action);
   switch (action.type) {
     case actionType.GET_WORD_LIST_SUCCESS:
       return Object.assign({}, state, {
