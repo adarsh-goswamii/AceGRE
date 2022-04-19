@@ -9,14 +9,14 @@ export const handleLogin = (payload) => {
 
 export const handleRegisterUser = (payload) => {
   return {
-    type: actionType.REGISTER_USER, 
+    type: actionType.REGISTER_USER,
     payload: payload
   };
 }
 
 export const handleLogout = (payload) => {
   return {
-    type: actionType.LOGOUT_USER, 
+    type: actionType.LOGOUT_USER,
     payload: payload,
   }
 };

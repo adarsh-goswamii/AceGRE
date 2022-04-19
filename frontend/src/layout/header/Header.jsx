@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./Header.scss";
 import AvatarMenu from "../../components/widgets/avatarMenu/AvatarMenu";
 import { useSelector } from "react-redux";
+import { Menu as MuiMenu } from "@material-ui/core";
 
 const Header = (props) => {
     const location = useLocation();
@@ -63,7 +64,7 @@ const Header = (props) => {
                 {loggedIn ? (
                     <div className="avatar-container" onClick={handleAvatarClick}>
                         {localStorage.getItem("email")}
-                        <Avatar className="avatar"  />
+                        <Avatar className="avatar" />
                     </div>
                 ) : (
                     <div className="call-for-actions">
@@ -84,10 +85,17 @@ const Header = (props) => {
                     </div>
                 )}
             </div>
-            <Popover
-                open={Boolean(anchorEl)}
+            <MuiMenu
                 anchorEl={anchorEl}
-                setAnchorEl={setAnchorEl}
+                open={Boolean(anchorEl)}
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                }}
+                transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                }}
             >
                 <ClickAwayListener onClickAway={handlePopOverClose}>
                     <div className="menu-container">
@@ -97,11 +105,11 @@ const Header = (props) => {
                         }
                         {
                             popover === "avatar" &&
-                            <AvatarMenu />
+                            <AvatarMenu handlePopOverClose={handlePopOverClose} />
                         }
                     </div>
                 </ClickAwayListener>
-            </Popover>
+            </MuiMenu>
         </>
     );
 };
