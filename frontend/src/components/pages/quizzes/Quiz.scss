@@ -1,0 +1,123 @@
+@import "../../../styles/main.scss";
+
+.quiz-screen {
+  padding: 0px !important;
+
+  .container {
+    display: flex;
+    .left {
+      background: url("../../../assets/images/MeshQuiz.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      width: 40%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .timer-container {
+        background-color: $white;
+        width: fit-content;
+        border-radius: 50%;
+        padding: 8px;
+        margin-top: 32px;
+        @extend .bodyRegular;
+
+        .timeLeft {
+          font-weight: 500;
+          font-size: 24px;
+          color: $primary;
+        }
+      }
+    }
+
+    .right {
+      width: 60%;
+      min-height: 100vh;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: flex-start;
+
+      .options-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+      }
+
+      .btn-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+
+        .button {
+          padding: 4px 36px;
+          width: fit-content;
+
+          &.green {
+            background-color: $green;
+            color: $white;
+          }
+
+          &.red {
+            border-color: $red;
+            color: $red;
+          }
+        }
+      }
+
+      .heading {
+        @extend .bodyRegular;
+        color: $primary;
+      }
+
+      .question {
+        @extend .headerSemiBold;
+        font-size: 24px;
+        color: $primary;
+      }
+    }
+  }
+}
+
+.stepper-container {
+  width: 60%;
+  height: fit-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $white;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  padding: 32px;
+
+  .MuiStepper-root {
+    padding-inline: 0px;
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+
+    .MuiButtonBase-root {
+      width: fit-content;
+      padding: 4px 32px;
+    }
+
+  }
+
+  .content {
+    margin-top: 16px;
+
+    .points {
+      margin: 0px 0px 8px 16px;
+    }
+  }
+}
