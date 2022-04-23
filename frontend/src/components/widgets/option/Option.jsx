@@ -11,7 +11,7 @@ const Option = ({ text }) => {
     <>
       <div className="option-container" onClick={handleOptionClick}>
         <div className="info">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus laboriosam earum blanditiis modi repellat ipsam distinctio, fuga sed aspernatur deserunt voluptatum quasi architecto nesciunt harum amet quos iste beatae natus!
+          {text}
         </div>
       </div>
     </>

@@ -4,10 +4,12 @@ import Button from "../../shared/button/Button";
 import "./Quiz.scss";
 import Option from "../../widgets/option/Option";
 import Timer from "../../widgets/timer/Timer";
+import { quiz } from "../../../data/words";
 
 const Quiz = ({ }) => {
   const [openModal, setOpenModal] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
+  const [currQues, setCurrQues] = useState(0);
   const steps = ["Select Category", "General Instructions", "All set to go"];
   const Instructions = [
     "The quizzes consists of questions carefully designed to help you self-assess your comprehension of the information presented on the topics covered in the module.",
@@ -27,6 +29,10 @@ const Quiz = ({ }) => {
     }
   }, [activeStep]);
 
+  function nextQues() {
+    setCurrQues(prev => prev+1);
+  }
+
   return (
     <>
       { activeStep === steps.length ? <div className="container">
@@ -36,19 +42,16 @@ const Quiz = ({ }) => {
         <div className="right">
           <div className="ques-container">
             <p className="heading">Choose correct meaning for the given word <br/> Note: There can be more than one correct answer </p>
-            <p className="question">{`Word : ${ques}`}</p>
+            <p className="question">{`Word : ${quiz[currQues].word}`}</p>
           </div>
           <div className="options-container">
-            <Option></Option>
-            <Option></Option>
-            <Option></Option>
-            <Option></Option>
+            {quiz?.[currQues]?.meanings.map(data => <Option text={data} />)}
           </div>
           <div className="btn-container">
             <Button variant="outlined" className="red">
               End Quiz
             </Button>
-            <Button variant="contained" className="green">
+            <Button variant="contained" className="green" onClick={nextQues}>
               Submit
             </Button>
           </div>
