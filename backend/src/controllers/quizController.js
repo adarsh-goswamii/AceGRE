@@ -6,27 +6,77 @@ const jwt = require("jsonwebtoken");
 
 
 const postSolution = async (req, res, next) => {
+  try {
+    let access_token = req.headers['authorization'];
+    if (access_token) access_token = access_token.split(" ")[1];
 
+    jwt.verify(access_token, process.env.ACCESS_TOKEN_KEY, async (err, data) => {
+      if (err) return res.status(403).json("Unauthorized Access");
+
+      try {
+        let id = req.query.id;
+        if (!id) return res.status(401).json({
+          status: "failure",
+          message: "Quiz id is missing"
+        });
+        const {ques, selected_ans} = req.body;
+        let quiz = await Quiz.findOne({_id: id}).lean().exec();
+        if(!quiz) {
+          return res.status(401).json({
+            status: "failure", 
+            message: "No quiz with given id exists"
+          });
+        }
+
+        quiz.questions[Number(ques-1)].submitted_ans = selected_ans;
+
+        let updatedValue = await Quiz.updateOne({ _id: id }, {questions: quiz.questions}).exec();
+        console.log(updatedValue);
+        return res.status(200).json({
+          status: "success", 
+          message: "Answer recorded"
+        });
+      } catch (error) {
+        console.log(error);
+        return next(new HttpError("Something went wrong", 500));
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    return next(new HttpError("Something went wrong", 500));
+  }
 };
 
 const fetchQuestion = async (req, res, next) => {
   try {
     let access_token = req.headers['authorization'];
-    if(access_token) access_token = access_token.split(" ")[1];
+    if (access_token) access_token = access_token.split(" ")[1];
 
     jwt.verify(access_token, process.env.ACCESS_TOKEN_KEY, async (err, data) => {
-      if(err) return res.status(403).json("Unauthorized Access");
+      if (err) return res.status(403).json("Unauthorized Access");
 
-      const { id, email } = data;
-      let quizQues = await Quiz.findOne({id}).lean().exec();
-      quizQues = quizQues.map(ques => {
-        delete ques["correct_ans"];
-        return ques;
-      })
+      let id = req.query.id;
+      if (!id) return res.status(401).json({
+        status: "failure",
+        message: "Quiz id is missing"
+      });
+
+      let quizQues = await Quiz.findOne({ _id: id }).lean().exec();
+      if (!quizQues) {
+        return res.status(404).json({
+          status: "failure",
+          message: "No quiz generated with particular id"
+        });
+      } else {
+        quizQues = quizQues.questions.map(ques => ({
+          options: ques.options,
+          word: ques.word,
+        }));
+      }
 
       return res.status(200).json({
-        status: "success", 
-        data: ques
+        status: "success",
+        data: quizQues
       });
     });
   } catch (error) {
@@ -36,6 +86,7 @@ const fetchQuestion = async (req, res, next) => {
 
 
 const fetchResults = async (req, res, next) => {
+  // TODO
 };
 
 const generateQuiz = async (req, res, next) => {
@@ -52,12 +103,22 @@ const generateQuiz = async (req, res, next) => {
       const words = await Word.find({}).lean().exec();
 
       const quizQues = pickQuestionsRandomly(words);
-      let generatedQuiz = new Quiz({questions: quizQues, id});
+      let generatedQuiz = new Quiz({
+        user_id: id,
+        questions: quizQues,
+        status: "in_progress",
+        date: new Date(),
+        results: {}
+      });
       generatedQuiz = await generatedQuiz.save();
+
+      // ! delete this console
+      console.log(JSON.stringify(generatedQuiz));
 
       return res.status(200).json({
         status: "success",
-        message: "quiz generated", 
+        quiz_id: generatedQuiz._id,
+        message: "quiz generated",
       });
     });
 
@@ -115,10 +176,10 @@ function pickQuestionsRandomly(wordList) {
   let meaningList = Object.keys(meanings).map(id => meanings[id]);
   Object.keys(selectedWord).map(id => {
     let options = selectedWord[id].options;
-    while(options.length != 4) {
-      let index= random(meaningList.length);
+    while (options.length != 4) {
+      let index = random(meaningList.length);
       options.push({
-        id: meaningList[index]._id, 
+        id: meaningList[index]._id,
         meaning: meaningList[index].meaning
       });
     }

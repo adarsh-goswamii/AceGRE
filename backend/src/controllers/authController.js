@@ -22,7 +22,7 @@ const login = async (req, res, next) => {
       if (validPass) {
 
         const access_token = jwt.sign({ email, id: userInfo._id.toString() }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
-        const refresh_token = jwt.sign({ email, id: userInfo._id.toString() }, process.env.ACCESS_TOKEN_KEY, { expiresIn: `${rememberMe ? "30d" : '1d'}` });
+        const refresh_token = jwt.sign({ email, id: userInfo._id.toString() }, process.env.REFRESH_TOKEN_KEY, { expiresIn: `${rememberMe ? "30d" : '1d'}` });
 
         const newToken = new Token({ id: userInfo._id.toString(), token: refresh_token });
         await Token.deleteOne({ email }).exec();
