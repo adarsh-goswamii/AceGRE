@@ -2,7 +2,6 @@ import * as actionType from "../actionType/index";
 import { put, call, takeLatest, all } from "redux-saga/effects";
 import * as api from "../../apis/auth";
 import Cookies from "js-cookie";
-import {showLoader} from "../action/common";
 
 function* handleUserRegister(action) {
   let payload= action.payload;

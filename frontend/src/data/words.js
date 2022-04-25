@@ -113,3 +113,26 @@ export const wordDetails= {
   status: 1,
 };
 
+
+export const quiz = [
+  {
+    id: 1, 
+    word: "Audacious", 
+    meanings: [
+      "A: aggressive boldness or unmitigated effrontery", 
+      "B: the quality of being deserving (e.g., deserving assistance)",
+      "C: absence of the sense of pain without loss of consciousness", 
+      "D: understatement for rhetorical effect (especially when expressing an affirmative by negating its contrary)"
+    ]
+  },
+  {
+    id: 2, 
+    word: "Peremptory", 
+    meanings: [
+      "A: ocially or conventionally correct; refined or virtuous from a decent family", 
+      "B: the quality of being deserving (e.g., deserving assistance)",
+      "C: absence of the sense of pain without loss of consciousness", 
+      "D: conforming to conventions of sexual behavior"
+    ]
+  },
+]
