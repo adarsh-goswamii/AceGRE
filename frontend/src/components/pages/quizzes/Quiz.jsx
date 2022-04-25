@@ -6,11 +6,13 @@ import Option from "../../widgets/option/Option";
 import Timer from "../../widgets/timer/Timer";
 import { quiz } from "../../../data/words";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchQuestions, generateQuiz, patchSolution } from "../../../store/action/quiz";
+import { endQuiz, fetchQuestions, generateQuiz, patchSolution } from "../../../store/action/quiz";
 import { STEPS as steps, INSTRUCTIONS as Instructions } from "../../../constants/generic.consts";
+import { useNavigate } from "react-router-dom";
 
 const Quiz = ({ }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
   const [currQues, setCurrQues] = useState(0);
@@ -20,6 +22,7 @@ const Quiz = ({ }) => {
   const quizId = useSelector(state => state.quiz.quizGeneratedId);
   const quizQuestions = useSelector(state => state.quiz.quizQuestions);
   const solnSubmitted = useSelector(state => state.quiz.patchQuizSolutionSuccess);
+  const quizEnd = useSelector(state => state.quiz.endQuizSuccess);
 
   useEffect(() => {
     if (activeStep === steps.length) {
@@ -41,10 +44,17 @@ const Quiz = ({ }) => {
   }, [quizQuestions]);
 
   useEffect(() => {
-    if(Object.keys(solnSubmitted)) {
+    if (Object.keys(solnSubmitted).length) {
+      console.log("solnSubmitted", solnSubmitted);
       nextQues();
     }
   }, [solnSubmitted]);
+
+  useEffect(() => {
+    if ((currQues !== 0 && currQues === questions.length) || quizEnd) {
+      navigate(`results?id=${quizId}`);
+    }
+  }, [currQues, quizEnd]);
 
   function nextQues() {
     setCurrQues(prev => prev + 1);
@@ -62,10 +72,14 @@ const Quiz = ({ }) => {
       selected_ans: selectedAns
     };
 
-    const test = questions?.[currQues]?.options.filter(({id, meaning}) => selectedAns.includes(id));
+    const test = questions?.[currQues]?.options.filter(({ id, meaning }) => selectedAns.includes(id));
     console.log(test);
     dispatch(patchSolution(payload));
   };
+
+  function handleEndQuiz() {
+    dispatch(endQuiz(quizId));
+  }
 
   return (
     <>
@@ -86,7 +100,7 @@ const Quiz = ({ }) => {
               id={data.id} />)}
           </div>
           <div className="btn-container">
-            <Button variant="outlined" className="red">
+            <Button variant="outlined" className="red" onClick={handleEndQuiz}>
               End Quiz
             </Button>
             <Button variant="contained" className="green" onClick={submitSolution}>

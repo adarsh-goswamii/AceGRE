@@ -29,3 +29,20 @@ export const patchSolution = async (payload) => {
   }
 };
 
+export const fetchResults = async (payload) => {
+  try {
+    const results = await api.get(`${apiConst.GET_QUIZ_RESULTS}?id=${payload}`);
+    return results.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const endQuiz = async (payload) => {
+  try {
+    const results = await api.postData(`${apiConst.GET_PATCH_QUIZ_QUESTIONS}?id=${payload}`, {});
+    return results.data;
+  } catch (error) {
+    throw error;
+  }
+};

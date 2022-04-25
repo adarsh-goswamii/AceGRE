@@ -86,6 +86,62 @@ function* handlePatchSolution(action) {
   }
 }
 
+function* handleFetchResults(action) {
+  try {
+    const { payload } = action;
+    yield put({
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: true,
+    });
+    const results = yield call(api.fetchResults, payload);
+    yield put({
+      type: actionType.GET_QUIZ_RESULTS_SUCCESS,
+      payload: results?.data
+    });
+    yield put({
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: false,
+    });
+  } catch (error) {
+    yield put({
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: false
+    });
+    yield put({
+      type: actionType.GET_QUIZ_RESULTS_FAILURE,
+      payload: error.response.data
+    });
+  }
+}
+
+function* handleQuizEnd(action) {
+  try {
+    const { payload } = action;
+    yield put({
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: true,
+    });
+    const results = yield call(api.endQuiz, payload);
+    yield put({
+      type: actionType.END_QUIZ_SUCCESS,
+      payload: results
+    });
+    yield put({
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: false,
+    });
+  } catch (error) {
+    yield put({
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: false
+    });
+    yield put({
+      type: actionType.END_QUIZ_FAILURE,
+      payload: error.response.data
+    });
+  }
+}
+
 
 function* generateQuizWatcher() {
   yield takeLatest(actionType.GENERATE_QUIZ, handleGenerateQuiz);
@@ -99,10 +155,20 @@ function* patchQuizSolutionWatcher() {
   yield takeLatest(actionType.PATCH_QUIZ_SOLUTION, handlePatchSolution);
 }
 
+function* fetchResultsWatcher() {
+  yield takeLatest(actionType.GET_QUIZ_RESULTS, handleFetchResults);
+}
+
+function* endQuizWatcher() {
+  yield takeLatest(actionType.END_QUIZ, handleQuizEnd);
+}
+
 export function* quizSaga() {
   yield all([
     generateQuizWatcher(),
     fetchQuizQuestionsWatcher(),
     patchQuizSolutionWatcher(),
+    fetchResultsWatcher(), 
+    endQuizWatcher(),
   ]);
 };
