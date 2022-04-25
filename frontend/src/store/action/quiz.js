@@ -19,3 +19,17 @@ export const patchSolution = (payload) => {
     payload: payload, 
   };
 };
+
+export const fetchResults = (payload) => {
+  return {
+    type: actionType.GET_QUIZ_RESULTS, 
+    payload: payload, 
+  };
+};
+
+export const endQuiz = (payload) => {
+  return {
+    type: actionType.END_QUIZ, 
+    payload: payload, 
+  };
+};
