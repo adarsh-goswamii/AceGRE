@@ -19,21 +19,21 @@ const postSolution = async (req, res, next) => {
           status: "failure",
           message: "Quiz id is missing"
         });
-        const {ques, selected_ans} = req.body;
-        let quiz = await Quiz.findOne({_id: id}).lean().exec();
-        if(!quiz) {
+        const { ques, selected_ans } = req.body;
+        let quiz = await Quiz.findOne({ _id: id }).lean().exec();
+        if (!quiz) {
           return res.status(401).json({
-            status: "failure", 
+            status: "failure",
             message: "No quiz with given id exists"
           });
         }
 
         quiz.questions[Number(ques)].submitted_ans = selected_ans;
 
-        let updatedValue = await Quiz.updateOne({ _id: id }, {questions: quiz.questions}).exec();
+        let updatedValue = await Quiz.updateOne({ _id: id }, { questions: quiz.questions }).exec();
         console.log(updatedValue);
         return res.status(200).json({
-          status: "success", 
+          status: "success",
           message: "Answer recorded"
         });
       } catch (error) {
@@ -86,8 +86,102 @@ const fetchQuestion = async (req, res, next) => {
 
 
 const fetchResults = async (req, res, next) => {
-  // TODO
+  try {
+    let access_token = req.headers['authorization'];
+    if (access_token) access_token = access_token.split(" ")[1];
+
+    jwt.verify(access_token, process.env.ACCESS_TOKEN_KEY, async (err, data) => {
+      if (err) return res.status(403).json("Unauthorized Access");
+
+      try {
+        let id = req.query.id;
+        if (!id) {
+          return res.status(401).json({
+            status: "failure",
+            message: "Quiz id missing"
+          });
+        }
+
+        const quiz = await Quiz.findOne({ _id: id }).lean().exec();
+        if (!quiz) {
+          return res.status(404).json({
+            status: "failure",
+            message: "No Quiz with given id exists"
+          });
+        }
+        
+        if (quiz.status !== "score_calculated") {
+          let correctAns = 0;
+          quiz.questions.map(({ submitted_ans, correct_ans }) => {
+            if (submitted_ans.length === correct_ans.length) {
+              let bool = correct_ans.reduce((prev, id) => prev &&= submitted_ans.includes(id), true);
+
+              if (bool) correctAns++;
+            }
+          });
+
+          quiz.results = {
+            no_of_correct: correctAns,
+            total_ques: quiz.questions.length
+          };
+
+          quiz.status = "score_calculated";
+          await Quiz.updateOne({ _id: id }, { ...quiz });
+        }
+        
+        return res.status(200).json({
+          status: "success",
+          data: quiz,
+        });
+
+      } catch (error) {
+        return next(new HttpError("Somrthing went wrong", 500));
+      }
+    });
+  } catch (error) {
+    return next(new HttpError("Something went wrong", 500));
+  }
 };
+
+const endQuiz = async (req, res, next) => {
+  try {
+    // check for token 
+    let access_token = req.headers['authorization'];
+    if (access_token) access_token = access_token.split(" ")[1];
+
+    jwt.verify(access_token, process.env.ACCESS_TOKEN_KEY, async (err, data) => {
+      if (err) return res.status(403).json("Unauthorized Access");
+
+      try {
+        let id = req.query.id;
+        if (!id) {
+          return res.status(401).json({
+            status: "failure",
+            message: "Quiz id missing"
+          });
+        }
+
+        const quiz = await Quiz.updateOne({ _id: id }, {status: "completed"}).exec();
+        console.log(quiz);
+        if (!quiz) {
+          return res.status(404).json({
+            status: "failure",
+            message: "No Quiz with given id exists"
+          });
+        }
+
+        return res.status(200).json({
+          status: "success", 
+          message: "Quiz ended successfully",
+        });
+      } catch (error) {
+        return next(new HttpError("Something went wrong", 500));
+      }
+    });
+  } catch (error) {
+    return next(new HttpError("Something went wrong", 500));
+  }
+}
 
 const generateQuiz = async (req, res, next) => {
   try {
@@ -131,7 +225,8 @@ module.exports = {
   postSolution,
   fetchQuestion,
   generateQuiz,
-  fetchResults
+  fetchResults, 
+  endQuiz
 };
 
 
