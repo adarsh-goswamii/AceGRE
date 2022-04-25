@@ -5,59 +5,97 @@ import "./Quiz.scss";
 import Option from "../../widgets/option/Option";
 import Timer from "../../widgets/timer/Timer";
 import { quiz } from "../../../data/words";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchQuestions, generateQuiz, patchSolution } from "../../../store/action/quiz";
+import { STEPS as steps, INSTRUCTIONS as Instructions } from "../../../constants/generic.consts";
 
 const Quiz = ({ }) => {
+  const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
   const [currQues, setCurrQues] = useState(0);
-  const steps = ["Select Category", "General Instructions", "All set to go"];
-  const Instructions = [
-    "The quizzes consists of questions carefully designed to help you self-assess your comprehension of the information presented on the topics covered in the module.",
-    "Each question in the quiz is of multiple-choice. Read each question carefully, and click on the button next to your response that is based on the information covered on the topic in the module. Each correct or incorrect response will result in appropriate feedback immediately at the left of the screen.",
-    'After responding to a question, click on the "Next Question" button at the bottom to go to the next question. After responding to the all question, click on "Close" on the top of the window to exit the quiz.',
-    'Each question has a timer running on the left side of your screen try to answere before the time runs out'
-  ];
-  const ques = "Audacious";
+  const [questions, setQuestions] = useState([]);
+  const [selectedAns, setSelectedAns] = useState([]);
+
+  const quizId = useSelector(state => state.quiz.quizGeneratedId);
+  const quizQuestions = useSelector(state => state.quiz.quizQuestions);
+  const solnSubmitted = useSelector(state => state.quiz.patchQuizSolutionSuccess);
+
+  useEffect(() => {
+    if (activeStep === steps.length) {
+      setOpenModal(false);
+      dispatch(generateQuiz());
+    }
+  }, [activeStep]);
+
+  useEffect(() => {
+    if (quizId) {
+      dispatch(fetchQuestions(quizId));
+    }
+  }, [quizId]);
+
+  useEffect(() => {
+    if (quizQuestions) {
+      setQuestions(quizQuestions);
+    }
+  }, [quizQuestions]);
+
+  useEffect(() => {
+    if(Object.keys(solnSubmitted)) {
+      nextQues();
+    }
+  }, [solnSubmitted]);
+
+  function nextQues() {
+    setCurrQues(prev => prev + 1);
+    setSelectedAns([]);
+  }
 
   function isStepCompleted(index) {
     return activeStep > index;
   }
 
-  useEffect(() => {
-    if (activeStep === steps.length) {
-      setOpenModal(false);
-    }
-  }, [activeStep]);
+  function submitSolution() {
+    let payload = {
+      quiz_id: quizId,
+      ques: currQues,
+      selected_ans: selectedAns
+    };
 
-  function nextQues() {
-    setCurrQues(prev => prev+1);
-  }
+    const test = questions?.[currQues]?.options.filter(({id, meaning}) => selectedAns.includes(id));
+    console.log(test);
+    dispatch(patchSolution(payload));
+  };
 
   return (
     <>
-      { activeStep === steps.length ? <div className="container">
+      {activeStep === steps.length && questions.length > currQues ? <div className="container">
         <div className="left">
-          <Timer />
+          {<Timer onComplete={submitSolution} duration={60} currQues={currQues} />}
         </div>
         <div className="right">
           <div className="ques-container">
-            <p className="heading">Choose correct meaning for the given word <br/> Note: There can be more than one correct answer </p>
-            <p className="question">{`Word : ${quiz[currQues].word}`}</p>
+            <p className="heading">Choose correct meaning for the given word <br /> Note: There can be more than one correct answer </p>
+            <p className="question">{`Question : ${questions[currQues].word}`}</p>
           </div>
           <div className="options-container">
-            {quiz?.[currQues]?.meanings.map(data => <Option text={data} />)}
+            {questions?.[currQues]?.options.map(data => <Option
+              setSelectedAns={setSelectedAns}
+              text={data.meaning}
+              key={data.id}
+              id={data.id} />)}
           </div>
           <div className="btn-container">
             <Button variant="outlined" className="red">
               End Quiz
             </Button>
-            <Button variant="contained" className="green" onClick={nextQues}>
+            <Button variant="contained" className="green" onClick={submitSolution}>
               Submit
             </Button>
           </div>
         </div>
-      </div> : 
-      <></>}
+      </div> :
+        <></>}
       <Modal
         open={openModal}
         onClose={() => { }}

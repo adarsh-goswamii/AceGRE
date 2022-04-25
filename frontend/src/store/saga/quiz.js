@@ -9,9 +9,10 @@ function* handleGenerateQuiz(action) {
       payload: true,
     });
     const results = yield call(api.generateQuiz);
+    console.log("Results", results);
     yield put({
       type: actionType.GENERATE_QUIZ_SUCCESS,
-      payload: results?.data?.quiz_id
+      payload: results?.quiz_id
     });
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
@@ -38,8 +39,8 @@ function* handleQuizQuesFetch(action) {
     });
     const results = yield call(api.fetchQuestions, payload);
     yield put({
-      type: actionType.GENERATE_QUIZ_SUCCESS,
-      payload: results?.data?.data
+      type: actionType.GET_QUIZ_QUESTIONS_SUCCESS,
+      payload: results?.data
     });
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
@@ -67,7 +68,7 @@ function* handlePatchSolution(action) {
     const results = yield call(api.patchSolution, payload);
     yield put({
       type: actionType.PATCH_QUIZ_SOLUTION_SUCCESS,
-      payload: results?.data
+      payload: results
     });
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,

@@ -1,5 +1,5 @@
 import * as apiConst from "../constants/api.consts";
-import * as api from "./index";
+import api from "./index";
 
 export const generateQuiz = async () => {
   try {
@@ -21,7 +21,8 @@ export const fetchQuestions = async (payload) => {
 
 export const patchSolution = async (payload) => {
   try {
-    const results = await api.patchData(`${apiConst.GET_PATCH_QUIZ_QUESTIONS}?id=${payload}`);
+    let {quiz_id, ques, selected_ans} = payload;
+    const results = await api.patchData(`${apiConst.GET_PATCH_QUIZ_QUESTIONS}?id=${quiz_id}`, {ques, selected_ans});
     return results.data;
   } catch (error) {
     throw error;

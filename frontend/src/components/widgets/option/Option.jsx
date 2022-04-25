@@ -1,10 +1,14 @@
 
 import "./Option.scss";
 
-const Option = ({ text }) => {
+const Option = ({ text, id, setSelectedAns }) => {
   
   function handleOptionClick(event) {
     event.target.classList.toggle("selected");
+    setSelectedAns(prev => {
+      if(prev.includes(id)) return prev.filter(data => data!== id);
+      else return [...prev, id]
+    });
   }
 
   return (
