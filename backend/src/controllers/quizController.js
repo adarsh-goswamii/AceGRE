@@ -28,7 +28,7 @@ const postSolution = async (req, res, next) => {
           });
         }
 
-        quiz.questions[Number(ques-1)].submitted_ans = selected_ans;
+        quiz.questions[Number(ques)].submitted_ans = selected_ans;
 
         let updatedValue = await Quiz.updateOne({ _id: id }, {questions: quiz.questions}).exec();
         console.log(updatedValue);
