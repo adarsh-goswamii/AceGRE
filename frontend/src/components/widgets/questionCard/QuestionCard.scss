@@ -1,0 +1,36 @@
+@import '../../../styles/main.scss';
+
+.question-card-container {
+  border-radius: 4px;
+  width: 100%;
+  height: fit-content;
+  padding: 0px 0px 0px 8px;
+  background-color: $white;
+  box-shadow: $boxShadow;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  @extend .bodySemibold;
+
+  .content {
+    padding: 16px 32px;
+    background-color: $white;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+  }
+
+  &.correct {
+    background-color: $green;
+    .content {
+      background-color: $greenBackground;
+    }
+  }
+
+  &.wrong {
+    background-color: $red;
+    .content {
+      background-color: $redBackground;
+    }
+  }
+}

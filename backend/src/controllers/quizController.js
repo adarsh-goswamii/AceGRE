@@ -110,7 +110,7 @@ const fetchResults = async (req, res, next) => {
           });
         }
         
-        if (quiz.status !== "score_calculated") {
+        if (quiz.status !== "score_calcuated") {
           let correctAns = 0;
           quiz.questions.map(({ submitted_ans, correct_ans }) => {
             if (submitted_ans.length === correct_ans.length) {
@@ -252,7 +252,7 @@ function pickQuestionsRandomly(wordList) {
       let correct_ans = [], options = [];
       for (let j = 0; j < noOfCorrectAns; j++) {
         delete meanings[wordList[index].meanings[j]._id];
-        correct_ans.push(wordList[index].meanings[j]._id);
+        correct_ans.push(wordList[index].meanings[j]._id.toString());
         options.push({
           meaning: wordList[index].meanings[j].meaning,
           id: wordList[index].meanings[j]._id
