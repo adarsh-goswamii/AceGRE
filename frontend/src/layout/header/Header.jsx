@@ -3,7 +3,6 @@ import { Avatar, ClickAwayListener } from "@material-ui/core";
 import { Body, H3, Heading } from "../../components/shared/typography/Typogrpahy";
 import Menu from "../../components/shared/menu/MenuList";
 import Button from "../../components/shared/button/Button";
-import Popover from "../../components/shared/popover/Popover";
 import data from "../../data/headerNav";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Header.scss";

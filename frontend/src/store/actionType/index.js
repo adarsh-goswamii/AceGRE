@@ -1,6 +1,8 @@
 // common 
 export const SHOW_RIGHT_DRAWER = "SHOW_RIGHT_DRAWER";
 export const CHANGE_GLOBAL_LOADER_VISIBILITY= "CHANGE_GLOBAL_LOADER_VISIBILITY";
+export const SHOW_MODAL = "SHOW_MODAL";
+export const HIDE_MODAL = "HIDE_MODAL";
 
 // explore
 export const GET_WORD_LIST = "GET_WORD_LIST";
