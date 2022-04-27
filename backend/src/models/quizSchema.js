@@ -7,6 +7,7 @@ const optionSchema = new Schema({
 });
 
 const quizQuestionSchema = new Schema({
+  id: { type: String, required: true},
   word: { type: String, required: true },
   options: { type: [optionSchema], required: true },
   correct_ans: { type: Array, required: true },

@@ -2,6 +2,8 @@ import { Expose } from "class-transformer";
 import { Option } from "./Quiz";
 
 class QuizQuestion {
+  @Expose({ name: "id"})
+  id: String;
   @Expose({ name: "word" })
   word: String;
   @Expose({ name: "options" })

@@ -10,12 +10,20 @@ import Button from "../../shared/button/Button";
 import { PropTypes } from "prop-types";
 import { useDispatch } from "react-redux";
 import { showRightDrawer } from "../../../store/action/common";
+import { updateWordStatus } from "../../../store/action/explore";
 
 const WordDetails = ({
   word,
   className
 }) => {
   const dispatch = useDispatch();
+
+  function handleClick(statusId) {
+    dispatch(updateWordStatus({
+      id: word.id, 
+      status: statusId,
+    }));
+  };
 
   return (
     <div className="word-details-pane">
@@ -107,8 +115,8 @@ const WordDetails = ({
       </div>
 
       <div className="footer">
-        <Button color="$green" fullWidth={false}>Completed</Button>
-        <Button color="$green" fullWidth={false}>Review Later</Button>
+        <Button color="$green" fullWidth={false} onClick={() => handleClick(1)}>Completed</Button>
+        <Button color="$green" fullWidth={false} onClick={()=> handleClick(2)}>Review Later</Button>
       </div>
     </div>
   );

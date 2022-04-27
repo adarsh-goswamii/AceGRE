@@ -260,6 +260,7 @@ function pickQuestionsRandomly(wordList) {
       }
 
       selectedWord[wordList[index]._id] = {
+        id: wordList[index]._id,
         word: wordList[index].title,
         correct_ans,
         options
