@@ -1,14 +1,16 @@
-import { useState } from "react";
 import "./QuestionCard.scss";
 
-const QuestionCard = ({word, correct, index}) => {
+const QuestionCard = ({ word, correct, index, onClick }) => {
+
   return (
-    <div className={`question-card-container ${correct? "correct": "wrong"}`}>
+    <div
+      onClick={onClick}
+      className={`question-card-container ${correct ? "correct" : "wrong"}`}>
       <div className="content">
         {`${index}. ${word}`}
       </div>
     </div>
   )
-}; 
+};
 
 export default QuestionCard;

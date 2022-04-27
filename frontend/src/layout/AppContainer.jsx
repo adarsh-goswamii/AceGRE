@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { routes } from "../routes/routes";
 import Container from "./container/Container";
 import Header from "./header/Header";
-import Error404 from "../components/pages/404/Error404";
+import Modal from "./modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_USER_LOGGEDIN } from "../store/actionType";
 import Loader from "../components/widgets/loader/Loader";
@@ -39,8 +39,8 @@ const AppContainer = () => {
       {loaderVisible ? <Loader /> : <></>}
       {/* <Toaster />
       <RightDrawer />
+    <Footer /> */}
       <Modal />
-      <Footer /> */}
       <Routes>
         {
           routes?.map(route => {

@@ -10,4 +10,19 @@ export const showLoader = (payload) => {
     type: actions.CHANGE_GLOBAL_LOADER_VISIBILITY, 
     payload: payload
   }
-}
+};
+
+export const openModal = (payload) => {
+  return {
+    type: actions.SHOW_MODAL, 
+    payload: payload
+  }
+};
+
+export const closeModal = (payload) => {
+  return {
+    type: actions.HIDE_MODAL, 
+    payload: payload,
+  }
+};
+

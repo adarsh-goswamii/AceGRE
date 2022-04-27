@@ -7,6 +7,8 @@ import "./Result.scss";
 import { checkIfCorrect } from "../../../utility/utils";
 import PercentageFill from "../../widgets/percentageFill/PercentageFill";
 import Button from "../../shared/button/Button";
+import WordModal from "../../widgets/wordModal/WordModal";
+import { openModal } from "../../../store/action/common";
 
 const Result = ({ }) => {
   const location = useLocation();
@@ -23,6 +25,11 @@ const Result = ({ }) => {
       dispatch(fetchResults(id));
     }
   }, [id]);
+
+  function handleCardClick(question, index) {
+    dispatch(openModal(<WordModal {...question} index={index}/>));
+  }
+
   return (
     <div className="container">
       <div className="left">
@@ -30,7 +37,7 @@ const Result = ({ }) => {
         <p className="heading">Results</p>
         {
           results?.questions?.map((ques, index) => {
-            return <QuestionCard word={ques.word} correct={checkIfCorrect(ques?.submitted_ans, ques?.correct_ans)} index={index+1}/>
+            return <QuestionCard word={ques.word} correct={checkIfCorrect(ques?.submitted_ans, ques?.correct_ans)} index={index+1} onClick={() => handleCardClick(ques, index+1)}/>
           })
         }
       </div>
