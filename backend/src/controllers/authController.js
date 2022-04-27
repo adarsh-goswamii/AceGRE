@@ -19,20 +19,20 @@ const login = async (req, res, next) => {
     const userInfo = await User.findOne({ email: email }).exec();
     if (userInfo) {
       const validPass = await bcrypt.compare(password, userInfo.password);
-      if(validPass) {
+      if (validPass) {
 
-        const access_token = jwt.sign({email, id: userInfo._id.toString()}, process.env.ACCESS_TOKEN_KEY, {expiresIn: "1h"});
-        const refresh_token = jwt.sign({email, id: userInfo._id.toString()}, process.env.ACCESS_TOKEN_KEY, { expiresIn: `${rememberMe? "30d": '1d'}`});
+        const access_token = jwt.sign({ email, id: userInfo._id.toString() }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
+        const refresh_token = jwt.sign({ email, id: userInfo._id.toString() }, process.env.REFRESH_TOKEN_KEY, { expiresIn: `${rememberMe ? "30d" : '1d'}` });
 
-        const newToken= new Token({id: userInfo._id.toString(), token: refresh_token});
+        const newToken = new Token({ id: userInfo._id.toString(), token: refresh_token });
         await Token.deleteOne({ email }).exec();
         newToken.save();
 
         res.status(200).json({
           status: "success",
           data: {
-            email: email, 
-            token: access_token, 
+            email: email,
+            token: access_token,
             refresh_token: refresh_token,
             message: "User successfully logged in"
           }
@@ -42,7 +42,7 @@ const login = async (req, res, next) => {
         res.status(409).json({
           status: "failure",
           data: {
-            email: email, 
+            email: email,
             message: "Email or password is wrong"
           }
         });
@@ -52,7 +52,7 @@ const login = async (req, res, next) => {
       res.status(404).json({
         status: "failure",
         data: {
-          email: email, 
+          email: email,
           message: "No user with given email exists"
         }
       })
@@ -84,17 +84,17 @@ const register = async (req, res, next) => {
     }
 
     const hashedPass = await bcrypt.hash(password, 16);
-    
-    let newUser = new User({ email, password: hashedPass, admin: false });
-    newUser= await newUser.save();
-    
-    const generatedToken = jwt.sign({email, id: newUser._id.toString()}, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
-    const refresh_token = jwt.sign({email, id: newUser._id.toString()}, process.env.REFRESH_TOKEN_KEY, { expiresIn: "1d" });
 
-    const newRefreshToken = new Token({ token:refresh_token, id: newUser._id.toString()});
+    let newUser = new User({ email, password: hashedPass, admin: false });
+    newUser = await newUser.save();
+
+    const generatedToken = jwt.sign({ email, id: newUser._id.toString() }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
+    const refresh_token = jwt.sign({ email, id: newUser._id.toString() }, process.env.REFRESH_TOKEN_KEY, { expiresIn: "1d" });
+
+    const newRefreshToken = new Token({ token: refresh_token, id: newUser._id.toString() });
     await newRefreshToken.save();
 
-    const userData = new UserData({id: newUser._id.toString(), word_status: {}});
+    const userData = new UserData({ id: newUser._id.toString(), word_status: {} });
     await userData.save();
 
     res.status(200).json({
@@ -112,9 +112,25 @@ const register = async (req, res, next) => {
 };
 
 const logout = async (req, res, next) => {
-  // try {
+  try {
+    let access_token = req.headers["authorization"];
+    if (access_token) access_token = req.headers["authorization"].split(" ")[1];
 
-  // }
+    jwt.verify(access_token, process.env.ACCESS_TOKEN_KEY, async (err, data) => {
+      if (err) return res.status(403).json("Unauthorized Access");
+
+      const { id } = data;
+      const deletedToken = await Token.deleteOne({id}).exec();
+      console.log(deletedToken);
+
+      res.status(200).json({
+          status: "success",
+          message: "Successfully logged out user!"
+      });
+    });
+  } catch (error) {
+    return next(new HttpError(error, 500));
+  }
 };
 
 /**
@@ -124,21 +140,21 @@ const logout = async (req, res, next) => {
  */
 const refreshToken = async (req, res, next) => {
   try {
-    console.log("refreshing");  
-    const {refresh_token} = req.body;
-    if(!refresh_token) return res.status(401).json("Unauthorized Access, no token found");
+    console.log("refreshing");
+    const { refresh_token } = req.body;
+    if (!refresh_token) return res.status(401).json("Unauthorized Access, no token found");
 
     jwt.verify(refresh_token, process.env.REFRESH_TOKEN_KEY, async (err, data) => {
-      if(err) return res.status(403).json({ message: "Unauthorized Access", err});
+      if (err) return res.status(403).json({ message: "Unauthorized Access", err });
 
-      const {id, email} = data;
-      const {token} = await Token.findOne({id}).lean().exec();
-      if(!token || token!== refresh_token) return res.status(403).json("Token expired, Unauthorized Access");
+      const { id, email } = data;
+      const { token } = await Token.findOne({ id }).lean().exec();
+      if (!token || token !== refresh_token) return res.status(403).json("Token expired, Unauthorized Access");
 
-      const newToken = jwt.sign({email, id}, process.env.ACCESS_TOKEN_KEY,{ expiresIn: "1h" });
+      const newToken = jwt.sign({ email, id }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
 
       res.status(200).json({
-        token: newToken, 
+        token: newToken,
       });
     });
   } catch (error) {
@@ -149,6 +165,7 @@ const refreshToken = async (req, res, next) => {
 module.exports = {
   login,
   register,
-  refreshToken
+  refreshToken,
+  logout
 };
 

@@ -1,0 +1,70 @@
+@import "../../../styles/main.scss";
+
+.word-modal-container {
+  background-color: $white;
+  padding: 32px;
+  border-radius: 12px;
+  width: 600px;
+  height: fit-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+
+  .question-word {
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    width: 100%;
+    margin-top: 16px;
+    height: fit-content;
+    grid-gap: 20px;
+    @extend .bodyLight;
+
+    .option-container {
+      margin: 0px;
+    }
+  }
+
+  .action-btns {
+    display: flex;
+    margin-top: 32px;
+
+    .button {
+      width: fit-content;
+      padding: 6px 64px;
+      margin-right: 32px;
+
+      &.completed {
+        &.MuiButton-outlinedPrimary {
+          color: $green;
+          border-color: $green;
+        }
+
+        &.MuiButton-containedPrimary {
+          background-color: $green;
+        }
+      }
+
+      &.review {
+        &.MuiButton-outlinedPrimary {
+          color: $red;
+          border-color: $red;
+        }
+
+        &.MuiButton-containedPrimary {
+          background-color: $red;
+        }
+      }
+    }
+  }
+
+
+}

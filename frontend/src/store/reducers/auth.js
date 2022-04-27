@@ -19,6 +19,8 @@ const reducerFn = (state= INIT_INITIAL_STATE, action) => {
         loggedIn: true,
         userData: action.payload,
       });
+    case actionType.LOGOUT_USER_SUCCESS:
+      return Object.assign({}, INIT_INITIAL_STATE);
     case actionType.REGISTER_USER_FAILURE: 
       return Object.assign({}, INIT_INITIAL_STATE, {
         registerUserFailure: action.payload.data,
