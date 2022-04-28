@@ -9,6 +9,7 @@ import { Menu, MenuItem } from "@material-ui/core";
 import { handleLogout } from "../../../store/action/auth";
 import { useDispatch } from "react-redux";
 import {useNavigate} from "react-router-dom";
+import { PropTypes } from "prop-types";
 
 const AvatarMenu = ({
   handlePopOverClose
@@ -55,3 +56,9 @@ const AvatarMenu = ({
 };
 
 export default AvatarMenu;
+
+AvatarMenu.protoTypes = {
+
+  handlePopOverClose: PropTypes.func, 
+  
+}

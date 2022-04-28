@@ -1,4 +1,5 @@
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+import { PropTypes } from "prop-types";
 
 const Timer = ({ onComplete, duration, currQues }) => {
   return (
@@ -20,3 +21,10 @@ const Timer = ({ onComplete, duration, currQues }) => {
 };
 
 export default Timer;
+Timer.protoTypes = { 
+  // optional fields
+  onComplete: PropTypes.func,
+  duration:PropTypes.number,
+  currQues:PropTypes.number
+
+}
