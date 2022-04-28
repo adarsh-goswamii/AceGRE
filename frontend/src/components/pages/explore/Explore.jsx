@@ -18,6 +18,7 @@ import { Word } from "../../../model/Word";
 const Explore = () => {
   const [filterStatus, setFilterStatus] = useState(null);
   const [words, setWords] = useState([]);
+  const [openWord, setOpenWord] = useState({});
   const rightDrawer = useSelector(state => state.common.rightDrawer);
   const dispatch = useDispatch();
 
@@ -41,7 +42,8 @@ const Explore = () => {
     }
   }, [wordList]);
 
-  function handleRightPaneOpen(event) {
+  function handleRightPaneOpen(word) {
+    setOpenWord(word);
     dispatch(action.showRightDrawer({ open: true }));
   }
 
@@ -70,8 +72,6 @@ const Explore = () => {
       }
     }));
   }
-
-  console.log(pagination);
 
   return (
     <>
@@ -139,7 +139,7 @@ const Explore = () => {
       </div>
       <div className="word-grid-container">
         {
-          words?.map(word => <WordCard {...word} onClick={handleRightPaneOpen} />)
+          words?.map(word => <WordCard word={word} onClick={handleRightPaneOpen} />)
         }
       </div>
       <div className="pagination">
@@ -155,7 +155,7 @@ const Explore = () => {
         open={rightDrawer?.open}
         close={handleRightPaneClose}
         className="word-details-pane">
-        <WordDetails id={6} />
+        <WordDetails word={openWord} />
       </RightPane>
     </>
   )

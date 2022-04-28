@@ -11,7 +11,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   async (config) => {
     const token = localStorage.getItem("token");
-    config.headers.Authorization = `Bearer ${token}`;
+    if(token) config.headers.Authorization = `Bearer ${token}`;
 
     return config;
   }, 
@@ -36,6 +36,10 @@ const api = {
   putData(endUrl, data, config, apiUrl) {
     let url = apiUrl ? apiUrl : `${endUrl}`;
     return instance.put(url, data, config);
+  },
+  patchData(endUrl, data, config, apiUrl) {
+    let url = apiUrl ? apiUrl : `${endUrl}`;
+    return instance.patch(url, data, config);
   },
   deleteData(endUrl, data, config, apiUrl) {
     let url = apiUrl ? apiUrl : `${endUrl}`;

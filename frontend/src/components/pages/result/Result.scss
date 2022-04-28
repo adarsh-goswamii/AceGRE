@@ -1,0 +1,62 @@
+@import "../../../styles/main.scss";
+
+.result-screen {
+  padding: 0px !important;
+  display: flex;
+  background-color: $offWhite;
+
+  .container {
+    min-height: 100vh;
+
+    .left {
+      width: 60%;
+      min-height: fit-content;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+      padding: 32px 64px;
+
+      .heading {
+        @extend .headerSemiBold;
+        font-size: 28px;
+        color: $primary;
+        grid-column: 1/4;
+      }
+    }
+
+    .right {
+      position: absolute;
+      z-index: 2;
+      right: 0px;
+      top: 0px;
+      width: 40%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: url(../../../assets/images/MeshQuiz.svg);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      padding: 32px;
+
+      .heading {
+        @extend .headerSemiBold;
+        font-size: 28px;
+        color: $white;
+      }
+
+      .btn {
+        padding: 6px 64px;
+        background-color: $white;
+        width: fit-content;
+        margin-top: 64px;
+      }
+
+      .text {
+        @extend .bodyRegular;
+        color: $white;
+        margin-top: 32px;
+      }
+    }
+  }
+}

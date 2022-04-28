@@ -2,6 +2,8 @@ import Error404 from '../components/pages/404/Error404';
 import Home from '../components/pages/home/Home';
 import Explore from '../components/pages/explore/Explore';
 import Authentication from '../components/pages/login/Authentication';
+import Quiz from '../components/pages/quizzes/Quiz';
+import Results from '../components/pages/result/Result';
 
 export const routes = [
   {
@@ -55,6 +57,22 @@ export const routes = [
     id: 8,
     protected: false,
     className: "login-screen",
+  }, {
+    path: "/quiz",
+    exact: true,
+    hideHeader: true,
+    component: Quiz,
+    id: 9,
+    protected: false,
+    className: "quiz-screen",
+  }, {
+    path: "/quiz/results",
+    exact: false,
+    hideHeader: true,
+    component: Results,
+    id: 10,
+    protected: true,
+    className: "result-screen",
   }, {
     path: "*",
     exact: true,

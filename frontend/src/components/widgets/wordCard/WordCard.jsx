@@ -10,24 +10,29 @@ import Popover from "../../../components/shared/popover/Popover";
 import "./WordCard.scss";
 import { MenuItem } from "@material-ui/core";
 import { PropTypes } from "prop-types";
+import { useDispatch } from "react-redux";
+import { updateWordStatus } from "../../../store/action/explore";
 
-const WordCard = ({
-  status, // can have three values ["review later", "completed", "none"]
-  className,
-  title,
-  meanings,
-  onClick
-}) => {
+const WordCard = ({word, onClick}) => {
+  const {
+    status,
+    className,
+    title,
+    meanings,
+  } = word;
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const [wordStatus, setWordStatus] = useState(null);
 
   useEffect(() => {
-    setWordStatus(status);
+    setWordStatus(status === 1 ? "Completed": status === 2 ? "Review Later" : "");
   }, [status]);
 
-  function handleStatusChange(id, title) {
-    if (title === wordStatus) setWordStatus(null);
-    else setWordStatus(title);
+  function handleStatusChange(status, title) {
+    dispatch(updateWordStatus({
+      id: word.id, 
+      status
+    }));
     setAnchorEl(null);
   }
 
@@ -39,7 +44,7 @@ const WordCard = ({
   return (
     <>
       <div
-        onClick={onClick}
+        onClick={() => onClick(word)}
         className={`word-container ${wordStatus} ${className}`}>
         <div className="word-info">
           <div className="word-title">

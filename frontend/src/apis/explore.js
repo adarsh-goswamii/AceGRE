@@ -20,3 +20,12 @@ export const getWordList = async(payload) => {
   }
 };
 
+export const updateWordStatus = async (payload) => {
+  try {
+    const results = await api.postData(`${apiConst.UPDATE_WORD_STATUS}`, payload);
+    return results.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
