@@ -1,12 +1,11 @@
 import * as apiConst from "../constants/api.consts";
-import api from './index';
+import api from "./index";
 
 export const login = async (payload) => {
   try {
     const result = await api.postData(apiConst.AUTH_LOGIN, payload);
     return result.data;
-  }
-  catch (error) {
+  } catch (error) {
     throw error;
   }
 };
@@ -20,3 +19,11 @@ export const register = async (payload) => {
   }
 };
 
+export const logout = async (payload) => {
+  try {
+    const result = await api.postData(apiConst.AUTH_LOGOUT, payload);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
+};

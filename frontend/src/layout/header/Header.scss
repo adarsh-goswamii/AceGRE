@@ -33,6 +33,20 @@
     }
   }
 
+  .avatar-container {
+    display: flex;
+    align-items: center;
+    height: inherit;
+    cursor: pointer;
+    
+    .avatar {
+      margin-left: 16px;
+      background-color: $primary;
+      width: 32px;
+      height: 32px;
+    }
+  }
+
   .call-for-actions {
     display: flex;
     align-items: center;

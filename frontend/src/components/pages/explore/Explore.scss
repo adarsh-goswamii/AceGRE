@@ -6,7 +6,9 @@
   align-items: center;
 
   .heading {
+    margin-top: 16px;
     margin-bottom: 32px;
+    color: $primary;
   }
 
   .filters {
@@ -81,9 +83,9 @@
   .pagination {
     width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     margin: 32px 0px;
+    position: relative;
 
     .card-per-page {
       display: flex;
@@ -114,6 +116,12 @@
           background-color: white;
         }
       }
+    }
+
+    .MuiPagination-root {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
 

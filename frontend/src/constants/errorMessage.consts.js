@@ -1,5 +1,6 @@
 export const PASSWORD_TOO_SHORT = "Password too short";
-export const PASSWORD_CASE_CHECK = "Password must have atleast one character lower and uppercase";
+export const PASSWORD_CASE_CHECK =
+  "Password must have atleast one character lower and uppercase";
 export const PASSWORD_DIGITS_CHECK = "Password must contain atleast 1 digit";
 export const PASSWORD_SYMBOL_CHECK = "Password must contain atleast 1 symbol";
 

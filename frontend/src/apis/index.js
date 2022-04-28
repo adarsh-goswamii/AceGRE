@@ -3,23 +3,23 @@ import axios from "axios";
 const baseUrl = "http://localhost:5000";
 
 const instance = axios.create({
-  baseURL: baseUrl, 
-  timeout: 500000, 
-  params: {}
+  baseURL: baseUrl,
+  timeout: 500000,
+  params: {},
 });
 
 instance.interceptors.request.use(
   async (config) => {
     const token = localStorage.getItem("token");
-    config.headers.Authorization = `Bearer ${token}`;
+    if (token) config.headers.Authorization = `Bearer ${token}`;
 
     return config;
-  }, 
+  },
   (error) => Promise.reject(error)
 );
 
 instance.interceptors.response.use(
-  (response) => response, 
+  (response) => response,
   (error) => Promise.reject(error)
 );
 
@@ -32,15 +32,19 @@ const api = {
   postData(endUrl, data, config, apiUrl) {
     let url = apiUrl ? apiUrl : `${endUrl}`;
     return instance.post(url, data, config);
-  }, 
+  },
   putData(endUrl, data, config, apiUrl) {
     let url = apiUrl ? apiUrl : `${endUrl}`;
     return instance.put(url, data, config);
   },
+  patchData(endUrl, data, config, apiUrl) {
+    let url = apiUrl ? apiUrl : `${endUrl}`;
+    return instance.patch(url, data, config);
+  },
   deleteData(endUrl, data, config, apiUrl) {
     let url = apiUrl ? apiUrl : `${endUrl}`;
     return instance.delete(url, data, config);
-  }
+  },
 };
 
 export default api;

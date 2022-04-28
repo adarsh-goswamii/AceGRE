@@ -1,17 +1,10 @@
 import { useState } from "react";
-import {Drawer, ClickAwayListener} from '@material-ui/core';
-import { useCallback, useEffect } from 'react';
+import { Drawer, ClickAwayListener } from "@material-ui/core";
+import { useCallback, useEffect } from "react";
 import "./RightDrawer.scss";
 import { PropTypes } from "prop-types";
 
-const RightDrawer = ({
-  children,
-  className,
-  open,
-  setOpen,
-  close, 
-}) => {
-
+const RightDrawer = ({ children, className, open, setOpen, close }) => {
   useEffect(() => {
     window.addEventListener("click", closeDrawer);
     return () => window.removeEventListener("click", closeDrawer);
@@ -24,23 +17,22 @@ const RightDrawer = ({
   }, []);
 
   return (
-    <Drawer anchor={"right"} open={open} classes={{root: className }}>
+    <Drawer anchor={"right"} open={open} classes={{ root: className }}>
       <ClickAwayListener onClickAway={close}>
-        <div>
-          {children}
-        </div>
+        <div>{children}</div>
       </ClickAwayListener>
     </Drawer>
   );
 };
 
 export default RightDrawer;
-RightDrawer.propTypes={
+
+RightDrawer.propTypes = {
   //necesarry fields
   open: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
   //optional field
-  className:PropTypes.string,
-  setOpen:PropTypes.func,
-  close:PropTypes.bool
-  };
+  className: PropTypes.string,
+  setOpen: PropTypes.func,
+  close: PropTypes.bool,
+};

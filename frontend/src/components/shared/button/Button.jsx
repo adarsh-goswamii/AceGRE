@@ -17,7 +17,7 @@ const FilledButton = ({
 }) => {
   return (
     <Button
-      className={`button ${className} ${disabled? "disabled": ""}`}
+      className={`button ${className} ${disabled ? "disabled" : ""}`}
       color={color}
       disabled={disabled}
       disableElevation={disableElevation}
@@ -49,5 +49,5 @@ FilledButton.propTypes = {
   fullWidth: PropTypes.bool,
   size: PropTypes.string,
   variant: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
