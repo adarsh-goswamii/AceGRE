@@ -1,4 +1,6 @@
 import "./QuestionCard.scss";
+import { PropTypes } from "prop-types";
+
 
 const QuestionCard = ({ word, correct, index, onClick }) => {
 
@@ -14,3 +16,12 @@ const QuestionCard = ({ word, correct, index, onClick }) => {
 };
 
 export default QuestionCard;
+
+QuestionCard.protoTypes = { 
+  // optional fields
+  onClick: PropTypes.func,
+  index:PropTypes.number,
+  word:PropTypes.string,
+  correct:PropTypes.bool
+
+}
