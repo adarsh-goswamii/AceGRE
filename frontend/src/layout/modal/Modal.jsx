@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import "./Modal.scss";
 
 const Modal = ({ handleClose }) => {
-  const modal = useSelector(state => state.common.modal);
-  
+  const modal = useSelector((state) => state.common.modal);
+
   return (
     <>
       <MuiModal
@@ -15,7 +15,7 @@ const Modal = ({ handleClose }) => {
         {modal.children}
       </MuiModal>
     </>
-  )
+  );
 };
 
 export default Modal;

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { routes } from "../routes/routes";
 import Container from "./container/Container";
@@ -13,14 +13,15 @@ const AppContainer = () => {
   const dispatch = useDispatch();
   const [headerVisible, setHeaderVisible] = useState(false);
 
-  const loaderVisible = useSelector(state => state.common.loader);
+  const loaderVisible = useSelector((state) => state.common.loader);
 
   useEffect(() => {
-    const email= localStorage.getItem("email");
-    if(email) dispatch({
-      type: UPDATE_USER_LOGGEDIN, 
-      payload: true,
-    });
+    const email = localStorage.getItem("email");
+    if (email)
+      dispatch({
+        type: UPDATE_USER_LOGGEDIN,
+        payload: true,
+      });
   }, []);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const AppContainer = () => {
 
   function renderHeader() {
     const pathname = location.pathname;
-    const currentRoute = routes.filter(route => route.path === pathname);
+    const currentRoute = routes.filter((route) => route.path === pathname);
     return currentRoute && !currentRoute[0].hideHeader;
   }
 
@@ -42,20 +43,23 @@ const AppContainer = () => {
     <Footer /> */}
       <Modal />
       <Routes>
-        {
-          routes?.map(route => {
-            return <Route
+        {routes?.map((route) => {
+          return (
+            <Route
               key={route?.id}
               path={route.path}
               exact={route.exact}
-              element={<Container className={route.className}>
-                <route.component />
-              </Container>} />
-          })
-        }
+              element={
+                <Container className={route.className}>
+                  <route.component />
+                </Container>
+              }
+            />
+          );
+        })}
       </Routes>
     </>
-  )
+  );
 };
 
 export default AppContainer;

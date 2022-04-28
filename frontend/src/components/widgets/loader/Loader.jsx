@@ -8,7 +8,7 @@ const Loader = () => {
         <LoaderIcon className="icon" />
       </div>
     </>
-  )
+  );
 };
 
 export default Loader;

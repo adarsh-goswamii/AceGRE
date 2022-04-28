@@ -1,9 +1,8 @@
-import {useState} from "react";
-import Pagination from '@material-ui/lab/Pagination';
-import { Select, MenuItem } from '@material-ui/core';
-import { useEffect } from 'react';
-import {PropTypes} from "prop-types";
-
+import { useState } from "react";
+import Pagination from "@material-ui/lab/Pagination";
+import { Select, MenuItem } from "@material-ui/core";
+import { useEffect } from "react";
+import { PropTypes } from "prop-types";
 
 const CustomPagination = ({
   page,
@@ -31,21 +30,23 @@ const CustomPagination = ({
           variant="outlined"
           size="small"
           onChange={changeCardPerPage}
-          value={cardPerPage || ""}>
-          {
-            paginationOptions?.map((value) => {
-              return <MenuItem
-                value={value}
-                key={value}>{value}</MenuItem>
-            })
-          }
+          value={cardPerPage || ""}
+        >
+          {paginationOptions?.map((value) => {
+            return (
+              <MenuItem value={value} key={value}>
+                {value}
+              </MenuItem>
+            );
+          })}
         </Select>
       </div>
       <Pagination
         count={totalPage}
         page={page}
         shape="rounded"
-        onChange={handlePageNumberChange} />
+        onChange={handlePageNumberChange}
+      />
       <div></div>
     </>
   );
@@ -54,9 +55,9 @@ const CustomPagination = ({
 export default CustomPagination;
 CustomPagination.propTypes = {
   // necessary fields
-  totalPage:PropTypes.number.isRequired,
-  paginationOptions :PropTypes.array.isRequired,
-  limit:PropTypes.number.isRequired,
-  handleCardPerPageChange:PropTypes.func.isRequired,
-  handlePageNumberChange :PropTypes.func.isRequired
+  totalPage: PropTypes.number.isRequired,
+  paginationOptions: PropTypes.array.isRequired,
+  limit: PropTypes.number.isRequired,
+  handleCardPerPageChange: PropTypes.func.isRequired,
+  handlePageNumberChange: PropTypes.func.isRequired,
 };

@@ -7,25 +7,25 @@ function* getWordList(action) {
     const payload = action.payload;
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: true
+      payload: true,
     });
     const results = yield call(api.getWordList, payload);
     yield put({
       type: actionType.GET_WORD_LIST_SUCCESS,
-      payload: results
+      payload: results,
     });
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false
+      payload: false,
     });
   } catch (error) {
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false
+      payload: false,
     });
     yield put({
       type: actionType.GET_WORD_LIST_FAILURE,
-      payload: error.response.data
+      payload: error.response.data,
     });
   }
 }
@@ -35,25 +35,25 @@ function* handleUpdateWordStatus(action) {
     const { payload } = action;
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: true
+      payload: true,
     });
     const results = yield call(api.updateWordStatus, payload);
     yield put({
       type: actionType.UPDATE_WORD_STATUS_BY_ID_SUCCESS,
-      payload: results.data
+      payload: results.data,
     });
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false
+      payload: false,
     });
   } catch (error) {
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false
+      payload: false,
     });
     yield put({
       type: actionType.UPDATE_WORD_STATUS_BY_ID_FAILURE,
-      payload: error.response.data
+      payload: error.response.data,
     });
   }
 }
@@ -67,8 +67,5 @@ function* updateWordStatusWatcher() {
 }
 
 export function* exploreSaga() {
-  yield all([
-    getWordListWatcher(),
-    updateWordStatusWatcher(),
-  ]);
-};
+  yield all([getWordListWatcher(), updateWordStatusWatcher()]);
+}

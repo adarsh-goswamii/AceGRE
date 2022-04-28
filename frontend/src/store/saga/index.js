@@ -4,9 +4,5 @@ import { quizSaga } from "./quiz";
 import { exploreSaga } from "./explore";
 
 export default function* rootSaga() {
-  yield all([
-    authSaga(),
-    exploreSaga(),
-    quizSaga()
-  ])
-};
+  yield all([authSaga(), exploreSaga(), quizSaga()]);
+}

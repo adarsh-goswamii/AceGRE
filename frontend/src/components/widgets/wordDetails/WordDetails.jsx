@@ -12,28 +12,30 @@ import { useDispatch } from "react-redux";
 import { showRightDrawer } from "../../../store/action/common";
 import { updateWordStatus } from "../../../store/action/explore";
 
-const WordDetails = ({
-  word,
-  className
-}) => {
+const WordDetails = ({ word, className }) => {
   const dispatch = useDispatch();
 
   function handleClick(statusId) {
-    dispatch(updateWordStatus({
-      id: word.id, 
-      status: statusId,
-    }));
-  };
+    dispatch(
+      updateWordStatus({
+        id: word.id,
+        status: statusId,
+      })
+    );
+  }
 
   return (
     <div className="word-details-pane">
       <div className="word-details-container">
-        <CrossIcon className="cross-icon" onClick={() => dispatch(showRightDrawer({ open: false }))}/>
+        <CrossIcon
+          className="cross-icon"
+          onClick={() => dispatch(showRightDrawer({ open: false }))}
+        />
 
         <div className="hero-section">
           <div className="top-row">
             <H3>{word?.title}</H3>
-            <Volume className="icon" onClick={() => { }} />
+            <Volume className="icon" onClick={() => {}} />
           </div>
           <Accordion
             className="accordion"
@@ -47,42 +49,40 @@ const WordDetails = ({
             }
             Content={
               <ul>
-                {
-                  word?.meanings?.map(({ id, meaning }) => {
-                    return (
-                      <li key={id} className="meaning-li">
-                        <Body>{meaning}</Body>
-                      </li>
-                    );
-                  })
-                }
+                {word?.meanings?.map(({ id, meaning }) => {
+                  return (
+                    <li key={id} className="meaning-li">
+                      <Body>{meaning}</Body>
+                    </li>
+                  );
+                })}
               </ul>
             }
           />
-          {word.mneumonics && word.mneumonics.length > 0 && <Accordion
-            className="accordion"
-            defaultExpanded={true}
-            Heading={
-              <AccordionSummary
-                expandIcon={<AccordionOpenIcon className="icon" />}
-              >
-                <Heading>Mneumonics</Heading>
-              </AccordionSummary>
-            }
-            Content={
-              <ul>
-                {
-                  word?.mneumonics?.map(({ id, mneumonic }) => {
+          {word.mneumonics && word.mneumonics.length > 0 && (
+            <Accordion
+              className="accordion"
+              defaultExpanded={true}
+              Heading={
+                <AccordionSummary
+                  expandIcon={<AccordionOpenIcon className="icon" />}
+                >
+                  <Heading>Mneumonics</Heading>
+                </AccordionSummary>
+              }
+              Content={
+                <ul>
+                  {word?.mneumonics?.map(({ id, mneumonic }) => {
                     return (
                       <li key={id} className="meaning-li">
                         <Body>{mneumonic}</Body>
                       </li>
                     );
-                  })
-                }
-              </ul>
-            }
-          />}
+                  })}
+                </ul>
+              }
+            />
+          )}
           <Accordion
             className="accordion"
             defaultExpanded={true}
@@ -95,37 +95,41 @@ const WordDetails = ({
             }
             Content={
               <ul>
-                {
-                  word?.sentences?.map(({ id, sentence }) => {
-                    return (
-                      <li key={id} className="meaning-li">
-                        <Body>{sentence}</Body>
-                      </li>
-                    );
-                  })
-                }
+                {word?.sentences?.map(({ id, sentence }) => {
+                  return (
+                    <li key={id} className="meaning-li">
+                      <Body>{sentence}</Body>
+                    </li>
+                  );
+                })}
               </ul>
             }
           />
-          {word?.funFact && <div className="fun-fact">
-            <Heading>Fun Fact</Heading>
-            <Body className="fun-fact-content">{word.funFact}</Body>
-          </div>}
+          {word?.funFact && (
+            <div className="fun-fact">
+              <Heading>Fun Fact</Heading>
+              <Body className="fun-fact-content">{word.funFact}</Body>
+            </div>
+          )}
         </div>
       </div>
 
       <div className="footer">
-        <Button color="$green" fullWidth={false} onClick={() => handleClick(1)}>Completed</Button>
-        <Button color="$green" fullWidth={false} onClick={()=> handleClick(2)}>Review Later</Button>
+        <Button color="$green" fullWidth={false} onClick={() => handleClick(1)}>
+          Completed
+        </Button>
+        <Button color="$green" fullWidth={false} onClick={() => handleClick(2)}>
+          Review Later
+        </Button>
       </div>
     </div>
   );
-}
+};
 
 export default WordDetails;
 WordDetails.propTypes = {
   // necessary fields
   id: PropTypes.number.isRequired,
   // optional fields
-  className: PropTypes.string
+  className: PropTypes.string,
 };

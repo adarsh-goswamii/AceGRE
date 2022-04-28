@@ -1,16 +1,15 @@
 import * as apiConst from "../constants/api.consts";
-import api from './index';
+import api from "./index";
 
-export const getWordList = async(payload) => {
+export const getWordList = async (payload) => {
   try {
-    const {pagination, filter} = payload;
+    const { pagination, filter } = payload;
     let page = "";
-    if(pagination) {
-      page= `page=${pagination.page_no}&size=${pagination.size}`
+    if (pagination) {
+      page = `page=${pagination.page_no}&size=${pagination.size}`;
     }
-    
-    if(filter) {
 
+    if (filter) {
     }
 
     const result = await api.get(`${apiConst.GET_WORD_LIST}?${page}`);
@@ -22,10 +21,12 @@ export const getWordList = async(payload) => {
 
 export const updateWordStatus = async (payload) => {
   try {
-    const results = await api.postData(`${apiConst.UPDATE_WORD_STATUS}`, payload);
+    const results = await api.postData(
+      `${apiConst.UPDATE_WORD_STATUS}`,
+      payload
+    );
     return results.data;
   } catch (error) {
     throw error;
   }
-}
-
+};

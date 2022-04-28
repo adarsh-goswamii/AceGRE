@@ -12,32 +12,32 @@ import { Autocomplete } from "@material-ui/lab";
 import { TextField, InputAdornment, Select, MenuItem } from "@material-ui/core";
 import { ReactComponent as SearchIcon } from "../../../assets/images/search.svg";
 import { getWordList, updatePagination } from "../../../store/action/explore";
-import { plainToClass } from 'class-transformer';
+import { plainToClass } from "class-transformer";
 import { Word } from "../../../model/Word";
 
 const Explore = () => {
   const [filterStatus, setFilterStatus] = useState(null);
   const [words, setWords] = useState([]);
   const [openWord, setOpenWord] = useState({});
-  const rightDrawer = useSelector(state => state.common.rightDrawer);
+  const rightDrawer = useSelector((state) => state.common.rightDrawer);
   const dispatch = useDispatch();
 
-  const pagination = useSelector(state => state.explore.pagination);
-  const wordList = useSelector(state => state.explore.words);
+  const pagination = useSelector((state) => state.explore.pagination);
+  const wordList = useSelector((state) => state.explore.words);
 
   useEffect(() => {
     const payload = {
       pagination: {
         size: pagination.size,
-        page_no: pagination.page_no
-      }
-    }
+        page_no: pagination.page_no,
+      },
+    };
     dispatch(getWordList(payload));
   }, []);
 
   useEffect(() => {
     if (wordList) {
-      const temp = wordList.map(word => plainToClass(Word, word));
+      const temp = wordList.map((word) => plainToClass(Word, word));
       setWords(temp);
     }
   }, [wordList]);
@@ -56,21 +56,25 @@ const Explore = () => {
   }
 
   function handlePageNumberChange(event, currPage) {
-    dispatch(getWordList({
-      pagination: {
-        page_no: currPage,
-        size: pagination.size
-      }
-    }));
+    dispatch(
+      getWordList({
+        pagination: {
+          page_no: currPage,
+          size: pagination.size,
+        },
+      })
+    );
   }
 
   function handleCardPerPageChange(value) {
-    dispatch(getWordList({
-      pagination: {
-        page_no: 1,
-        size: value
-      }
-    }));
+    dispatch(
+      getWordList({
+        pagination: {
+          page_no: 1,
+          size: value,
+        },
+      })
+    );
   }
 
   return (
@@ -101,7 +105,7 @@ const Explore = () => {
                   ),
                 }}
               />
-            )
+            );
           }}
         />
         <Select
@@ -116,31 +120,28 @@ const Explore = () => {
           MenuProps={{
             anchorOrigin: {
               vertical: "bottom",
-              horizontal: "left"
+              horizontal: "left",
             },
             transformOrigin: {
               vertical: "top",
-              horizontal: "left"
+              horizontal: "left",
             },
-            getContentAnchorEl: null
-          }} >
-          {
-            wordMenu?.map(data => {
-              return (
-                <MenuItem
-                  key={data.id}
-                  value={data}>
-                  {data.title}
-                </MenuItem>
-              )
-            })
-          }
+            getContentAnchorEl: null,
+          }}
+        >
+          {wordMenu?.map((data) => {
+            return (
+              <MenuItem key={data.id} value={data}>
+                {data.title}
+              </MenuItem>
+            );
+          })}
         </Select>
       </div>
       <div className="word-grid-container">
-        {
-          words?.map(word => <WordCard word={word} onClick={handleRightPaneOpen} />)
-        }
+        {words?.map((word) => (
+          <WordCard word={word} onClick={handleRightPaneOpen} />
+        ))}
       </div>
       <div className="pagination">
         <Pagination
@@ -149,16 +150,18 @@ const Explore = () => {
           paginationOptions={[20, 40, 60, 80, 100]}
           handlePageNumberChange={handlePageNumberChange}
           handleCardPerPageChange={handleCardPerPageChange}
-          totalPage={pagination.total_pages} />
+          totalPage={pagination.total_pages}
+        />
       </div>
       <RightPane
         open={rightDrawer?.open}
         close={handleRightPaneClose}
-        className="word-details-pane">
+        className="word-details-pane"
+      >
         <WordDetails word={openWord} />
       </RightPane>
     </>
-  )
-}
+  );
+};
 
 export default Explore;

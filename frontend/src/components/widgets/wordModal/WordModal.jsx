@@ -23,10 +23,12 @@ const WordModal = ({ index, ...quizQues }) => {
   }
 
   function handleStatusUpdate(status) {
-    dispatch(updateWordStatus({
-      id: quizQues.id,
-      status
-    }))
+    dispatch(
+      updateWordStatus({
+        id: quizQues.id,
+        status,
+      })
+    );
     handleModalClose();
   }
 
@@ -37,24 +39,41 @@ const WordModal = ({ index, ...quizQues }) => {
           <p className="question-word">{`${index}. ${ques?.word}`}</p>
 
           <div className="options">
-            {
-              ques?.options?.map(option => <Option
+            {ques?.options?.map((option) => (
+              <Option
                 text={option.meaning}
-                setSelectedAns={() => { }}
+                setSelectedAns={() => {}}
                 id={option.id}
-                defaultState={`${ques.correctAns.includes(option.id) ? "selected" : ""}`} />)
-            }
+                defaultState={`${
+                  ques.correctAns.includes(option.id) ? "selected" : ""
+                }`}
+              />
+            ))}
           </div>
 
           <div className="action-btns">
             <Button
               onClick={() => handleStatusUpdate(1)}
-              variant={`${checkIfCorrect(ques.submittedAns, ques.correctAns) ? "contained" : "outlined"}`}
-              className={"completed"}>Completed</Button>
-            <Button 
+              variant={`${
+                checkIfCorrect(ques.submittedAns, ques.correctAns)
+                  ? "contained"
+                  : "outlined"
+              }`}
+              className={"completed"}
+            >
+              Completed
+            </Button>
+            <Button
               onClick={() => handleStatusUpdate(2)}
-              variant={`${!checkIfCorrect(ques.submittedAns, ques.correctAns) ? "contained" : "outlined"}`} 
-              className={"review"}>Review Later</Button>
+              variant={`${
+                !checkIfCorrect(ques.submittedAns, ques.correctAns)
+                  ? "contained"
+                  : "outlined"
+              }`}
+              className={"review"}
+            >
+              Review Later
+            </Button>
           </div>
         </div>
       </ClickAwayListener>

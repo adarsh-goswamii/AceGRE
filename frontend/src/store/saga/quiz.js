@@ -12,7 +12,7 @@ function* handleGenerateQuiz(action) {
     console.log("Results", results);
     yield put({
       type: actionType.GENERATE_QUIZ_SUCCESS,
-      payload: results?.quiz_id
+      payload: results?.quiz_id,
     });
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
@@ -21,11 +21,11 @@ function* handleGenerateQuiz(action) {
   } catch (error) {
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false
+      payload: false,
     });
     yield put({
       type: actionType.GENERATE_QUIZ_FAILURE,
-      payload: error.response.data
+      payload: error.response.data,
     });
   }
 }
@@ -40,7 +40,7 @@ function* handleQuizQuesFetch(action) {
     const results = yield call(api.fetchQuestions, payload);
     yield put({
       type: actionType.GET_QUIZ_QUESTIONS_SUCCESS,
-      payload: results?.data
+      payload: results?.data,
     });
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
@@ -49,11 +49,11 @@ function* handleQuizQuesFetch(action) {
   } catch (error) {
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false
+      payload: false,
     });
     yield put({
       type: actionType.GET_QUIZ_QUESTIONS_FAILURE,
-      payload: error.response.data
+      payload: error.response.data,
     });
   }
 }
@@ -68,7 +68,7 @@ function* handlePatchSolution(action) {
     const results = yield call(api.patchSolution, payload);
     yield put({
       type: actionType.PATCH_QUIZ_SOLUTION_SUCCESS,
-      payload: results
+      payload: results,
     });
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
@@ -77,11 +77,11 @@ function* handlePatchSolution(action) {
   } catch (error) {
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false
+      payload: false,
     });
     yield put({
       type: actionType.PATCH_QUIZ_SOLUTION_FAILURE,
-      payload: error.response.data
+      payload: error.response.data,
     });
   }
 }
@@ -96,7 +96,7 @@ function* handleFetchResults(action) {
     const results = yield call(api.fetchResults, payload);
     yield put({
       type: actionType.GET_QUIZ_RESULTS_SUCCESS,
-      payload: results?.data
+      payload: results?.data,
     });
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
@@ -105,11 +105,11 @@ function* handleFetchResults(action) {
   } catch (error) {
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false
+      payload: false,
     });
     yield put({
       type: actionType.GET_QUIZ_RESULTS_FAILURE,
-      payload: error.response.data
+      payload: error.response.data,
     });
   }
 }
@@ -124,7 +124,7 @@ function* handleQuizEnd(action) {
     const results = yield call(api.endQuiz, payload);
     yield put({
       type: actionType.END_QUIZ_SUCCESS,
-      payload: results
+      payload: results,
     });
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
@@ -133,15 +133,14 @@ function* handleQuizEnd(action) {
   } catch (error) {
     yield put({
       type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false
+      payload: false,
     });
     yield put({
       type: actionType.END_QUIZ_FAILURE,
-      payload: error.response.data
+      payload: error.response.data,
     });
   }
 }
-
 
 function* generateQuizWatcher() {
   yield takeLatest(actionType.GENERATE_QUIZ, handleGenerateQuiz);
@@ -168,7 +167,7 @@ export function* quizSaga() {
     generateQuizWatcher(),
     fetchQuizQuestionsWatcher(),
     patchQuizSolutionWatcher(),
-    fetchResultsWatcher(), 
+    fetchResultsWatcher(),
     endQuizWatcher(),
   ]);
-};
+}

@@ -4,11 +4,11 @@ import * as api from "../../apis/auth";
 import Cookies from "js-cookie";
 
 function* handleUserRegister(action) {
-  let payload= action.payload;
+  let payload = action.payload;
   try {
     yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY, 
-      payload: true
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: true,
     });
     const results = yield call(api.register, payload);
     localStorage.setItem("email", results?.data?.email);
@@ -16,31 +16,31 @@ function* handleUserRegister(action) {
     localStorage.setItem("token", results?.data?.token);
     Cookies.set("refresh_token", results?.data?.refresh_token);
     yield put({
-      type: actionType.REGISTER_USER_SUCCESS, 
-      payload: results.data
+      type: actionType.REGISTER_USER_SUCCESS,
+      payload: results.data,
     });
     yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY, 
-      payload: false
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: false,
     });
   } catch (error) {
     yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY, 
-      payload: false
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: false,
     });
     yield put({
-      type: actionType.REGISTER_USER_FAILURE, 
-      payload: error.response.data
+      type: actionType.REGISTER_USER_FAILURE,
+      payload: error.response.data,
     });
   }
 }
 
 function* handleUserLogin(action) {
-  let payload= action.payload;
+  let payload = action.payload;
   try {
     yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY, 
-      payload: true
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: true,
     });
     const results = yield call(api.login, payload);
     localStorage.setItem("email", results?.data?.email);
@@ -48,21 +48,21 @@ function* handleUserLogin(action) {
     localStorage.setItem("token", results?.data?.token);
     Cookies.set("refresh_token", results?.data?.refresh_token);
     yield put({
-      type: actionType.LOGIN_USER_SUCCESS, 
-      payload: results.data
+      type: actionType.LOGIN_USER_SUCCESS,
+      payload: results.data,
     });
     yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY, 
-      payload: false
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: false,
     });
   } catch (error) {
     yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY, 
-      payload: false
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: false,
     });
     yield put({
-      type: actionType.LOGIN_USER_FAILURE, 
-      payload: error.response.data
+      type: actionType.LOGIN_USER_FAILURE,
+      payload: error.response.data,
     });
   }
 }
@@ -70,8 +70,8 @@ function* handleUserLogin(action) {
 function* handleUserLogout(action) {
   try {
     yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY, 
-      payload: true
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: true,
     });
     yield call(api.logout);
     localStorage.removeItem("email");
@@ -82,17 +82,17 @@ function* handleUserLogout(action) {
       type: actionType.LOGOUT_USER_SUCCESS,
     });
     yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY, 
-      payload: false
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: false,
     });
   } catch (error) {
     yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY, 
-      payload: false
+      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
+      payload: false,
     });
     yield put({
-      type: actionType.LOGIN_USER_FAILURE, 
-      payload: error.response.data
+      type: actionType.LOGIN_USER_FAILURE,
+      payload: error.response.data,
     });
   }
 }
@@ -109,9 +109,5 @@ function* logoutWatcher() {
 }
 
 export function* authSaga() {
-  yield all([
-    loginWatcher(), 
-    registerWatcher(),
-    logoutWatcher(), 
-  ]);
-};
+  yield all([loginWatcher(), registerWatcher(), logoutWatcher()]);
+}

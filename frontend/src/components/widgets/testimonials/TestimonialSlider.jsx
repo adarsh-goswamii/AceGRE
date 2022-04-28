@@ -3,12 +3,9 @@ import Testimonial from "./Testimonial";
 import { ReactComponent as LeftArrow } from "../../../assets/images/leftArrow.svg";
 import { ReactComponent as RightArrow } from "../../../assets/images/rightArrow.svg";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import { Carousel } from "react-responsive-carousel";
 
-const TestimonialSlider = ({
-
-}) => {
-
+const TestimonialSlider = ({}) => {
   return (
     <Carousel
       axis="horizontal"
@@ -18,9 +15,14 @@ const TestimonialSlider = ({
       swipeable={true}
       showArrows={true}
       interval={3000}
-      renderArrowPrev={(handleClick) => <LeftArrow className="left-arrow" onClick={handleClick} />}
-      renderArrowNext={(handleClick) => <RightArrow className="right-arrow" onClick={handleClick} />}
-      className="testimonials-container">
+      renderArrowPrev={(handleClick) => (
+        <LeftArrow className="left-arrow" onClick={handleClick} />
+      )}
+      renderArrowNext={(handleClick) => (
+        <RightArrow className="right-arrow" onClick={handleClick} />
+      )}
+      className="testimonials-container"
+    >
       <div>
         <Testimonial />
       </div>
@@ -31,7 +33,7 @@ const TestimonialSlider = ({
         <Testimonial />
       </div>
     </Carousel>
-  )
+  );
 };
 
 export default TestimonialSlider;
