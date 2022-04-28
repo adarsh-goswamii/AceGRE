@@ -20,7 +20,7 @@ const Modal = ({ handleClose }) => {
 };
 
 export default Modal;
-Container.propTypes = {
+Modal.propTypes = {
   // necessary fields
   handleClose: PropTypes.func
 };
