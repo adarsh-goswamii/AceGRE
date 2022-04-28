@@ -25,9 +25,8 @@ const Option = ({ text, id, setSelectedAns, defaultState = "" }) => {
 export default Option;
 
 Option.propTypes = {
-
-  text:PropTypes.string,
-  id:PropTypes.number,
-  setSelectedAns:PropTypes.func,
-  defaultState :PropTypes.string
+  text: PropTypes.string,
+  id: PropTypes.number,
+  setSelectedAns: PropTypes.func,
+  defaultState: PropTypes.string,
 };

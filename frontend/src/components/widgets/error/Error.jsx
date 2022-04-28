@@ -18,4 +18,4 @@ Error.protoTypes = {
   message: PropTypes.string.isRequired,
   // optional fields
   //className: PropTypes.string
-}
+};

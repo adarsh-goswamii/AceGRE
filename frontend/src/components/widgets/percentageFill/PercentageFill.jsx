@@ -14,7 +14,7 @@ const PercentageFill = ({ percentage }) => {
 
 export default PercentageFill;
 
-PercentageFill.protoTypes = { 
+PercentageFill.protoTypes = {
   // optional fields
-  percentage:PropTypes.number
-}
+  percentage: PropTypes.number,
+};

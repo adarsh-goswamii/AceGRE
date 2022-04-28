@@ -131,5 +131,5 @@ WordDetails.propTypes = {
   // necessary fields
   // optional fields
   word: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
