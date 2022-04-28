@@ -1,4 +1,5 @@
 import "./PercentageFill.scss";
+import { PropTypes } from "prop-types";
 
 const PercentageFill = ({ percentage }) => {
   return (
@@ -12,3 +13,8 @@ const PercentageFill = ({ percentage }) => {
 };
 
 export default PercentageFill;
+
+PercentageFill.protoTypes = { 
+  // optional fields
+  percentage:PropTypes.number
+}

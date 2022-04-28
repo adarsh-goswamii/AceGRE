@@ -17,5 +17,5 @@ Error.protoTypes = {
   // necessary fields
   message: PropTypes.string.isRequired,
   // optional fields
-  className: PropTypes.string,
-};
+  //className: PropTypes.string
+}

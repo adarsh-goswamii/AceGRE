@@ -1,4 +1,5 @@
 import "./Option.scss";
+import { PropTypes } from "prop-types";
 
 const Option = ({ text, id, setSelectedAns, defaultState = "" }) => {
   function handleOptionClick(event) {
@@ -22,3 +23,11 @@ const Option = ({ text, id, setSelectedAns, defaultState = "" }) => {
 };
 
 export default Option;
+
+Option.propTypes = {
+
+  text:PropTypes.string,
+  id:PropTypes.number,
+  setSelectedAns:PropTypes.func,
+  defaultState :PropTypes.string
+};

@@ -1,6 +1,7 @@
 import { Modal as MuiModal } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import "./Modal.scss";
+import { PropTypes } from "prop-types";
 
 const Modal = ({ handleClose }) => {
   const modal = useSelector((state) => state.common.modal);
@@ -19,3 +20,7 @@ const Modal = ({ handleClose }) => {
 };
 
 export default Modal;
+Modal.propTypes = {
+  // necessary fields
+  handleClose: PropTypes.func
+};

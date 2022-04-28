@@ -129,7 +129,7 @@ const WordDetails = ({ word, className }) => {
 export default WordDetails;
 WordDetails.propTypes = {
   // necessary fields
-  id: PropTypes.number.isRequired,
   // optional fields
-  className: PropTypes.string,
+  word: PropTypes.string,
+  className: PropTypes.string
 };

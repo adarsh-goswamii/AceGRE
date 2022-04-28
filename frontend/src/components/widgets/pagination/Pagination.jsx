@@ -55,9 +55,10 @@ const CustomPagination = ({
 export default CustomPagination;
 CustomPagination.propTypes = {
   // necessary fields
-  totalPage: PropTypes.number.isRequired,
-  paginationOptions: PropTypes.array.isRequired,
-  limit: PropTypes.number.isRequired,
-  handleCardPerPageChange: PropTypes.func.isRequired,
-  handlePageNumberChange: PropTypes.func.isRequired,
+  page:PropTypes.number.isRequired,
+  totalPage:PropTypes.number.isRequired,
+  paginationOptions :PropTypes.array.isRequired,
+  limit:PropTypes.number.isRequired,
+  handleCardPerPageChange:PropTypes.func.isRequired,
+  handlePageNumberChange :PropTypes.func.isRequired
 };

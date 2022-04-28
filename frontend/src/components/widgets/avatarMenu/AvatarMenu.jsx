@@ -8,7 +8,8 @@ import { ReactComponent as LogoutIcon } from "../../../assets/images/logout.svg"
 import { Menu, MenuItem } from "@material-ui/core";
 import { handleLogout } from "../../../store/action/auth";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import { PropTypes } from "prop-types";
 
 const AvatarMenu = ({ handlePopOverClose }) => {
   const dispatch = useDispatch();
@@ -53,3 +54,9 @@ const AvatarMenu = ({ handlePopOverClose }) => {
 };
 
 export default AvatarMenu;
+
+AvatarMenu.protoTypes = {
+
+  handlePopOverClose: PropTypes.func, 
+  
+}
