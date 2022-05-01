@@ -40,10 +40,9 @@ const getWords = async (req, res, next) => {
         let access_token = req.headers["authorization"];
         if (access_token) access_token = req.headers["authorization"].split(" ")[1];
 
-        let filter= req.query.filter, size= Number(req.query.size), page_no = Number(req.query.page);
+        let search = req.query.search, status = Number(req.query.status), size = Number(req.query.size), page_no = Number(req.query.page);
         page_no--;
-        const wordsCount = await Word.count();
-        let wordList = await Word.find({}, null, { skip: size * page_no, limit: size }).lean().exec();
+        let wordList = await Word.find({}).lean().exec();
         if (access_token) {
             // user is logged in
             let userData;
@@ -57,6 +56,9 @@ const getWords = async (req, res, next) => {
                     return Object.assign({}, word, { status });
                 });
 
+                wordList = applyFilter(wordList, search, status);
+                [wordList, wordsCount] = applyPagination(wordList, size, page_no);
+
                 res.status(200).json({
                     status: "success",
                     data: wordList,
@@ -68,6 +70,9 @@ const getWords = async (req, res, next) => {
                 });
             });
         } else {
+            wordList = applyFilter(wordList, search, status);
+            [wordList, wordsCount] = applyPagination(wordList, size, page_no);
+
             res.status(200).json({
                 status: "success",
                 data: wordList,
@@ -113,4 +118,25 @@ module.exports = {
     addWord,
     getWords,
     updateWordStatus,
-}; 
+};
+
+
+// helper functions
+
+function applyFilter(words, search, status,) {
+    if (search) {
+        words = words.filter(word => {
+            let ret= word.title.substring(0, search.length).toLowerCase() === search.toLowerCase()
+            return ret;
+        });
+    }
+    if (status) {
+        words = words.filter(word => word.status === status);
+    }
+    return words;
+}
+
+function applyPagination(words, size, page_no) {
+    console.log(words, size, page_no);
+    return [words.slice(size*page_no, size*page_no + size), words.length];
+}
