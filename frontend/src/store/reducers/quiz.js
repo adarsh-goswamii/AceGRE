@@ -14,7 +14,6 @@ const INIT_INITIAL_STATE = {
 };
 
 const reducerFn = (state = INIT_INITIAL_STATE, action) => {
-  console.log(action);
   switch (action.type) {
     case actionType.GENERATE_QUIZ_SUCCESS:
       return Object.assign({}, state, { quizGeneratedId: action.payload });
@@ -40,6 +39,15 @@ const reducerFn = (state = INIT_INITIAL_STATE, action) => {
       return Object.assign({}, state, { endQuizSuccess: action.payload });
     case actionType.END_QUIZ_FAILURE:
       return Object.assign({}, state, { endQuizFailure: action.payload });
+    case actionType.RESET_QUIZ:
+      return Object.assign({}, state, {
+        quizQuestions: null,
+        fetchQuizQuesFailure: {},
+        patchQuizSolutionFailure: {},
+        patchQuizSolutionSuccess: {},
+        endQuizSuccess: null,
+        endQuizFailure: null,
+      });
     default:
       return state;
   }

@@ -113,7 +113,6 @@ const SignUpForm = ({ toggleForm }) => {
 
   function handleOnBlurPassword() {
     const temp = passwordStrengthCheck(password.value);
-    console.log(temp);
     setPassword((prev) =>
       Object.assign({}, prev, {
         helperText: temp,
