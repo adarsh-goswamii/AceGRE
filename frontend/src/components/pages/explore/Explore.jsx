@@ -33,7 +33,7 @@ const Explore = () => {
         size: pagination.size,
         page_no: pagination.page_no,
       },
-      filter: filter
+      filter: filter,
     };
     dispatch(getWordList(payload));
   }, []);
@@ -66,7 +66,7 @@ const Explore = () => {
         filter: {
           status: temp?.id || 0,
           search: filter.search,
-        }
+        },
       })
     );
   }
@@ -78,7 +78,7 @@ const Explore = () => {
           page_no: currPage,
           size: pagination.size,
         },
-        filter: filter
+        filter: filter,
       })
     );
   }
@@ -90,7 +90,7 @@ const Explore = () => {
           page_no: 1,
           size: value,
         },
-        filter
+        filter,
       })
     );
   }
@@ -102,23 +102,26 @@ const Explore = () => {
 
   const debouncedSearchCall = useCallback(
     debounce((value) => {
-      dispatch(getWordList({
-        pagination: {
-          page_no: 1,
-          size: pagination.size
-        },
-        filter: {
-          status: filter.status,
-          search: value,
-        }
-      }))
-    }, 500), []);
+      dispatch(
+        getWordList({
+          pagination: {
+            page_no: 1,
+            size: pagination.size,
+          },
+          filter: {
+            status: filter.status,
+            search: value,
+          },
+        })
+      );
+    }, 500),
+    []
+  );
 
   return (
     <>
       <H3 className="heading">Search Vocabulary Words</H3>
       <div className="filters">
-
         <TextField
           className="search-autocomplete"
           valeue={search}

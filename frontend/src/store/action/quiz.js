@@ -36,6 +36,6 @@ export const endQuiz = (payload) => {
 
 export const resetQuiz = () => {
   return {
-    type: actionType.RESET_QUIZ
-  }
+    type: actionType.RESET_QUIZ,
+  };
 };

@@ -70,7 +70,7 @@ const WordCard = ({ word, onClick }) => {
       >
         <div className="menu-container">
           {wordMenu?.map(({ id, title }) => {
-            if(id === 0) return <></>;
+            if (id === 0) return <></>;
             return (
               <MenuItem key={id} onClick={() => handleStatusChange(id, title)}>
                 {id === 1 ? (

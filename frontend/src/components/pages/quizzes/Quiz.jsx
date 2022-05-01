@@ -10,7 +10,7 @@ import {
   fetchQuestions,
   generateQuiz,
   patchSolution,
-  resetQuiz
+  resetQuiz,
 } from "../../../store/action/quiz";
 import {
   STEPS as steps,
@@ -18,7 +18,7 @@ import {
 } from "../../../constants/generic.consts";
 import { useNavigate } from "react-router-dom";
 
-const Quiz = ({ }) => {
+const Quiz = ({}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(true);
@@ -144,7 +144,7 @@ const Quiz = ({ }) => {
       ) : (
         <></>
       )}
-      <Modal open={openModal} onClose={() => { }}>
+      <Modal open={openModal} onClose={() => {}}>
         <div className="stepper-container">
           <Stepper activeStep={activeStep}>
             {steps.map((label, index) => {
