@@ -20,19 +20,27 @@
 
     .search-autocomplete {
       border-radius: 10px;
-      padding: 2px 18px;
+      padding: 6px 18px;
       background-color: $white;
       width: 60%;
       box-shadow: $boxShadow;
+      border: 0px;
+      outline: 0px;
+      
+      .icon {
+        width: 24px;
+        height: 24px;
+      }
+      
+      .MuiInput-underline:before, 
+      .MuiInput-underline:after {
+        border-bottom: 0px;
+      }
 
       .MuiFormControl-root {
         .MuiInputBase-root {
           width: 100%;
 
-          .icon {
-            width: 24px;
-            height: 24px;
-          }
 
           .MuiInputBase-input {
             font-size: 14px !important;

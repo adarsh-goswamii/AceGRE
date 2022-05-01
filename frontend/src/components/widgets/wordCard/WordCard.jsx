@@ -70,6 +70,7 @@ const WordCard = ({ word, onClick }) => {
       >
         <div className="menu-container">
           {wordMenu?.map(({ id, title }) => {
+            if(id === 0) return <></>;
             return (
               <MenuItem key={id} onClick={() => handleStatusChange(id, title)}>
                 {id === 1 ? (
@@ -102,7 +103,7 @@ const WordCard = ({ word, onClick }) => {
 export default WordCard;
 WordCard.propTypes = {
   //necesarry fields
-  status: PropTypes.oneOf(["review later", "completed", "none"]).isRequired,
+  status: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   meaning: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,

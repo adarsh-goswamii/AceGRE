@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { wordMenu } from "../../../data/words";
 import WordCard from "../../widgets/wordCard/WordCard";
 import "./Explore.scss";
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as action from "../../../store/action/common";
 import Pagination from "../../widgets/pagination/Pagination";
 import { H3 } from "../../shared/typography/Typogrpahy";
-import { Autocomplete } from "@material-ui/lab";
+import debounce from "lodash/debounce";
 import { TextField, InputAdornment, Select, MenuItem } from "@material-ui/core";
 import { ReactComponent as SearchIcon } from "../../../assets/images/search.svg";
 import { getWordList, updatePagination } from "../../../store/action/explore";
@@ -19,6 +19,7 @@ const Explore = () => {
   const [filterStatus, setFilterStatus] = useState(null);
   const [words, setWords] = useState([]);
   const [openWord, setOpenWord] = useState({});
+  const [search, setSearch] = useState("");
   const rightDrawer = useSelector((state) => state.common.rightDrawer);
   const dispatch = useDispatch();
 
@@ -94,37 +95,45 @@ const Explore = () => {
     );
   }
 
+  function handleSearchChange(event) {
+    setSearch(event.target.value);
+    debouncedSearchCall(event.target.value);
+  }
+
+  const debouncedSearchCall = useCallback(
+    debounce((value) => {
+      dispatch(getWordList({
+        pagination: {
+          page_no: 1,
+          size: pagination.size
+        },
+        filter: {
+          status: filter.status,
+          search: value,
+        }
+      }))
+    }, 500), []);
+
   return (
     <>
       <H3 className="heading">Search Vocabulary Words</H3>
       <div className="filters">
-        <Autocomplete
-          freeSolo
-          id="search"
+
+        <TextField
           className="search-autocomplete"
-          // value={""}
-          disableClearable
-          getOptionLabel={(data) => data.value}
-          options={[]}
-          renderOption={() => "ada"}
-          renderInput={(params) => {
-            return (
-              <TextField
-                {...params}
-                variant="outlined"
-                size="small"
-                placeholder="Enter to search words"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon className="icon" />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            );
+          valeue={search}
+          onChange={handleSearchChange}
+          size="small"
+          placeholder="Enter to search words"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon className="icon" />
+              </InputAdornment>
+            ),
           }}
         />
+
         <Select
           label="Status"
           labelId="status"
