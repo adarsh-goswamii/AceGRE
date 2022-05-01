@@ -66,6 +66,10 @@ const getWords = async (req, res, next) => {
                         size,
                         page_no: page_no + 1,
                         total_pages: Number(Math.ceil(wordsCount / size))
+                    }, 
+                    filter: {
+                        search, 
+                        status
                     }
                 });
             });
@@ -80,6 +84,10 @@ const getWords = async (req, res, next) => {
                     size,
                     page_no: page_no + 1,
                     total_pages: Number(Math.ceil(wordsCount / size))
+                }, 
+                filter: {
+                    search, 
+                    status,
                 }
             });
         }
