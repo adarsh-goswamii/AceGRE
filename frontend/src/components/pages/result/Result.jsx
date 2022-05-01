@@ -15,10 +15,8 @@ const Result = ({}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const id = new URLSearchParams(location.search).get("id");
-  console.log(id);
 
   const results = useSelector((state) => state.quiz.quizResults);
-  console.log(results);
 
   useEffect(() => {
     if (id) {

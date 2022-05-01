@@ -9,7 +9,6 @@ function* handleGenerateQuiz(action) {
       payload: true,
     });
     const results = yield call(api.generateQuiz);
-    console.log("Results", results);
     yield put({
       type: actionType.GENERATE_QUIZ_SUCCESS,
       payload: results?.quiz_id,

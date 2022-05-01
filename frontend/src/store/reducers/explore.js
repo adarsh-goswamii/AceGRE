@@ -10,9 +10,9 @@ const INIT_INITIAL_STATE = {
     total_pages: 10,
   },
   filter: {
-    search: "", 
+    search: "",
     status: null,
-  }
+  },
 };
 
 const reducerFn = (state = INIT_INITIAL_STATE, action) => {
@@ -21,7 +21,7 @@ const reducerFn = (state = INIT_INITIAL_STATE, action) => {
       return Object.assign({}, state, {
         words: action.payload.data,
         pagination: action.payload.pagination,
-        filter: action.payload.filter
+        filter: action.payload.filter,
       });
     case actionType.GET_WORD_LIST_FAILURE:
       return Object.assign({}, state, { getWordFailure: action.payload });

@@ -4,13 +4,13 @@ import Button from "../../shared/button/Button";
 import "./Quiz.scss";
 import Option from "../../widgets/option/Option";
 import Timer from "../../widgets/timer/Timer";
-import { quiz } from "../../../data/words";
 import { useDispatch, useSelector } from "react-redux";
 import {
   endQuiz,
   fetchQuestions,
   generateQuiz,
   patchSolution,
+  resetQuiz,
 } from "../../../store/action/quiz";
 import {
   STEPS as steps,
@@ -33,7 +33,6 @@ const Quiz = ({}) => {
     (state) => state.quiz.patchQuizSolutionSuccess
   );
   const quizEnd = useSelector((state) => state.quiz.endQuizSuccess);
-
   useEffect(() => {
     if (activeStep === steps.length) {
       setOpenModal(false);
@@ -55,7 +54,6 @@ const Quiz = ({}) => {
 
   useEffect(() => {
     if (Object.keys(solnSubmitted).length) {
-      console.log("solnSubmitted", solnSubmitted);
       nextQues();
     }
   }, [solnSubmitted]);
@@ -64,6 +62,8 @@ const Quiz = ({}) => {
     if ((currQues !== 0 && currQues === questions.length) || quizEnd) {
       navigate(`results?id=${quizId}`);
     }
+
+    return () => dispatch(resetQuiz());
   }, [currQues, quizEnd]);
 
   function nextQues() {
@@ -85,7 +85,6 @@ const Quiz = ({}) => {
     const test = questions?.[currQues]?.options.filter(({ id, meaning }) =>
       selectedAns.includes(id)
     );
-    console.log(test);
     dispatch(patchSolution(payload));
   }
 
