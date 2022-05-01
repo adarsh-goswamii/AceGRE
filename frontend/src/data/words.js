@@ -6,6 +6,7 @@ export const word = {
 };
 
 export const wordMenu = [
+  { title: "None", id: 0 },
   { title: "Completed", id: 1 },
   { title: "Review Later", id: 2 },
 ];

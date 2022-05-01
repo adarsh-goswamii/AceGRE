@@ -23,6 +23,7 @@ const Explore = () => {
   const dispatch = useDispatch();
 
   const pagination = useSelector((state) => state.explore.pagination);
+  const filter = useSelector((state) => state.explore.filter);
   const wordList = useSelector((state) => state.explore.words);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const Explore = () => {
         size: pagination.size,
         page_no: pagination.page_no,
       },
+      filter: filter
     };
     dispatch(getWordList(payload));
   }, []);
@@ -52,7 +54,20 @@ const Explore = () => {
   }
 
   function handleFilterStatusChange(event) {
-    setFilterStatus(event.target.value);
+    let temp = event.target.value;
+    setFilterStatus(temp);
+    dispatch(
+      getWordList({
+        pagination: {
+          page_no: 1,
+          size: pagination.size,
+        },
+        filter: {
+          status: temp?.id || 0,
+          search: filter.search,
+        }
+      })
+    );
   }
 
   function handlePageNumberChange(event, currPage) {
@@ -62,6 +77,7 @@ const Explore = () => {
           page_no: currPage,
           size: pagination.size,
         },
+        filter: filter
       })
     );
   }
@@ -73,6 +89,7 @@ const Explore = () => {
           page_no: 1,
           size: value,
         },
+        filter
       })
     );
   }
