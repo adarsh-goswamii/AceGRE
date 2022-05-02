@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import {
   Heading,
   Body,
-} from "../../../components/shared/typography/Typogrpahy";
+} from "../../shared/typography/Typogrpahy";
 import { ReactComponent as MenuIcon } from "../../../assets/images/menu.svg";
 import { ReactComponent as Completed } from "../../../assets/images/completed.svg";
 import { ReactComponent as CompletedActive } from "../../../assets/images/completedActive.svg";
 import { ReactComponent as Review } from "../../../assets/images/review.svg";
 import { ReactComponent as ReviewActive } from "../../../assets/images/reviewActive.svg";
 import { wordMenu } from "../../../data/words";
-import Popover from "../../../components/shared/popover/Popover";
+import Popover from "../../shared/popover/Popover";
 import "./WordCard.scss";
 import { MenuItem } from "@material-ui/core";
 import { PropTypes } from "prop-types";
