@@ -240,7 +240,7 @@ function pickQuestionsRandomly(wordList) {
   });
 
   let selectedWord = {};
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 20; i++) {
     let index = random(wordList.length);
     if (wordList[index]._id in selectedWord) i--;
     else {

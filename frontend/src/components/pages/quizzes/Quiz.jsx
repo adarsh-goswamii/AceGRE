@@ -5,6 +5,7 @@ import "./Quiz.scss";
 import Option from "../../widgets/option/Option";
 import Timer from "../../widgets/timer/Timer";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   endQuiz,
   fetchQuestions,
@@ -18,7 +19,7 @@ import {
 } from "../../../constants/generic.consts";
 import { useNavigate } from "react-router-dom";
 
-const Quiz = ({}) => {
+const Quiz = ({ }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(true);
@@ -33,6 +34,11 @@ const Quiz = ({}) => {
     (state) => state.quiz.patchQuizSolutionSuccess
   );
   const quizEnd = useSelector((state) => state.quiz.endQuizSuccess);
+
+  useEffect(() => {
+    return () => dispatch(resetQuiz());
+  }, []);
+
   useEffect(() => {
     if (activeStep === steps.length) {
       setOpenModal(false);
@@ -62,8 +68,6 @@ const Quiz = ({}) => {
     if ((currQues !== 0 && currQues === questions.length) || quizEnd) {
       navigate(`results?id=${quizId}`);
     }
-
-    return () => dispatch(resetQuiz());
   }, [currQues, quizEnd]);
 
   function nextQues() {
@@ -92,18 +96,27 @@ const Quiz = ({}) => {
     dispatch(endQuiz(quizId));
   }
 
+  console.log(quizQuestions);
+
   return (
     <>
+    
       {activeStep === steps.length && questions.length > currQues ? (
         <div className="container">
           <div className="left">
-            {
-              <Timer
-                onComplete={submitSolution}
-                duration={60}
-                currQues={currQues}
-              />
-            }
+            <Timer
+              onComplete={submitSolution}
+              duration={60}
+              currQues={currQues}
+            />
+
+            <div className="ques-container">
+              {
+                [...Array(quizQuestions?.length).keys()].map(val => (
+                  <div className={`ques-box ${currQues > val ? "completed" : ""}`}>{val + 1}</div>
+                ))
+              }
+            </div>
           </div>
           <div className="right">
             <div className="ques-container">
@@ -144,7 +157,9 @@ const Quiz = ({}) => {
       ) : (
         <></>
       )}
-      <Modal open={openModal} onClose={() => {}}>
+      <Modal open={openModal} onClose={() => { }}
+        BackdropComponent={"backdrop"}
+        className="background-modal">
         <div className="stepper-container">
           <Stepper activeStep={activeStep}>
             {steps.map((label, index) => {
