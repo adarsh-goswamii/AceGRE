@@ -21,7 +21,9 @@ instance.interceptors.request.use(
       if(accessTokenExpired) {
         if(checkExpiration(Cookies.get("refresh_token"))) {
           // console.log("refresh token is also expired");
-          // TODO: somehow logout user.
+          localStorage.removeItem("token");
+          localStorage.removeItem("email");
+          localStorage.removeItem("role");
         } else {
           console.log("refresh token is not expired");
           localStorage.removeItem("token");
