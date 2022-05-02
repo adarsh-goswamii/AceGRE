@@ -1,4 +1,7 @@
 import axios from "axios";
+import jwt from "jwt-decode";
+import Cookies from "js-cookie";
+import { refreshToken } from "./auth";
 
 const baseUrl = "http://localhost:5000";
 
@@ -10,8 +13,32 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   async (config) => {
-    const token = localStorage.getItem("token");
-    if (token) config.headers.Authorization = `Bearer ${token}`;
+    let token = localStorage.getItem("token");
+    if (token) {
+      const accessTokenExpired = checkExpiration(token);
+      // console.log("expired", accessTokenExpired);
+
+      if(accessTokenExpired) {
+        if(checkExpiration(Cookies.get("refresh_token"))) {
+          // console.log("refresh token is also expired");
+          localStorage.removeItem("token");
+          localStorage.removeItem("email");
+          localStorage.removeItem("role");
+        } else {
+          console.log("refresh token is not expired");
+          localStorage.removeItem("token");
+          await refreshToken({refresh_token: Cookies.get("refresh_token")});
+          token = localStorage.getItem("token");
+
+          if(!checkExpiration(token)) {
+            console.log("token good to go");
+          } else {
+            console.log("Something went wrong", token);
+          }
+        }
+      }
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
     return config;
   },
@@ -48,3 +75,17 @@ const api = {
 };
 
 export default api;
+
+// helper functions 
+
+function checkExpiration(token) {
+  try {
+    const {exp} = jwt(token);
+    if (Date.now() >= exp * 1000) {
+      return true;
+    }
+  } catch (err) {
+    return true;
+  }
+  return false;
+}

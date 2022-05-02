@@ -27,3 +27,12 @@ export const logout = async (payload) => {
     throw error;
   }
 };
+
+export const refreshToken = async (payload) => {
+  try {
+    const result = await api.postData(apiConst.REFRESH_TOKEN, payload);
+    localStorage.setItem("token", result?.data?.token)
+  } catch (error) {
+    throw error;
+  }
+}
