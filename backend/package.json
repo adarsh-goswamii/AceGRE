@@ -3,9 +3,13 @@
     "version": "1.0.0",
     "description": "backend is the ultimate backend solution",
     "main": "src/server.js",
+    "engines": {
+        "node": "16.14.0",
+        "npm": "8.3.1"
+      },
     "scripts": {
         "setup": "npm install && npm update",
-        "start": "nodemon server.js"
+        "start": "node src/server.js"
     },
     "keywords": [
         "express",
