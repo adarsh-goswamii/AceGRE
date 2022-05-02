@@ -3,8 +3,7 @@ import jwt from "jwt-decode";
 import Cookies from "js-cookie";
 import { refreshToken } from "./auth";
 
-const baseUrl = "https://ace-gre.herokuapp.com";
-
+const baseUrl = process.env.NODE_ENV === "production" ? "https://ace-gre.herokuapp.com" : "http://localhost:5000";
 
 const instance = axios.create({
   baseURL: baseUrl,
