@@ -18,6 +18,7 @@ import {
 } from "../../../store/action/quiz";
 import { openModal, closeModal } from "../../../store/action/common";
 import { useNavigate } from "react-router-dom";
+import UnauthorizedAccess from "../../widgets/unauthorizedAccess/UnauthorizedAccess";
 
 const Quiz = ({ }) => {
   const dispatch = useDispatch();
@@ -35,11 +36,6 @@ const Quiz = ({ }) => {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
 
   useEffect(() => {
-    dispatch(openModal({
-      children: <QuizStepper />, 
-      hideBackdrop: true
-    }));
-
     return () => dispatch(resetQuiz());
   }, []);
 
@@ -67,6 +63,13 @@ const Quiz = ({ }) => {
     }
   }, [currQues, quizEnd]);
 
+  useEffect(() => {
+    if(loggedIn) dispatch(openModal({
+      children: <QuizStepper />,
+      hideBackdrop: true
+    }));
+  }, [loggedIn]);
+
   function nextQues() {
     setCurrQues((prev) => prev + 1);
     setSelectedAns([]);
@@ -89,18 +92,22 @@ const Quiz = ({ }) => {
     dispatch(endQuiz(quizId));
   }
 
+  console.log(loggedIn);
   if (!loggedIn) {
+    console.log("henlo");
+    dispatch(openModal({
+      children: <UnauthorizedAccess />,
+      hideBackdrop: true
+    }));
+
     return (
-      <Modal open={true} onClose={() => { }}>
-        <div className="secure-container">
-          <Lottie animationData={secureFeature} />
-        </div>
-      </Modal>
+      <div className="background-modal" />
     );
   } else {
+    console.log("henlo 2");
     return (
       <>
-        { questions.length > currQues ? (
+        {questions.length > currQues ? (
           <div className="container">
             <div className="left">
               <Timer
