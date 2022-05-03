@@ -7,6 +7,7 @@ const INIT_INITIAL_STATE = {
   modal: {
     open: false,
     children: null,
+    hideBackdrop: false,
   },
   loader: false,
 };
@@ -19,10 +20,10 @@ const reducerFn = (state = INIT_INITIAL_STATE, action) => {
       return Object.assign({}, state, { loader: action.payload });
     case actionType.SHOW_MODAL:
       return Object.assign({}, state, {
-        modal: { open: true, children: action.payload },
+        modal: { open: true, children: action.payload.children, hideBackdrop: action.payload.hideBackdrop  },
       });
     case actionType.HIDE_MODAL:
-      return Object.assign({}, state, { modal: { open: false } });
+      return Object.assign({}, state, { modal: { open: false, hideBackdrop: false } });
     default:
       return state;
   }
