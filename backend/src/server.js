@@ -36,14 +36,10 @@ app.use((error, req, res, next) => {
     res.json({ message: error.message || 'An unknown error occurred!' });
 });
 
-if(process.env.NODE_ENV === "production") {
-    app.use(express.static("frontend/build"));
-}
-
 async function connect() {
     try {
         let db = await mongoose.connect(process.env.MONGO_URL);
-        app.listen(process.env.PORT || 5000);
+        app.listen(process.env.SERVER_PORT);
         console.log('CONNECTION SUCCESSFULL'); 
     } catch(error) {
         console.log('Could not connect to the database try again later', error);
