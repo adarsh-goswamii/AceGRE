@@ -15,3 +15,5 @@ export const INSTRUCTIONS = [
   'After responding to a question, click on the "Next Question" button at the bottom to go to the next question. After responding to the all question, click on "Close" on the top of the window to exit the quiz.',
   "Each question has a timer running on the left side of your screen try to answere before the time runs out",
 ];
+
+export const LOGIN_FOR_THIS_FUTURE = "This is a protected feature, you need to login in able to access it.";
