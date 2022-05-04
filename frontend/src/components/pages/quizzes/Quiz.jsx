@@ -36,7 +36,10 @@ const Quiz = ({ }) => {
   const loggedIn = useSelector((state) => state.auth.loggedIn);
 
   useEffect(() => {
-    return () => dispatch(resetQuiz());
+    return () => {
+      dispatch(closeModal());
+      dispatch(resetQuiz());
+    }
   }, []);
 
   useEffect(() => {
