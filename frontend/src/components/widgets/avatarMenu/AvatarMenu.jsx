@@ -21,6 +21,11 @@ const AvatarMenu = ({ handlePopOverClose }) => {
     navigate("/");
   }
 
+  function handleNavigation(route) {
+    handlePopOverClose();
+    navigate(route);
+  }
+
   return (
     <>
       <div className="avatarMenu-container">
@@ -28,19 +33,19 @@ const AvatarMenu = ({ handlePopOverClose }) => {
           <ProfileIcon className="icon" />
           <p>Adarsh Goswami</p>
         </MenuItem>
-        <MenuItem className="menuItem explore">
+        <MenuItem className="menuItem explore" onClick={() => handleNavigation("/explore")}>
           <ExploreIcon className="icon" />
           <p>Explore</p>
         </MenuItem>
-        <MenuItem className="menuItem leaderboard">
+        <MenuItem className="menuItem leaderboard" onClick={() => handleNavigation("/leaderboard")}>
           <LeaderboardIcon className="icon" />
           <p>Leaderboard</p>
         </MenuItem>
-        <MenuItem className="menuItem stats">
+        {/* <MenuItem className="menuItem stats">
           <StatsIcon className="icon" />
           <p>Statistics</p>
-        </MenuItem>
-        <MenuItem className="menuItem quiz">
+        </MenuItem> */}
+        <MenuItem className="menuItem quiz" onClick={() => handleNavigation("/quiz")}>
           <QuizIcon className="icon" />
           <p>Quiz</p>
         </MenuItem>
