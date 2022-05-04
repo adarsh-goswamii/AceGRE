@@ -12,6 +12,7 @@ const Modal = ({ handleClose }) => {
         open={modal?.open}
         onClose={handleClose}
         className="modal-container"
+        hideBackdrop={modal.hideBackdrop}
       >
         {modal.children}
       </MuiModal>

@@ -1,0 +1,40 @@
+@import "../../../styles/main.scss";
+
+.stepper-container {
+  width: 60%;
+  height: fit-content;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $white;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  padding: 32px;
+
+  .MuiStepper-root {
+    padding-inline: 0px;
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+
+    .MuiButtonBase-root {
+      width: fit-content;
+      padding: 4px 32px;
+    }
+
+  }
+
+  .content {
+    margin-top: 16px;
+
+    .points {
+      margin: 0px 0px 8px 16px;
+    }
+  }
+}

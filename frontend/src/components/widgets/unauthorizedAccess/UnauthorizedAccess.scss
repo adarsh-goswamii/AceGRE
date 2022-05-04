@@ -1,0 +1,30 @@
+@import "../../../styles/main.scss";
+
+.secure-container {
+  width: fit-content;
+  padding: 32px 64px;
+  height: fit-content;
+  background-color: $white;
+  border-radius: 12px;
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .lottie {
+    width: 60%;
+  }
+
+  .call-for-actions {
+    margin-top: 32px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+}

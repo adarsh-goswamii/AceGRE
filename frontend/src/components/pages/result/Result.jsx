@@ -25,7 +25,9 @@ const Result = ({}) => {
   }, [id]);
 
   function handleCardClick(question, index) {
-    dispatch(openModal(<WordModal {...question} index={index} />));
+    dispatch(openModal({
+      children: <WordModal {...question} index={index} />
+    }));
   }
 
   return (
