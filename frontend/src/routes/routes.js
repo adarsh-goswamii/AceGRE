@@ -4,6 +4,7 @@ import Explore from "../components/pages/explore/Explore";
 import Authentication from "../components/pages/login/Authentication";
 import Quiz from "../components/pages/quizzes/Quiz";
 import Results from "../components/pages/result/Result";
+import Leaderboard from "../components/pages/leaderboard/Leaderboard";
 
 export const routes = [
   {
@@ -36,7 +37,7 @@ export const routes = [
     className: "leaderboard",
     exact: true,
     hideHeader: false,
-    component: null,
+    component: Leaderboard,
     id: 4,
   },
   {
