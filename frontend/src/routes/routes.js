@@ -34,7 +34,7 @@ export const routes = [
   },
   {
     path: "/leaderboard",
-    className: "leaderboard",
+    className: "leaderboard-page-container",
     exact: true,
     hideHeader: false,
     component: Leaderboard,
