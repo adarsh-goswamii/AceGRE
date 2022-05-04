@@ -115,7 +115,7 @@ const Explore = () => {
         })
       );
     }, 500),
-    []
+    [filter, pagination]
   );
 
   return (

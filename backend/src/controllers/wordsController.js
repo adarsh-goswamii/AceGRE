@@ -99,6 +99,9 @@ const getWords = async (req, res, next) => {
 const updateWordStatus = async (req, res, next) => {
     try {
         const { status, id: word_id } = req.body;
+        if(!req.headers["authorization"]) return res.status(401).json({
+            message: "Token missing", 
+        });
         let access_token = req.headers["authorization"].split(" ")[1] || null;
         if (access_token) {
             jwt.verify(access_token, process.env.ACCESS_TOKEN_KEY, async (err, data) => {
