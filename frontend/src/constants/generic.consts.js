@@ -17,3 +17,5 @@ export const INSTRUCTIONS = [
 ];
 
 export const LOGIN_FOR_THIS_FUTURE = "This is a protected feature, you need to login in able to access it.";
+
+export const LEADERBOARD_LIVE = "Available after we hit a milestone of 100 users.";

@@ -1,0 +1,42 @@
+@import "../../../styles/main.scss";
+
+.leaderboard {
+  background: url(../../../assets/images/backgroundMesh.svg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: calc(100vh - $headerHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px !important;
+
+  .content-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    background-color: $white;
+    width: 50%;
+    height: fit-content;
+    padding: 32px 0px 32px 64px;
+    border-radius: 12px;
+    position: relative;
+
+    .lottie {
+      min-height: 200px !important;
+      align-self: flex-end;
+      // transform: translateY(60px);
+    }
+
+    .content {
+      position: absolute;
+      top: 40px;
+      left: 64px;
+      font-size: 24px;
+      font-weight: 600;
+      width: 40%;
+      color: $primary;
+    }
+  }
+}
