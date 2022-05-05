@@ -25,3 +25,17 @@ export const closeModal = (payload) => {
     payload: payload,
   };
 };
+
+export const openToaster = (payload) => {
+  return {
+    type: actions.SHOW_TOASTER, 
+    payload,
+  }
+};
+
+export const closeToaster = (payload) => {
+  return {
+    type: actions.HIDE_TOASTER, 
+    payload
+  }
+};
