@@ -29,7 +29,7 @@ const UnauthorizedAccess = ({
           dispatch(closeModal());
         }}>Go Back</Button>
         <Button variant="contained" onClick={() => {
-          navigate("/auth");
+          navigate("/auth?user=login");
           dispatch(closeModal());
         }}>Login</Button>
       </div>

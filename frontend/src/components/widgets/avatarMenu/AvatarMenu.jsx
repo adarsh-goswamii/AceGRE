@@ -31,7 +31,7 @@ const AvatarMenu = ({ handlePopOverClose }) => {
       <div className="avatarMenu-container">
         <MenuItem className="menuItem username">
           <ProfileIcon className="icon" />
-          <p>Adarsh Goswami</p>
+          <p>{localStorage.getItem("email") || "UserName"}</p>
         </MenuItem>
         <MenuItem className="menuItem explore" onClick={() => handleNavigation("/explore")}>
           <ExploreIcon className="icon" />
