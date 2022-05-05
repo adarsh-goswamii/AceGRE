@@ -8,6 +8,8 @@ import {
 } from "../../../constants/generic.consts";
 import { closeModal } from "../../../store/action/common";
 import { generateQuiz } from "../../../store/action/quiz";
+import Lottie from "lottie-react";
+import allSet from "../../../assets/lottie/allSet.json";
 import "./QuizStepper.scss";
 
 const QuizStepper = ({
@@ -16,7 +18,7 @@ const QuizStepper = ({
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
-    if(activeStep === steps.length) {
+    if (activeStep === steps.length) {
       dispatch(closeModal());
       dispatch(generateQuiz());
     }
@@ -51,14 +53,18 @@ const QuizStepper = ({
           <div>
             <div className="content">
               {activeStep === 0 &&
-                "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi non aperiam minima, aliquam, reiciendis modi saepe sed numquam omnis nobis culpa facilis tempore aliquid possimus consequatur corrupti. Ratione, eius cupiditate"}
-
-              {activeStep === 1 &&
                 Instructions.map((ins, index) => (
                   <li key={index} className="points">
                     {ins}
                   </li>
                 ))}
+              {
+                activeStep === 1 &&
+                <div className="all-set">
+                  <Lottie animationData={allSet} className="lottie" />
+                  <p>"You are all set to go, click on the finish button below to start your quiz. Good Luck!!"</p>
+                </div>
+              }
             </div>
             <div className="btn-container">
               <Button
