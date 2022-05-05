@@ -16,7 +16,7 @@ import { plainToClass } from "class-transformer";
 import { Word } from "../../../model/Word";
 
 const Explore = () => {
-  const [filterStatus, setFilterStatus] = useState(null);
+  const [filterStatus, setFilterStatus] = useState(wordMenu[0]);
   const [words, setWords] = useState([]);
   const [openWord, setOpenWord] = useState({});
   const [search, setSearch] = useState("");

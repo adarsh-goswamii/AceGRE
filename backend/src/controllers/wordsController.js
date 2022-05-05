@@ -105,14 +105,16 @@ const updateWordStatus = async (req, res, next) => {
                 if (err) return res.status(403).json(err);
 
                 const { word_status } = await UserData.findOne({ id: data.id }).lean().exec();
-                word_status[word_id] = status;
+                if(word_status[word_id] !== status) {
+                    word_status[word_id] = status;
+                } else word_status[word_id] = null;
                 await UserData.updateOne({ id: data.id }, { word_status });
 
                 return res.status(200).json({
                     status: "success",
                     data: {
                         id: word_id,
-                        status
+                        status: word_status[word_id]
                     }
                 });
             })
