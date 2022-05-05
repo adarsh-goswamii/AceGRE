@@ -2,14 +2,12 @@ import * as actionType from "../actionType/index";
 import { put, call, takeLatest, all } from "redux-saga/effects";
 import * as api from "../../apis/auth";
 import Cookies from "js-cookie";
+import { showLoader, hideLoader } from "./common";
 
 function* handleUserRegister(action) {
   let payload = action.payload;
   try {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: true,
-    });
+    yield* showLoader();
     const results = yield call(api.register, payload);
     localStorage.setItem("email", results?.data?.email);
     localStorage.setItem("role", results?.data?.role);
@@ -19,15 +17,9 @@ function* handleUserRegister(action) {
       type: actionType.REGISTER_USER_SUCCESS,
       payload: results.data,
     });
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
   } catch (error) {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
     yield put({
       type: actionType.REGISTER_USER_FAILURE,
       payload: error.response.data,
@@ -38,10 +30,7 @@ function* handleUserRegister(action) {
 function* handleUserLogin(action) {
   let payload = action.payload;
   try {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: true,
-    });
+    yield* showLoader();
     const results = yield call(api.login, payload);
     localStorage.setItem("email", results?.data?.email);
     localStorage.setItem("role", results?.data?.role);
@@ -51,15 +40,9 @@ function* handleUserLogin(action) {
       type: actionType.LOGIN_USER_SUCCESS,
       payload: results.data,
     });
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
   } catch (error) {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
     yield put({
       type: actionType.LOGIN_USER_FAILURE,
       payload: error.response.data,
@@ -69,10 +52,7 @@ function* handleUserLogin(action) {
 
 function* handleUserLogout(action) {
   try {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: true,
-    });
+    yield* showLoader();
     yield call(api.logout);
     localStorage.removeItem("email");
     localStorage.removeItem("role");
@@ -81,15 +61,9 @@ function* handleUserLogout(action) {
     yield put({
       type: actionType.LOGOUT_USER_SUCCESS,
     });
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
   } catch (error) {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
     yield put({
       type: actionType.LOGIN_USER_FAILURE,
       payload: error.response.data,
