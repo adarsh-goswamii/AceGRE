@@ -11,7 +11,7 @@ export const getWordList = async (payload) => {
     }
 
     if (filter) {
-      filters = `search=${filter.search}&status=${filter.status}`;
+      filters = `search=${filter.search || ""}&status=${filter.status}`;
     }
 
     const result = await api.get(
