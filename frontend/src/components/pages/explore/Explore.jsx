@@ -14,6 +14,8 @@ import { ReactComponent as SearchIcon } from "../../../assets/images/search.svg"
 import { getWordList, updatePagination } from "../../../store/action/explore";
 import { plainToClass } from "class-transformer";
 import { Word } from "../../../model/Word";
+import Lottie from "lottie-react";
+import secure from "../../../assets/lottie/noResults.json";
 
 const Explore = () => {
   const [filterStatus, setFilterStatus] = useState(wordMenu[0]);
@@ -30,10 +32,9 @@ const Explore = () => {
   useEffect(() => {
     const payload = {
       pagination: {
-        size: pagination.size,
-        page_no: pagination.page_no,
+        size: 20,
+        page_no: 1,
       },
-      filter: filter,
     };
     dispatch(getWordList(payload));
   }, []);
@@ -167,11 +168,20 @@ const Explore = () => {
           })}
         </Select>
       </div>
-      <div className="word-grid-container">
-        {words?.map((word) => (
-          <WordCard word={word} onClick={handleRightPaneOpen} />
-        ))}
-      </div>
+      {
+        words && words.length > 0 ?
+          <div className="word-grid-container">
+            {words?.map((word) => (
+              <WordCard word={word} onClick={handleRightPaneOpen} />
+            ))
+            }
+          </div>
+          :
+          (filter.search || filter.status) ?
+            <Lottie animationData={secure} className="lottie" />
+            :
+            <></>
+      }
       <div className="pagination">
         <Pagination
           page={pagination.page_no}
