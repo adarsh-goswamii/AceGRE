@@ -30,10 +30,9 @@ const Explore = () => {
   useEffect(() => {
     const payload = {
       pagination: {
-        size: pagination.size,
-        page_no: pagination.page_no,
+        size: 20,
+        page_no: 1,
       },
-      filter: filter,
     };
     dispatch(getWordList(payload));
   }, []);
