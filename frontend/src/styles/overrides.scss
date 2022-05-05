@@ -43,3 +43,7 @@
         @extend .bodyLight;
     }
 }
+
+.MuiAlert-message {
+    @extend .bodyLight;
+}

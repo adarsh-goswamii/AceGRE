@@ -1,27 +1,20 @@
 import * as actionType from "../actionType/index";
 import { put, call, takeLatest, all } from "redux-saga/effects";
 import * as api from "../../apis/quiz";
+import { showLoader, hideLoader, showToaster } from "./common";
+import { SOMETHING_WENT_WRONG, QUIZ_SOLUTION_RECORDED_SUCCESSFULLY } from "../../constants/toastMessage.const";
 
 function* handleGenerateQuiz(action) {
   try {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: true,
-    });
+    yield* showLoader();
     const results = yield call(api.generateQuiz);
     yield put({
       type: actionType.GENERATE_QUIZ_SUCCESS,
       payload: results?.quiz_id,
     });
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
   } catch (error) {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
     yield put({
       type: actionType.GENERATE_QUIZ_FAILURE,
       payload: error.response.data,
@@ -32,24 +25,15 @@ function* handleGenerateQuiz(action) {
 function* handleQuizQuesFetch(action) {
   try {
     const { payload } = action;
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: true,
-    });
+    yield* showLoader();
     const results = yield call(api.fetchQuestions, payload);
     yield put({
       type: actionType.GET_QUIZ_QUESTIONS_SUCCESS,
       payload: results?.data,
     });
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
   } catch (error) {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
     yield put({
       type: actionType.GET_QUIZ_QUESTIONS_FAILURE,
       payload: error.response.data,
@@ -60,27 +44,26 @@ function* handleQuizQuesFetch(action) {
 function* handlePatchSolution(action) {
   try {
     const { payload } = action;
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: true,
-    });
+    yield* showLoader();
     const results = yield call(api.patchSolution, payload);
     yield put({
       type: actionType.PATCH_QUIZ_SOLUTION_SUCCESS,
       payload: results,
     });
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
+    yield* hideLoader();
+    yield* showToaster({
+      status: "success", 
+      message: QUIZ_SOLUTION_RECORDED_SUCCESSFULLY
     });
   } catch (error) {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
     yield put({
       type: actionType.PATCH_QUIZ_SOLUTION_FAILURE,
       payload: error.response.data,
+    });
+    yield* showToaster({
+      status: "error", 
+      message: SOMETHING_WENT_WRONG
     });
   }
 }
@@ -88,24 +71,15 @@ function* handlePatchSolution(action) {
 function* handleFetchResults(action) {
   try {
     const { payload } = action;
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: true,
-    });
+    yield* showLoader();
     const results = yield call(api.fetchResults, payload);
     yield put({
       type: actionType.GET_QUIZ_RESULTS_SUCCESS,
       payload: results?.data,
     });
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
   } catch (error) {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
     yield put({
       type: actionType.GET_QUIZ_RESULTS_FAILURE,
       payload: error.response.data,
@@ -116,24 +90,15 @@ function* handleFetchResults(action) {
 function* handleQuizEnd(action) {
   try {
     const { payload } = action;
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: true,
-    });
+    yield* showLoader();
     const results = yield call(api.endQuiz, payload);
     yield put({
       type: actionType.END_QUIZ_SUCCESS,
       payload: results,
     });
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
   } catch (error) {
-    yield put({
-      type: actionType.CHANGE_GLOBAL_LOADER_VISIBILITY,
-      payload: false,
-    });
+    yield* hideLoader();
     yield put({
       type: actionType.END_QUIZ_FAILURE,
       payload: error.response.data,
