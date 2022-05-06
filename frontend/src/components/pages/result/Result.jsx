@@ -17,6 +17,7 @@ const Result = ({}) => {
   const id = new URLSearchParams(location.search).get("id");
 
   const results = useSelector((state) => state.quiz.quizResults);
+  localStorage.removeItem("quiz");
 
   useEffect(() => {
     if (id) {

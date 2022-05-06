@@ -28,7 +28,7 @@ const Home = () => {
       } else headerRef.current.style.backgroundColor = "transparent";
     }
     window.addEventListener("scroll", handleScroll);
-
+    localStorage.removeItem("quiz");
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
