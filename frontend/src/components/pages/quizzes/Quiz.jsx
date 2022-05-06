@@ -28,6 +28,7 @@ const Quiz = ({ }) => {
   const [questions, setQuestions] = useState([]);
   const [selectedAns, setSelectedAns] = useState([]);
   const [timeLeft, setTimeLeft] = useState(59);
+  const [quizStarted, setQuizStarted] = useState(false);
 
   const quizId = useSelector((state) => state.quiz.quizGeneratedId);
   const quizQuestions = useSelector((state) => state.quiz.quizQuestions);
@@ -35,6 +36,7 @@ const Quiz = ({ }) => {
     (state) => state.quiz.patchQuizSolutionSuccess
   );
   const quizEnd = useSelector((state) => state.quiz.endQuizSuccess);
+  const url = window.location.pathname.split('/').pop();
 
   // will handle refresh.
   useEffect(() => {
@@ -46,6 +48,7 @@ const Quiz = ({ }) => {
       setCurrQues(data.currQues);
       setTimeLeft(data.timeLeft);
       setId(data.id);
+      setQuizStarted(true);
     }
 
     if (localStorage.getItem("token") && !localStorage.getItem("quiz")) dispatch(openModal({
@@ -57,18 +60,29 @@ const Quiz = ({ }) => {
       localStorage.removeItem("quiz");
       dispatch(closeModal());
       dispatch(resetQuiz());
+      console.log("cleanup ran");
     };
   }, []);
 
+  useEffect(() => {
+    return () => {
+      localStorage.removeItem("quiz");
+      dispatch(closeModal());
+      dispatch(resetQuiz());
+      console.log("cleanup ran");
+    };
+  }, [url]);
+
   // handle navigating away
   usePrompt(
-    "Are you sure you want to leave? It will result in quiz to end", true
+    "Are you sure you want to leave? It will result in quiz to end", quizStarted
   );
 
   useEffect(() => {
     if (quizId) {
       dispatch(fetchQuestions(quizId));
       setId(quizId);
+      setQuizStarted(true);
     }
   }, [quizId]);
 

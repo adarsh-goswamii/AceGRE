@@ -13,6 +13,7 @@ const Login = ({}) => {
   const initForm =
     new URL(document.location).searchParams.get("user") === "login";
   const [showLoginForm, setShowLoginForm] = useState(initForm);
+  localStorage.removeItem("quiz");
 
   return (
     <>

@@ -37,6 +37,7 @@ const Explore = () => {
       },
     };
     dispatch(getWordList(payload));
+    localStorage.removeItem("quiz");
   }, []);
 
   useEffect(() => {
