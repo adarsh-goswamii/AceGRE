@@ -6,6 +6,7 @@ import "./Leaderboard.scss";
 const Leaderboard = ({
 
 }) => {
+  localStorage.removeItem("quiz");
   return (
       <div className="content-container">
         <p className="content">{LEADERBOARD_LIVE}</p>
