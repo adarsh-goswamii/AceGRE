@@ -3,7 +3,7 @@ import { FormControlLabel, Checkbox } from "@material-ui/core";
 import InputField from "../../shared/inputField/InputField";
 import Button from "../../shared/button/Button";
 import { PropTypes } from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Error from "../error/Error";
 import { emailValidate } from "../../../utility/validations";
 import { handleLogin } from "../../../store/action/auth";
@@ -17,14 +17,14 @@ export const initInputField = {
 };
 
 const LoginForm = ({ toggleForm }) => {
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const dispatch = useDispatch();
   const [username, setUsername] = useState(new Object(initInputField));
   const [password, setPassword] = useState(new Object(initInputField));
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState({ show: false, message: "" });
 
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const loggedIn = Boolean(localStorage.getItem("token"));
   const failure = useSelector((state) => state.auth.loginUserFailure);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const LoginForm = ({ toggleForm }) => {
   }, [failure]);
 
   useEffect(() => {
-    if (loggedIn) navigate("/");
+    if (loggedIn) navigate.push("/");
   }, [loggedIn]);
 
   function handleUsernameOnBlur() {

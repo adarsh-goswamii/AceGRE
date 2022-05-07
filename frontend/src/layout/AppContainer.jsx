@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import { routes } from "../routes/routes";
 import Container from "./container/Container";
 import Header from "./header/Header";
@@ -16,6 +16,8 @@ const AppContainer = () => {
 
   const loaderVisible = useSelector((state) => state.common.loader);
 
+  console.log(window.pathname);
+
   useEffect(() => {
     const email = localStorage.getItem("email");
     if (email)
@@ -31,8 +33,9 @@ const AppContainer = () => {
 
   function renderHeader() {
     const pathname = location.pathname;
+    console.log(pathname);
     const currentRoute = routes.filter((route) => route.path === pathname);
-    return currentRoute && !currentRoute[0].hideHeader;
+    return currentRoute && !currentRoute[0]?.hideHeader;
   }
 
   return (
@@ -43,22 +46,17 @@ const AppContainer = () => {
       {/*<RightDrawer />
     <Footer /> */}
       <Modal />
-      <Routes>
+      <Switch>
         {routes?.map((route) => {
           return (
-            <Route
-              key={route?.id}
-              path={route.path}
-              exact={route.exact}
-              element={
-                <Container className={route.className}>
-                  <route.component />
-                </Container>
-              }
-            />
+            <Route key={route?.id} path={route.path} exact={route.exact}>
+              <Container className={route.className}>
+                <route.component />
+              </Container>
+            </Route>
           );
         })}
-      </Routes>
+      </Switch>
     </>
   );
 };

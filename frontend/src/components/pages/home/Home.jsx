@@ -13,12 +13,12 @@ import { ReactComponent as ExploreIcon } from "../../../assets/images/explore-se
 import { ReactComponent as QuizIcon } from "../../../assets/images/quiz-service.svg";
 import { ReactComponent as VisualizeIcon } from "../../../assets/images/visualize-service.svg";
 import { useEffect, useRef } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
   const heroRef = useRef();
   const headerRef = useRef();
-  const navigate = useNavigate();
+  const history = useHistory();
 
   useEffect(() => {
     function handleScroll() {
@@ -43,7 +43,7 @@ const Home = () => {
             aut natus eum consequatur perferendis.
           </p>
           <Button
-            onClick={() => navigate("/explore")}
+            onClick={() => history.push("/explore")}
             className="outlined-btn"
             variant="contained"
           >

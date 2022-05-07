@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import QuestionCard from "../../widgets/questionCard/QuestionCard";
 import { fetchResults } from "../../../store/action/quiz";
 import "./Result.scss";
@@ -13,8 +13,9 @@ import { openModal } from "../../../store/action/common";
 const Result = ({}) => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const id = new URLSearchParams(location.search).get("id");
+  console.log("result id", id);
 
   const results = useSelector((state) => state.quiz.quizResults);
   localStorage.removeItem("quiz");
@@ -26,9 +27,11 @@ const Result = ({}) => {
   }, [id]);
 
   function handleCardClick(question, index) {
-    dispatch(openModal({
-      children: <WordModal {...question} index={index} />
-    }));
+    dispatch(
+      openModal({
+        children: <WordModal {...question} index={index} />,
+      })
+    );
   }
 
   return (
@@ -68,7 +71,7 @@ const Result = ({}) => {
         </p>
         <Button
           variant="outlined"
-          onClick={() => navigate("/explore")}
+          onClick={() => navigate.push("/explore")}
           className="btn"
         >
           Continue Learning

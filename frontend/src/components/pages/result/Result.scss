@@ -22,6 +22,10 @@
         color: $primary;
         grid-column: 1/4;
       }
+
+      // .question-card-container {
+      //   pointer-events: none !important;
+      // }
     }
 
     .right {
@@ -31,6 +35,7 @@
       top: 0px;
       width: 40%;
       min-height: 100vh;
+      height: 100%;
       display: flex;
       flex-direction: column;
       background: url(../../../assets/images/MeshQuiz.svg);

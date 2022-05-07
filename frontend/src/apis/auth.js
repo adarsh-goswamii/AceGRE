@@ -31,8 +31,8 @@ export const logout = async (payload) => {
 export const refreshToken = async (payload) => {
   try {
     const result = await api.postData(apiConst.REFRESH_TOKEN, payload);
-    localStorage.setItem("token", result?.data?.token)
+    localStorage.setItem("token", result?.data?.token);
   } catch (error) {
     throw error;
   }
-}
+};

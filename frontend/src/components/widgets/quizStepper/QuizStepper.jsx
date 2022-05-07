@@ -12,8 +12,7 @@ import Lottie from "lottie-react";
 import allSet from "../../../assets/lottie/allSet.json";
 import "./QuizStepper.scss";
 
-const QuizStepper = ({
-}) => {
+const QuizStepper = ({}) => {
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(0);
 
@@ -58,13 +57,15 @@ const QuizStepper = ({
                     {ins}
                   </li>
                 ))}
-              {
-                activeStep === 1 &&
+              {activeStep === 1 && (
                 <div className="all-set">
                   <Lottie animationData={allSet} className="lottie" />
-                  <p>"You are all set to go, click on the finish button below to start your quiz. Good Luck!!"</p>
+                  <p>
+                    "You are all set to go, click on the finish button below to
+                    start your quiz. Good Luck!!"
+                  </p>
                 </div>
-              }
+              )}
             </div>
             <div className="btn-container">
               <Button
@@ -87,7 +88,7 @@ const QuizStepper = ({
         )}
       </div>
     </div>
-  )
+  );
 };
 
 export default QuizStepper;
