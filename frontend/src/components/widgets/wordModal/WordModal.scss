@@ -27,6 +27,7 @@
     height: fit-content;
     grid-gap: 20px;
     @extend .bodyLight;
+    pointer-events: none;
 
     .option-container {
       margin: 0px;

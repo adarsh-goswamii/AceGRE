@@ -21,7 +21,7 @@ import { useHistory } from "react-router-dom";
 import UnauthorizedAccess from "../../widgets/unauthorizedAccess/UnauthorizedAccess";
 import { EndQuizAlert, EndQuizPrompt } from "../../widgets/endQuiz/EndQuiz";
 
-const Quiz = ({ }) => {
+const Quiz = ({}) => {
   const dispatch = useDispatch();
   const navigate = useHistory();
   const [id, setId] = useState(undefined);
@@ -38,7 +38,7 @@ const Quiz = ({ }) => {
     (state) => state.quiz.patchQuizSolutionSuccess
   );
   const quizEnd = useSelector((state) => state.quiz.endQuizSuccess);
-  const url = window.location.pathname.split('/').pop();
+  const url = window.location.pathname.split("/").pop();
 
   const quizState = useSelector((state) => state.quiz);
 
@@ -46,9 +46,7 @@ const Quiz = ({ }) => {
   useEffect(() => {
     console.log("initialSttae", quizState);
     if (localStorage.getItem("quiz")) {
-      console.log("Found an existing quiz");
       let data = JSON.parse(localStorage.getItem("quiz"));
-      console.log(data);
       dispatch(fetchQuestions(data.id));
       setCurrQues(data.currQues);
       setTimeLeft(data.timeLeft);
@@ -56,17 +54,19 @@ const Quiz = ({ }) => {
       setQuizStarted(true);
     } else dispatch(resetQuiz());
 
-    if (localStorage.getItem("token") && !localStorage.getItem("quiz")) dispatch(openModal({
-      children: <QuizStepper />,
-      hideBackdrop: true
-    }));
+    if (localStorage.getItem("token") && !localStorage.getItem("quiz"))
+      dispatch(
+        openModal({
+          children: <QuizStepper />,
+          hideBackdrop: true,
+        })
+      );
 
     setAlertopen(false);
     return () => {
       localStorage.removeItem("quiz");
       dispatch(closeModal());
       dispatch(resetQuiz());
-      console.log("cleanup ran");
     };
   }, []);
 
@@ -75,7 +75,6 @@ const Quiz = ({ }) => {
       localStorage.removeItem("quiz");
       dispatch(closeModal());
       dispatch(resetQuiz());
-      console.log("cleanup ran");
     };
   }, [url]);
 
@@ -99,19 +98,15 @@ const Quiz = ({ }) => {
     }
   }, [solnSubmitted]);
 
-  useEffect(() => {
-    if ((currQues !== 0 && currQues === questions.length) || quizEnd) {
-      console.log(currQues, quizEnd);
-      navigate.push(`results?id=${id}`);
-    }
-  }, [currQues, id]);
-
   if (id) {
-    localStorage.setItem("quiz", JSON.stringify({
-      id: id,
-      currQues: currQues,
-      timeLeft: timeLeft,
-    }));
+    localStorage.setItem(
+      "quiz",
+      JSON.stringify({
+        id: id,
+        currQues: currQues,
+        timeLeft: timeLeft,
+      })
+    );
   }
 
   function nextQues() {
@@ -135,22 +130,21 @@ const Quiz = ({ }) => {
   function handleEndQuiz(id) {
     dispatch(endQuiz(id));
     const route = {
-      pathname: '/results',
+      pathname: "/results",
       search: `?id=${id}`,
     };
-    console.log("quizId", route);
     navigate.push(route);
   }
 
   if (!localStorage.getItem("token")) {
-    dispatch(openModal({
-      children: <UnauthorizedAccess />,
-      hideBackdrop: true
-    }));
-
-    return (
-      <div className="background-modal" />
+    dispatch(
+      openModal({
+        children: <UnauthorizedAccess />,
+        hideBackdrop: true,
+      })
     );
+
+    return <div className="background-modal" />;
   } else {
     console.log("reason for background quiz", questions.length, currQues);
     return (
@@ -166,18 +160,20 @@ const Quiz = ({ }) => {
               />
 
               <div className="ques-container">
-                {
-                  [...Array(questions?.length).keys()].map(val => (
-                    <div className={`ques-box ${currQues > val ? "completed" : ""}`}>{val + 1}</div>
-                  ))
-                }
+                {[...Array(questions?.length).keys()].map((val) => (
+                  <div
+                    className={`ques-box ${currQues > val ? "completed" : ""}`}
+                  >
+                    {val + 1}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="right">
               <div className="ques-container">
                 <p className="heading">
-                  Choose correct meaning for the given word <br /> Note: There can
-                  be more than one correct answer{" "}
+                  Choose correct meaning for the given word <br /> Note: There
+                  can be more than one correct answer{" "}
                 </p>
                 <p className="question">{`Question : ${questions[currQues].word}`}</p>
               </div>
@@ -196,7 +192,7 @@ const Quiz = ({ }) => {
                   variant="outlined"
                   className="red"
                   onClick={(e) => {
-                    handleEndQuiz(id)
+                    handleEndQuiz(id);
                   }}
                 >
                   End Quiz
@@ -217,7 +213,7 @@ const Quiz = ({ }) => {
             />
 
             <EndQuizPrompt
-              open={quizStarted}
+              open={quizStarted && !alertOpen}
               quizEnd={() => handleEndQuiz(id)}
             />
           </div>
@@ -227,7 +223,7 @@ const Quiz = ({ }) => {
         )}
       </>
     );
-  };
+  }
 };
 
 export default Quiz;

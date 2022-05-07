@@ -37,7 +37,7 @@ const reducerFn = (state = INIT_INITIAL_STATE, action) => {
     case actionType.GET_QUIZ_RESULTS_FAILURE:
       return Object.assign({}, state, { quizResultsFailure: action.payload });
     case actionType.END_QUIZ_SUCCESS:
-      return Object.assign({}, state, { endQuizSuccess:null });
+      return Object.assign({}, state, { endQuizSuccess: null });
     case actionType.END_QUIZ_FAILURE:
       return Object.assign({}, state, { endQuizFailure: action.payload });
     case actionType.RESET_QUIZ:

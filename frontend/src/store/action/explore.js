@@ -16,12 +16,12 @@ export const updateWordStatus = (payload) => {
     };
   } else {
     return {
-      type: actionType.SHOW_TOASTER, 
+      type: actionType.SHOW_TOASTER,
       payload: {
-        status: "error", 
-        message: LOGIN_TO_ACCESS_THIS_FEATURE
-      }
-    }
+        status: "error",
+        message: LOGIN_TO_ACCESS_THIS_FEATURE,
+      },
+    };
   }
 };
 

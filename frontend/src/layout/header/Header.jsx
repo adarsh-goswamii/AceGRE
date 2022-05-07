@@ -45,7 +45,7 @@ const Header = (props) => {
     setAnchorEl(e.currentTarget);
   };
 
-  let loggedIn = useSelector((state) => state.auth.loggedIn);
+  let loggedIn = Boolean(localStorage.getItem("token"));
 
   return (
     <>

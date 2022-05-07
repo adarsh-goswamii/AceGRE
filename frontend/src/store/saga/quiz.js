@@ -2,7 +2,10 @@ import * as actionType from "../actionType/index";
 import { put, call, takeLatest, all } from "redux-saga/effects";
 import * as api from "../../apis/quiz";
 import { showLoader, hideLoader, showToaster } from "./common";
-import { SOMETHING_WENT_WRONG, QUIZ_SOLUTION_RECORDED_SUCCESSFULLY } from "../../constants/toastMessage.const";
+import {
+  SOMETHING_WENT_WRONG,
+  QUIZ_SOLUTION_RECORDED_SUCCESSFULLY,
+} from "../../constants/toastMessage.const";
 
 function* handleGenerateQuiz(action) {
   try {
@@ -52,8 +55,8 @@ function* handlePatchSolution(action) {
     });
     yield* hideLoader();
     yield* showToaster({
-      status: "success", 
-      message: QUIZ_SOLUTION_RECORDED_SUCCESSFULLY
+      status: "success",
+      message: QUIZ_SOLUTION_RECORDED_SUCCESSFULLY,
     });
   } catch (error) {
     yield* hideLoader();
@@ -62,8 +65,8 @@ function* handlePatchSolution(action) {
       payload: error.response.data,
     });
     yield* showToaster({
-      status: "error", 
-      message: SOMETHING_WENT_WRONG
+      status: "error",
+      message: SOMETHING_WENT_WRONG,
     });
   }
 }

@@ -18,8 +18,8 @@ instance.interceptors.request.use(
       const accessTokenExpired = checkExpiration(token);
       // console.log("expired", accessTokenExpired);
 
-      if(accessTokenExpired) {
-        if(checkExpiration(Cookies.get("refresh_token"))) {
+      if (accessTokenExpired) {
+        if (checkExpiration(Cookies.get("refresh_token"))) {
           // console.log("refresh token is also expired");
           localStorage.removeItem("token");
           localStorage.removeItem("email");
@@ -27,10 +27,10 @@ instance.interceptors.request.use(
         } else {
           console.log("refresh token is not expired");
           localStorage.removeItem("token");
-          await refreshToken({refresh_token: Cookies.get("refresh_token")});
+          await refreshToken({ refresh_token: Cookies.get("refresh_token") });
           token = localStorage.getItem("token");
 
-          if(!checkExpiration(token)) {
+          if (!checkExpiration(token)) {
             console.log("token good to go");
           } else {
             console.log("Something went wrong", token);
@@ -76,11 +76,11 @@ const api = {
 
 export default api;
 
-// helper functions 
+// helper functions
 
 function checkExpiration(token) {
   try {
-    const {exp} = jwt(token);
+    const { exp } = jwt(token);
     if (Date.now() >= exp * 1000) {
       return true;
     }
