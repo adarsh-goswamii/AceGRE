@@ -17,18 +17,20 @@ import {
   resetQuiz,
 } from "../../../store/action/quiz";
 import { openModal, closeModal } from "../../../store/action/common";
-import { useNavigate, useBlocker, usePrompt } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import UnauthorizedAccess from "../../widgets/unauthorizedAccess/UnauthorizedAccess";
+import { EndQuizAlert, EndQuizPrompt } from "../../widgets/endQuiz/EndQuiz";
 
 const Quiz = ({ }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const [id, setId] = useState(undefined);
   const [currQues, setCurrQues] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [selectedAns, setSelectedAns] = useState([]);
   const [timeLeft, setTimeLeft] = useState(59);
   const [quizStarted, setQuizStarted] = useState(false);
+  const [alertOpen, setAlertopen] = useState(false);
 
   const quizId = useSelector((state) => state.quiz.quizGeneratedId);
   const quizQuestions = useSelector((state) => state.quiz.quizQuestions);
@@ -38,8 +40,11 @@ const Quiz = ({ }) => {
   const quizEnd = useSelector((state) => state.quiz.endQuizSuccess);
   const url = window.location.pathname.split('/').pop();
 
+  const quizState = useSelector((state) => state.quiz);
+
   // will handle refresh.
   useEffect(() => {
+    console.log("initialSttae", quizState);
     if (localStorage.getItem("quiz")) {
       console.log("Found an existing quiz");
       let data = JSON.parse(localStorage.getItem("quiz"));
@@ -49,13 +54,14 @@ const Quiz = ({ }) => {
       setTimeLeft(data.timeLeft);
       setId(data.id);
       setQuizStarted(true);
-    }
+    } else dispatch(resetQuiz());
 
     if (localStorage.getItem("token") && !localStorage.getItem("quiz")) dispatch(openModal({
       children: <QuizStepper />,
       hideBackdrop: true
     }));
 
+    setAlertopen(false);
     return () => {
       localStorage.removeItem("quiz");
       dispatch(closeModal());
@@ -72,11 +78,6 @@ const Quiz = ({ }) => {
       console.log("cleanup ran");
     };
   }, [url]);
-
-  // handle navigating away
-  usePrompt(
-    "Are you sure you want to leave? It will result in quiz to end", quizStarted
-  );
 
   useEffect(() => {
     if (quizId) {
@@ -100,7 +101,8 @@ const Quiz = ({ }) => {
 
   useEffect(() => {
     if ((currQues !== 0 && currQues === questions.length) || quizEnd) {
-      navigate(`results?id=${id}`);
+      console.log(currQues, quizEnd);
+      navigate.push(`results?id=${id}`);
     }
   }, [currQues, id]);
 
@@ -130,9 +132,14 @@ const Quiz = ({ }) => {
     dispatch(patchSolution(payload));
   }
 
-  function handleEndQuiz() {
+  function handleEndQuiz(id) {
     dispatch(endQuiz(id));
-    navigate(`results?id=${id}`);
+    const route = {
+      pathname: '/results',
+      search: `?id=${id}`,
+    };
+    console.log("quizId", route);
+    navigate.push(route);
   }
 
   if (!localStorage.getItem("token")) {
@@ -145,6 +152,7 @@ const Quiz = ({ }) => {
       <div className="background-modal" />
     );
   } else {
+    console.log("reason for background quiz", questions.length, currQues);
     return (
       <>
         {questions.length > currQues ? (
@@ -187,7 +195,9 @@ const Quiz = ({ }) => {
                 <Button
                   variant="outlined"
                   className="red"
-                  onClick={handleEndQuiz}
+                  onClick={(e) => {
+                    handleEndQuiz(id)
+                  }}
                 >
                   End Quiz
                 </Button>
@@ -200,7 +210,18 @@ const Quiz = ({ }) => {
                 </Button>
               </div>
             </div>
+            <EndQuizAlert
+              open={alertOpen}
+              setOpen={setAlertopen}
+              endQuiz={() => handleEndQuiz(id)}
+            />
+
+            <EndQuizPrompt
+              open={quizStarted}
+              quizEnd={() => handleEndQuiz(id)}
+            />
           </div>
+
         ) : (
           <div className="background-modal"></div>
         )}

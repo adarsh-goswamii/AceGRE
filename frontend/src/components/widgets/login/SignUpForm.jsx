@@ -8,7 +8,7 @@ import {
   passwordStrengthCheck,
 } from "../../../utility/validations";
 import { PASSWORD_DONT_MATCH } from "../../../constants/errorMessage.consts";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { handleRegisterUser } from "../../../store/action/auth";
 
@@ -21,7 +21,7 @@ const initInputField = {
 
 const SignUpForm = ({ toggleForm }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const [username, setUsername] = useState(new Object(initInputField));
   const [password, setPassword] = useState(new Object(initInputField));
   const [confirmPassword, setConfirmPassword] = useState(
@@ -42,7 +42,7 @@ const SignUpForm = ({ toggleForm }) => {
   }, [failure]);
 
   useEffect(() => {
-    if (loggedIn) navigate("/");
+    if (loggedIn) navigate.push("/");
   }, [loggedIn]);
 
   function handleEmailChange(value) {

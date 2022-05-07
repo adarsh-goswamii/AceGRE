@@ -8,7 +8,7 @@ import {
 import Menu from "../../components/shared/menu/MenuList";
 import Button from "../../components/shared/button/Button";
 import data from "../../data/headerNav";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import "./Header.scss";
 import AvatarMenu from "../../components/widgets/avatarMenu/AvatarMenu";
 import { useSelector } from "react-redux";
@@ -16,7 +16,7 @@ import { Menu as MuiMenu } from "@material-ui/core";
 
 const Header = (props) => {
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const [menu, setMenu] = useState([]);
   const [popover, setPopover] = useState("");
@@ -25,13 +25,13 @@ const Header = (props) => {
   };
   const handleMenuClick = (e, menu) => {
     if (menu.pathname) {
-      navigate(menu.pathname);
+      navigate.push(menu.pathname);
     } else {
       setAnchorEl(e.currentTarget);
       let temp = menu?.submenu.map((data) => {
         data.onClick = () => {
           handlePopOverClose();
-          navigate(data.pathname);
+          navigate.push(data.pathname);
         };
         return data;
       });
@@ -78,14 +78,14 @@ const Header = (props) => {
               className={"login-btn"}
               variant="cont
                             ained"
-              onClick={() => navigate("/auth?user=login")}
+              onClick={() => navigate.push("/auth?user=login")}
             >
               Login
             </Button>
             <Button
               className={"signup-btn rounded-btn"}
               variant="outlined"
-              onClick={() => navigate("/auth?user=register")}
+              onClick={() => navigate.push("/auth?user=register")}
             >
               SignUp
             </Button>
