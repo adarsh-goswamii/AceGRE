@@ -30,7 +30,7 @@ const Quiz = ({ }) => {
   const [selectedAns, setSelectedAns] = useState([]);
   const [timeLeft, setTimeLeft] = useState(59);
   const [quizStarted, setQuizStarted] = useState(false);
-  const [alertOpen, setAlertopen] = useState(false);
+  const [alertOpen, setAlertopen] = useState(true);
 
   const quizId = useSelector((state) => state.quiz.quizGeneratedId);
   const quizQuestions = useSelector((state) => state.quiz.quizQuestions);
@@ -44,11 +44,8 @@ const Quiz = ({ }) => {
 
   // will handle refresh.
   useEffect(() => {
-    console.log("initialSttae", quizState);
     if (localStorage.getItem("quiz")) {
-      console.log("Found an existing quiz");
       let data = JSON.parse(localStorage.getItem("quiz"));
-      console.log(data);
       dispatch(fetchQuestions(data.id));
       setCurrQues(data.currQues);
       setTimeLeft(data.timeLeft);
@@ -66,7 +63,6 @@ const Quiz = ({ }) => {
       localStorage.removeItem("quiz");
       dispatch(closeModal());
       dispatch(resetQuiz());
-      console.log("cleanup ran");
     };
   }, []);
 
@@ -75,7 +71,6 @@ const Quiz = ({ }) => {
       localStorage.removeItem("quiz");
       dispatch(closeModal());
       dispatch(resetQuiz());
-      console.log("cleanup ran");
     };
   }, [url]);
 
@@ -98,13 +93,6 @@ const Quiz = ({ }) => {
       nextQues();
     }
   }, [solnSubmitted]);
-
-  useEffect(() => {
-    if ((currQues !== 0 && currQues === questions.length) || quizEnd) {
-      console.log(currQues, quizEnd);
-      navigate.push(`results?id=${id}`);
-    }
-  }, [currQues, id]);
 
   if (id) {
     localStorage.setItem("quiz", JSON.stringify({
@@ -138,7 +126,6 @@ const Quiz = ({ }) => {
       pathname: '/results',
       search: `?id=${id}`,
     };
-    console.log("quizId", route);
     navigate.push(route);
   }
 
@@ -152,8 +139,7 @@ const Quiz = ({ }) => {
       <div className="background-modal" />
     );
   } else {
-    console.log("reason for background quiz", questions.length, currQues);
-    return (
+     return (
       <>
         {questions.length > currQues ? (
           <div className="container">
@@ -217,7 +203,7 @@ const Quiz = ({ }) => {
             />
 
             <EndQuizPrompt
-              open={quizStarted}
+              open={quizStarted && !alertOpen}
               quizEnd={() => handleEndQuiz(id)}
             />
           </div>

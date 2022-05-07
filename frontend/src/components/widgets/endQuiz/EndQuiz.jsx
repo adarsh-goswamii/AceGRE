@@ -1,15 +1,15 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "@material-ui/core";
 import { useCallback, useEffect, useState } from "react";
 import Button from "../../shared/button/Button";
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
-const Modal = ({ open, onClose = () => { }, onQuizEnd }) => {
+const Modal = ({ open, onClose = () => { }, onQuizEnd, type }) => {
   return (
     <div>
       <Dialog
         onClose={onClose}
         open={open}>
-        <DialogTitle>End Quiz ?</DialogTitle>
+        <DialogTitle>{`End Quiz ? ${type}`}</DialogTitle>
         <DialogContent>It looks like you are trying to naviagte away from the page. If you leave, your quiz will end.</DialogContent>
         <DialogActions>
           <Button variant="outlined" onClick={onQuizEnd}>End Quiz</Button>
@@ -38,13 +38,13 @@ export const EndQuizAlert = ({
   }
 
   const handleEndQuiz = (e) => {
-    // TODO : handle quiz end.
+    endQuiz();
     handleClose(e, "leave");
   };
 
   return (
     <>
-      <Modal open={open} onClose={handleClose} onQuizEnd={handleEndQuiz} />
+      <Modal open={open} onClose={handleClose} onQuizEnd={handleEndQuiz} type="alert" />
     </>
   )
 };
@@ -64,25 +64,20 @@ export const EndQuizPrompt = ({ open, quizEnd }) => {
     quizEnd();
     return true;
   }
-
-  useEffect(() => {
-    if (open) {
-      history.block(prompt => {
-        console.log("prompt", prompt);
-        setCurrentPath(prompt);
-        setShowPrompt(true);
-        return false;
-      })
-    } else history.block(() => { });
-
-    return () => history.block(() => { });
-  }, [history, open]);
+  
+  if (open) {
+    history.block(prompt => {
+      setCurrentPath(prompt);
+      setShowPrompt(true);
+      return false;
+    })
+  } else history.block(() => { });
 
   const handleClose = useCallback(async (e, reason) => {
     if (onquizEndHandler) {
       setShowPrompt(false);
       history.block(() => { });
-      history.push(currentPath);
+      // history.push(currentPath);
     } else setShowPrompt(false);
   }, [currentPath, history, onCLoseHandler]);
 
@@ -96,10 +91,11 @@ export const EndQuizPrompt = ({ open, quizEnd }) => {
     }
   }, [currentPath, history, onquizEndHandler]);
 
+  console.log(showPrompt);
   return (
     <>
       {showPrompt ?
-        <Modal open={open} onlose={handleClose} onQuizEnd={onQuizEnd} />
+        <Modal open={open} onClose={handleClose} onQuizEnd={onQuizEnd} type="prompt" />
         :
         null}
     </>
