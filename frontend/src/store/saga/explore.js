@@ -2,7 +2,10 @@ import * as actionType from "../actionType/index";
 import { all, put, call, takeLatest } from "redux-saga/effects";
 import * as api from "../../apis/explore";
 import { showLoader, hideLoader, showToaster } from "./common";
-import { SOMETHING_WENT_WRONG, WORD_STATUS_UPDATED_SUCCESSFULLY } from "../../constants/toastMessage.const";
+import {
+  SOMETHING_WENT_WRONG,
+  WORD_STATUS_UPDATED_SUCCESSFULLY,
+} from "../../constants/toastMessage.const";
 
 function* getWordList(action) {
   try {
@@ -34,8 +37,8 @@ function* handleUpdateWordStatus(action) {
     });
     yield* hideLoader();
     yield* showToaster({
-      status: "success", 
-      message: WORD_STATUS_UPDATED_SUCCESSFULLY
+      status: "success",
+      message: WORD_STATUS_UPDATED_SUCCESSFULLY,
     });
   } catch (error) {
     yield* hideLoader();
@@ -44,8 +47,8 @@ function* handleUpdateWordStatus(action) {
       payload: error.response.data,
     });
     yield* showToaster({
-      status: "error", 
-      message: SOMETHING_WENT_WRONG
+      status: "error",
+      message: SOMETHING_WENT_WRONG,
     });
   }
 }
