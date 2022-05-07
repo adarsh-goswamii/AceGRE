@@ -24,7 +24,7 @@ const UnauthorizedAccess = ({}) => {
         <Button
           variant="outlined"
           onClick={() => {
-            navigate.push(-1);
+            navigate.push("/");
             dispatch(closeModal());
           }}
         >

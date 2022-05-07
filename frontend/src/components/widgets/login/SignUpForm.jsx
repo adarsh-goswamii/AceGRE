@@ -29,7 +29,7 @@ const SignUpForm = ({ toggleForm }) => {
   );
   const [error, setError] = useState({ show: false, message: "" });
 
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const loggedIn = Boolean(localStorage.getItem("token"));
   const failure = useSelector((state) => state.auth.registerUserFailure);
 
   useEffect(() => {
