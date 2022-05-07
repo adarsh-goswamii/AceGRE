@@ -5,7 +5,6 @@ export const REGISTER_USER_MESSAGE =
 export const TAGLINE =
   "Most complacent way to enhance and burnish your vocabulary. ";
 export const STEPS = [
-  "Select Category",
   "General Instructions",
   "All set to go",
 ];
