@@ -37,6 +37,7 @@ const Explore = () => {
       },
     };
     dispatch(getWordList(payload));
+    localStorage.removeItem("quiz");
   }, []);
 
   useEffect(() => {
@@ -138,7 +139,7 @@ const Explore = () => {
           }}
         />
 
-        <Select
+        {localStorage.getItem("token") && <Select
           label="Status"
           labelId="status"
           variant="outlined"
@@ -166,7 +167,7 @@ const Explore = () => {
               </MenuItem>
             );
           })}
-        </Select>
+        </Select>}
       </div>
       {
         words && words.length > 0 ?

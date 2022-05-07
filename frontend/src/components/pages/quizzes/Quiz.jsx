@@ -17,15 +17,18 @@ import {
   resetQuiz,
 } from "../../../store/action/quiz";
 import { openModal, closeModal } from "../../../store/action/common";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useBlocker, usePrompt } from "react-router-dom";
 import UnauthorizedAccess from "../../widgets/unauthorizedAccess/UnauthorizedAccess";
 
 const Quiz = ({ }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [id, setId] = useState(undefined);
   const [currQues, setCurrQues] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [selectedAns, setSelectedAns] = useState([]);
+  const [timeLeft, setTimeLeft] = useState(59);
+  const [quizStarted, setQuizStarted] = useState(false);
 
   const quizId = useSelector((state) => state.quiz.quizGeneratedId);
   const quizQuestions = useSelector((state) => state.quiz.quizQuestions);
@@ -33,18 +36,53 @@ const Quiz = ({ }) => {
     (state) => state.quiz.patchQuizSolutionSuccess
   );
   const quizEnd = useSelector((state) => state.quiz.endQuizSuccess);
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const url = window.location.pathname.split('/').pop();
+
+  // will handle refresh.
+  useEffect(() => {
+    if (localStorage.getItem("quiz")) {
+      console.log("Found an existing quiz");
+      let data = JSON.parse(localStorage.getItem("quiz"));
+      console.log(data);
+      dispatch(fetchQuestions(data.id));
+      setCurrQues(data.currQues);
+      setTimeLeft(data.timeLeft);
+      setId(data.id);
+      setQuizStarted(true);
+    }
+
+    if (localStorage.getItem("token") && !localStorage.getItem("quiz")) dispatch(openModal({
+      children: <QuizStepper />,
+      hideBackdrop: true
+    }));
+
+    return () => {
+      localStorage.removeItem("quiz");
+      dispatch(closeModal());
+      dispatch(resetQuiz());
+      console.log("cleanup ran");
+    };
+  }, []);
 
   useEffect(() => {
     return () => {
+      localStorage.removeItem("quiz");
       dispatch(closeModal());
       dispatch(resetQuiz());
-    }
-  }, []);
+      console.log("cleanup ran");
+    };
+  }, [url]);
+
+  // handle navigating away
+  usePrompt(
+    "Are you sure you want to leave? It will result in quiz to end", quizStarted
+  );
 
   useEffect(() => {
     if (quizId) {
       dispatch(fetchQuestions(quizId));
+      setId(quizId);
+      setQuizStarted(true);
     }
   }, [quizId]);
 
@@ -62,16 +100,17 @@ const Quiz = ({ }) => {
 
   useEffect(() => {
     if ((currQues !== 0 && currQues === questions.length) || quizEnd) {
-      navigate(`results?id=${quizId}`);
+      navigate(`results?id=${id}`);
     }
-  }, [currQues, quizEnd]);
+  }, [currQues, id]);
 
-  useEffect(() => {
-    if(loggedIn) dispatch(openModal({
-      children: <QuizStepper />,
-      hideBackdrop: true
+  if (id) {
+    localStorage.setItem("quiz", JSON.stringify({
+      id: id,
+      currQues: currQues,
+      timeLeft: timeLeft,
     }));
-  }, [loggedIn]);
+  }
 
   function nextQues() {
     setCurrQues((prev) => prev + 1);
@@ -80,7 +119,7 @@ const Quiz = ({ }) => {
 
   function submitSolution() {
     let payload = {
-      quiz_id: quizId,
+      quiz_id: id,
       ques: currQues,
       selected_ans: selectedAns,
     };
@@ -92,12 +131,11 @@ const Quiz = ({ }) => {
   }
 
   function handleEndQuiz() {
-    dispatch(endQuiz(quizId));
+    dispatch(endQuiz(id));
+    navigate(`results?id=${id}`);
   }
 
-  console.log(loggedIn);
-  if (!loggedIn) {
-    console.log("henlo");
+  if (!localStorage.getItem("token")) {
     dispatch(openModal({
       children: <UnauthorizedAccess />,
       hideBackdrop: true
@@ -107,7 +145,6 @@ const Quiz = ({ }) => {
       <div className="background-modal" />
     );
   } else {
-    console.log("henlo 2");
     return (
       <>
         {questions.length > currQues ? (
@@ -115,13 +152,14 @@ const Quiz = ({ }) => {
             <div className="left">
               <Timer
                 onComplete={submitSolution}
-                duration={60}
+                duration={timeLeft}
                 currQues={currQues}
+                setTimeLeft={setTimeLeft}
               />
 
               <div className="ques-container">
                 {
-                  [...Array(quizQuestions?.length).keys()].map(val => (
+                  [...Array(questions?.length).keys()].map(val => (
                     <div className={`ques-box ${currQues > val ? "completed" : ""}`}>{val + 1}</div>
                   ))
                 }
