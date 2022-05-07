@@ -75,7 +75,7 @@ export const routes = [
     className: "quiz-screen",
   },
   {
-    path: "/quiz/results",
+    path: "/results",
     exact: false,
     hideHeader: true,
     component: Results,
