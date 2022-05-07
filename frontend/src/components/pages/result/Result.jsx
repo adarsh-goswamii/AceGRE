@@ -15,6 +15,7 @@ const Result = ({}) => {
   const dispatch = useDispatch();
   const navigate = useHistory();
   const id = new URLSearchParams(location.search).get("id");
+  console.log("result id", id);
 
   const results = useSelector((state) => state.quiz.quizResults);
   localStorage.removeItem("quiz");

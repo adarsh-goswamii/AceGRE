@@ -30,7 +30,7 @@ const Quiz = ({}) => {
   const [selectedAns, setSelectedAns] = useState([]);
   const [timeLeft, setTimeLeft] = useState(59);
   const [quizStarted, setQuizStarted] = useState(false);
-  const [alertOpen, setAlertopen] = useState(true);
+  const [alertOpen, setAlertopen] = useState(false);
 
   const quizId = useSelector((state) => state.quiz.quizGeneratedId);
   const quizQuestions = useSelector((state) => state.quiz.quizQuestions);
@@ -44,6 +44,7 @@ const Quiz = ({}) => {
 
   // will handle refresh.
   useEffect(() => {
+    console.log("initialSttae", quizState);
     if (localStorage.getItem("quiz")) {
       let data = JSON.parse(localStorage.getItem("quiz"));
       dispatch(fetchQuestions(data.id));
@@ -145,6 +146,7 @@ const Quiz = ({}) => {
 
     return <div className="background-modal" />;
   } else {
+    console.log("reason for background quiz", questions.length, currQues);
     return (
       <>
         {questions.length > currQues ? (
@@ -215,6 +217,7 @@ const Quiz = ({}) => {
               quizEnd={() => handleEndQuiz(id)}
             />
           </div>
+
         ) : (
           <div className="background-modal"></div>
         )}

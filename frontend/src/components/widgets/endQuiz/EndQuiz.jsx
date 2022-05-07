@@ -104,7 +104,6 @@ export const EndQuizPrompt = ({ open, quizEnd }) => {
     }
   }, [currentPath, history, onquizEndHandler]);
 
-  console.log(showPrompt);
   return (
     <>
       {showPrompt ? (

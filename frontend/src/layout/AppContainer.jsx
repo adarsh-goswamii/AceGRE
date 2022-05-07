@@ -16,6 +16,8 @@ const AppContainer = () => {
 
   const loaderVisible = useSelector((state) => state.common.loader);
 
+  console.log(window.pathname);
+
   useEffect(() => {
     const email = localStorage.getItem("email");
     if (email)
@@ -31,6 +33,7 @@ const AppContainer = () => {
 
   function renderHeader() {
     const pathname = location.pathname;
+    console.log(pathname);
     const currentRoute = routes.filter((route) => route.path === pathname);
     return currentRoute && !currentRoute[0]?.hideHeader;
   }
