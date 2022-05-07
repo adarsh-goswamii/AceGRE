@@ -139,50 +139,49 @@ const Explore = () => {
           }}
         />
 
-        {localStorage.getItem("token") && <Select
-          label="Status"
-          labelId="status"
-          variant="outlined"
-          className="status-select"
-          id="status"
-          value={filterStatus}
-          renderValue={(data) => data.title}
-          onChange={handleFilterStatusChange}
-          MenuProps={{
-            anchorOrigin: {
-              vertical: "bottom",
-              horizontal: "left",
-            },
-            transformOrigin: {
-              vertical: "top",
-              horizontal: "left",
-            },
-            getContentAnchorEl: null,
-          }}
-        >
-          {wordMenu?.map((data) => {
-            return (
-              <MenuItem key={data.id} value={data}>
-                {data.title}
-              </MenuItem>
-            );
-          })}
-        </Select>}
+        {localStorage.getItem("token") && (
+          <Select
+            label="Status"
+            labelId="status"
+            variant="outlined"
+            className="status-select"
+            id="status"
+            value={filterStatus}
+            renderValue={(data) => data.title}
+            onChange={handleFilterStatusChange}
+            MenuProps={{
+              anchorOrigin: {
+                vertical: "bottom",
+                horizontal: "left",
+              },
+              transformOrigin: {
+                vertical: "top",
+                horizontal: "left",
+              },
+              getContentAnchorEl: null,
+            }}
+          >
+            {wordMenu?.map((data) => {
+              return (
+                <MenuItem key={data.id} value={data}>
+                  {data.title}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        )}
       </div>
-      {
-        words && words.length > 0 ?
-          <div className="word-grid-container">
-            {words?.map((word) => (
-              <WordCard word={word} onClick={handleRightPaneOpen} />
-            ))
-            }
-          </div>
-          :
-          (filter.search || filter.status) ?
-            <Lottie animationData={secure} className="lottie" />
-            :
-            <></>
-      }
+      {words && words.length > 0 ? (
+        <div className="word-grid-container">
+          {words?.map((word) => (
+            <WordCard word={word} onClick={handleRightPaneOpen} />
+          ))}
+        </div>
+      ) : filter.search || filter.status ? (
+        <Lottie animationData={secure} className="lottie" />
+      ) : (
+        <></>
+      )}
       <div className="pagination">
         <Pagination
           page={pagination.page_no}

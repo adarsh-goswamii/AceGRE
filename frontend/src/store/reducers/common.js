@@ -15,7 +15,7 @@ const INIT_INITIAL_STATE = {
     message: "",
     duration: 4000,
     open: false,
-  }
+  },
 };
 
 const reducerFn = (state = INIT_INITIAL_STATE, action) => {
@@ -26,18 +26,24 @@ const reducerFn = (state = INIT_INITIAL_STATE, action) => {
       return Object.assign({}, state, { loader: action.payload });
     case actionType.SHOW_MODAL:
       return Object.assign({}, state, {
-        modal: { open: true, children: action.payload.children, hideBackdrop: action.payload.hideBackdrop },
+        modal: {
+          open: true,
+          children: action.payload.children,
+          hideBackdrop: action.payload.hideBackdrop,
+        },
       });
     case actionType.HIDE_MODAL:
-      return Object.assign({}, state, { modal: { open: false, hideBackdrop: false } });
+      return Object.assign({}, state, {
+        modal: { open: false, hideBackdrop: false },
+      });
     case actionType.SHOW_TOASTER:
       return Object.assign({}, state, {
         toaster: {
           severity: action.payload.status,
           message: action.payload.message,
           open: true,
-          duration: action.payload.duration
-        }
+          duration: action.payload.duration,
+        },
       });
     case actionType.HIDE_TOASTER:
       return Object.assign({}, state, {
@@ -45,8 +51,8 @@ const reducerFn = (state = INIT_INITIAL_STATE, action) => {
           severity: "",
           message: "",
           open: false,
-          duration: 4000
-        }
+          duration: 4000,
+        },
       });
     default:
       return state;

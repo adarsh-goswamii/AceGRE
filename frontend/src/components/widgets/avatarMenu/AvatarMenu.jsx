@@ -33,11 +33,17 @@ const AvatarMenu = ({ handlePopOverClose }) => {
           <ProfileIcon className="icon" />
           <p>{localStorage.getItem("email") || "UserName"}</p>
         </MenuItem>
-        <MenuItem className="menuItem explore" onClick={() => handleNavigation("/explore")}>
+        <MenuItem
+          className="menuItem explore"
+          onClick={() => handleNavigation("/explore")}
+        >
           <ExploreIcon className="icon" />
           <p>Explore</p>
         </MenuItem>
-        <MenuItem className="menuItem leaderboard" onClick={() => handleNavigation("/leaderboard")}>
+        <MenuItem
+          className="menuItem leaderboard"
+          onClick={() => handleNavigation("/leaderboard")}
+        >
           <LeaderboardIcon className="icon" />
           <p>Leaderboard</p>
         </MenuItem>
@@ -45,7 +51,10 @@ const AvatarMenu = ({ handlePopOverClose }) => {
           <StatsIcon className="icon" />
           <p>Statistics</p>
         </MenuItem> */}
-        <MenuItem className="menuItem quiz" onClick={() => handleNavigation("/quiz")}>
+        <MenuItem
+          className="menuItem quiz"
+          onClick={() => handleNavigation("/quiz")}
+        >
           <QuizIcon className="icon" />
           <p>Quiz</p>
         </MenuItem>

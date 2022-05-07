@@ -1,31 +1,36 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions } from "@material-ui/core";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@material-ui/core";
 import { useCallback, useEffect, useState } from "react";
 import Button from "../../shared/button/Button";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
 
-const Modal = ({ open, onClose = () => { }, onQuizEnd, type }) => {
+const Modal = ({ open, onClose = () => {}, onQuizEnd, type }) => {
   return (
     <div>
-      <Dialog
-        onClose={onClose}
-        open={open}>
-        <DialogTitle>{`End Quiz ? ${type}`}</DialogTitle>
-        <DialogContent>It looks like you are trying to naviagte away from the page. If you leave, your quiz will end.</DialogContent>
+      <Dialog onClose={onClose} open={open}>
+        <DialogTitle>{`End Quiz ?`}</DialogTitle>
+        <DialogContent>
+          It looks like you are trying to naviagte away from the page. If you
+          leave, your quiz will end.
+        </DialogContent>
         <DialogActions>
-          <Button variant="outlined" onClick={onQuizEnd}>End Quiz</Button>
-          <Button variant="contained" onClick={(e) => onClose(e, "leave")}>Cancel</Button>
+          <Button variant="outlined" onClick={onQuizEnd}>
+            End Quiz
+          </Button>
+          <Button variant="contained" onClick={(e) => onClose(e, "leave")}>
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
   );
 };
 
-
-export const EndQuizAlert = ({
-  open,
-  setOpen,
-  endQuiz,
-}) => {
+export const EndQuizAlert = ({ open, setOpen, endQuiz }) => {
   const history = useHistory();
 
   const handleClose = (e, reason) => {
@@ -35,7 +40,7 @@ export const EndQuizAlert = ({
     } else {
       setOpen(false);
     }
-  }
+  };
 
   const handleEndQuiz = (e) => {
     endQuiz();
@@ -44,9 +49,14 @@ export const EndQuizAlert = ({
 
   return (
     <>
-      <Modal open={open} onClose={handleClose} onQuizEnd={handleEndQuiz} type="alert" />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        onQuizEnd={handleEndQuiz}
+        type="alert"
+      />
     </>
-  )
+  );
 };
 
 export const EndQuizPrompt = ({ open, quizEnd }) => {
@@ -63,29 +73,32 @@ export const EndQuizPrompt = ({ open, quizEnd }) => {
   const onquizEndHandler = () => {
     quizEnd();
     return true;
-  }
-  
+  };
+
   if (open) {
-    history.block(prompt => {
+    history.block((prompt) => {
       setCurrentPath(prompt);
       setShowPrompt(true);
       return false;
-    })
-  } else history.block(() => { });
+    });
+  } else history.block(() => {});
 
-  const handleClose = useCallback(async (e, reason) => {
-    if (onquizEndHandler) {
-      setShowPrompt(false);
-      history.block(() => { });
-      // history.push(currentPath);
-    } else setShowPrompt(false);
-  }, [currentPath, history, onCLoseHandler]);
+  const handleClose = useCallback(
+    async (e, reason) => {
+      if (onquizEndHandler) {
+        setShowPrompt(false);
+        history.block(() => {});
+        // history.push(currentPath);
+      } else setShowPrompt(false);
+    },
+    [currentPath, history, onCLoseHandler]
+  );
 
   const onQuizEnd = useCallback(async () => {
     if (onquizEndHandler) {
       const canRoute = await Promise.resolve(onquizEndHandler());
       if (canRoute) {
-        history.block(() => { });
+        history.block(() => {});
         history.push(currentPath);
       }
     }
@@ -94,10 +107,14 @@ export const EndQuizPrompt = ({ open, quizEnd }) => {
   console.log(showPrompt);
   return (
     <>
-      {showPrompt ?
-        <Modal open={open} onClose={handleClose} onQuizEnd={onQuizEnd} type="prompt" />
-        :
-        null}
+      {showPrompt ? (
+        <Modal
+          open={open}
+          onClose={handleClose}
+          onQuizEnd={onQuizEnd}
+          type="prompt"
+        />
+      ) : null}
     </>
-  )
+  );
 };

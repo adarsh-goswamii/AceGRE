@@ -46,15 +46,11 @@ const AppContainer = () => {
       <Switch>
         {routes?.map((route) => {
           return (
-            <Route
-              key={route?.id}
-              path={route.path}
-              exact={route.exact}
-            >
-                <Container className={route.className}>
-                  <route.component />
-                </Container>
-              </Route>
+            <Route key={route?.id} path={route.path} exact={route.exact}>
+              <Container className={route.className}>
+                <route.component />
+              </Container>
+            </Route>
           );
         })}
       </Switch>
