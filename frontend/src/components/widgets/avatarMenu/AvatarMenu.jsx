@@ -8,22 +8,22 @@ import { ReactComponent as LogoutIcon } from "../../../assets/images/logout.svg"
 import { Menu, MenuItem } from "@material-ui/core";
 import { handleLogout } from "../../../store/action/auth";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { PropTypes } from "prop-types";
 
 const AvatarMenu = ({ handlePopOverClose }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useHistory();
 
   function logoutClickHandler() {
     dispatch(handleLogout());
     handlePopOverClose();
-    navigate("/");
+    navigate.push("/");
   }
 
   function handleNavigation(route) {
     handlePopOverClose();
-    navigate(route);
+    navigate.push(route);
   }
 
   return (
