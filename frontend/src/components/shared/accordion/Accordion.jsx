@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails } from "@material-ui/core";
+import { Accordion, AccordionDetails, AccordionSummary } from "@material-ui/core";
 import { PropTypes } from "prop-types";
 import "./Accordion.scss";
 
@@ -9,8 +9,11 @@ const CustomAccordion = ({
   className,
 }) => {
   return (
-    <Accordion classes={{ root: className }} defaultExpanded={defaultExpanded}>
-      {Heading}
+    <Accordion 
+      onChange={(e) => e.stopPropogation()}
+      classes={{ root: `accordion ${className}` }} 
+      defaultExpanded={defaultExpanded}>
+      <AccordionSummary classes={{expanded: "summary-expanded"}}>{Heading}</AccordionSummary>
       <AccordionDetails>{Content}</AccordionDetails>
     </Accordion>
   );

@@ -11,6 +11,7 @@
       top: 0px;
       left: 0px;
     }
+
     overflow: hidden;
     display: flex;
     padding: $gutters;
@@ -61,7 +62,7 @@
         right: 22%;
         position: absolute;
         height: auto;
-        width: 30%; 
+        width: 30%;
       }
 
       .line {
@@ -127,6 +128,7 @@
       font-size: 24px;
       margin-bottom: 32px;
     }
+
     .sub-heading {
       color: $primary;
       width: 50%;
@@ -166,9 +168,11 @@
         &:nth-of-type(1) {
           margin-top: 90px;
         }
+
         &:nth-of-type(2) {
           margin-top: 20px;
         }
+
         &:nth-of-type(3) {
           margin-top: -50px;
         }
@@ -213,6 +217,7 @@
         align-self: center
       }
     }
+
     .heading {
       @extend .labelSemiBold;
       font-weight: 500;

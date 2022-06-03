@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { Provider } from "react-redux";

@@ -16,8 +16,6 @@ const AppContainer = () => {
 
   const loaderVisible = useSelector((state) => state.common.loader);
 
-  console.log(window.pathname);
-
   useEffect(() => {
     const email = localStorage.getItem("email");
     if (email)
