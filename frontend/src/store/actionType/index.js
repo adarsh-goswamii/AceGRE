@@ -8,6 +8,8 @@ export const SHOW_TOASTER = "SHOW_TOASTER";
 export const HIDE_TOASTER = "HIDE_TOASTER";
 
 // explore
+export const ADD_WORD = "ADD_WORD";
+export const ADD_WORD_SUCCESSFULL = "ADD_WORD_SUCCESSFULL";
 export const GET_WORD_LIST = "GET_WORD_LIST";
 export const GET_WORD_LIST_SUCCESS = "GET_WORD_LIST_SUCCESS";
 export const GET_WORD_LIST_FAILURE = "GET_WORD_LIST_FAILURE";

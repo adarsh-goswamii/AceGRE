@@ -5,9 +5,8 @@ import { ReactComponent as AddIcon } from "../../../assets/images/add.svg";
 import styles from "./DynamicInputs.module.scss";
 import Accordion from "../../shared/accordion/Accordion";
 
-const DynamicInputs = ({ heading }) => {
-  const [inputs, setInputs] = useState([""]);
-
+const DynamicInputs = ({ heading, className, inputs, setInputs }) => {
+  
   function handleInputValueChange(value, index, event) {
     const newInputs = [...inputs];
     newInputs[index] = value;
@@ -48,7 +47,7 @@ const DynamicInputs = ({ heading }) => {
 
   return (
     <Accordion
-      className={styles["inputs"]}
+      className={`${styles["inputs"]} ${className}`}
       defaultExpanded={true}
       Heading={AccordionHeader}
       Content={AccordionDetails} />
