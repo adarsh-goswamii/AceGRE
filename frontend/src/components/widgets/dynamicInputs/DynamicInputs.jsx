@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import InputField from "../../shared/inputField/InputField";
 import Button from "../../shared/button/Button";
 import { ReactComponent as AddIcon } from "../../../assets/images/add.svg";
@@ -6,17 +6,16 @@ import styles from "./DynamicInputs.module.scss";
 import Accordion from "../../shared/accordion/Accordion";
 
 const DynamicInputs = ({ heading }) => {
-  const [open, setOpen] = useState(true);
   const [inputs, setInputs] = useState([""]);
 
-  function handleInputValueChange(value, index) {
+  function handleInputValueChange(value, index, event) {
     const newInputs = [...inputs];
     newInputs[index] = value;
     setInputs(newInputs);
   }
 
   function handleAddInputClick(event) {
-    event.preventDefault();
+    event.stopPropagation();
     setInputs(prev => [...prev, ""]);
   }
 
@@ -31,16 +30,16 @@ const DynamicInputs = ({ heading }) => {
           <AddIcon className={styles["inputs__add-icon"]} />
         }
         onClick={handleAddInputClick}
-      >{`Add another ${heading?.toLowerCase()}`}</Button>
+      >{`Add ${heading?.toLowerCase()}`}</Button>
     </div>
   );
 
   const AccordionDetails = (
-    <div className={styles["inputs__field-container"]}>
+    <div className={styles["inputs__field-container"]} >
       {
         inputs?.map((input, index) => {
           return (
-            <InputField value={input} onChange={(value) => handleInputValueChange(value, index)} key={index} placeholder={`Add ${heading.toLowerCase()}...`} className={styles["inputs__input-field"]} />
+            <InputField value={input} onChange={(value, event) => handleInputValueChange(value, index, event)} key={index} placeholder={`Add ${heading.toLowerCase()}...`} className={styles["inputs__input-field"]} />
           )
         })
       }
@@ -48,10 +47,10 @@ const DynamicInputs = ({ heading }) => {
   );
 
   return (
-    <Accordion 
-      className={styles["inputs"]} 
-      defaultExpanded={true} 
-      Heading={AccordionHeader} 
+    <Accordion
+      className={styles["inputs"]}
+      defaultExpanded={true}
+      Heading={AccordionHeader}
       Content={AccordionDetails} />
   )
 };

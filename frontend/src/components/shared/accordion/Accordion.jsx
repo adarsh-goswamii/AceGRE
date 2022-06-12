@@ -9,11 +9,14 @@ const CustomAccordion = ({
   className,
 }) => {
   return (
-    <Accordion 
-      onChange={(e) => e.stopPropogation()}
-      classes={{ root: `accordion ${className}` }} 
+    <Accordion
+      classes={{ root: `accordion ${className}` }}
       defaultExpanded={defaultExpanded}>
-      <AccordionSummary classes={{expanded: "summary-expanded"}}>{Heading}</AccordionSummary>
+      <AccordionSummary
+        classes={{ expanded: "summary-expanded" }}
+        >
+        {Heading}
+      </AccordionSummary>
       <AccordionDetails>{Content}</AccordionDetails>
     </Accordion>
   );
