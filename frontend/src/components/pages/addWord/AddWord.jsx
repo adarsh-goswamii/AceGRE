@@ -1,9 +1,9 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import DynamicInputs from "../../widgets/dynamicInputs/DynamicInputs";
 import InputField from "../../shared/inputField/InputField";
 import Button from "../../shared/button/Button";
-import {addWord} from "../../../store/action/addWord";
-import {useDispatch, useSelector} from "react-redux";
+import { addWord } from "../../../store/action/addWord";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "../../shared/select/Select";
 import { MenuItem } from "@material-ui/core";
 import styles from "./addWord.module.scss";
@@ -20,19 +20,19 @@ const AddWord = ({ }) => {
   const wordAdded = useSelector(state => state.addWord.wordAddedSuccessfully);
 
   useEffect(() => {
-    if(wordAdded) {
+    if (wordAdded) {
       handleResetClick();
     }
   }, [wordAdded])
 
-  function handleAddWordClick () {
+  function handleAddWordClick() {
     const payload = {
-      title: word, 
-      part_of_speech: partOfSpeech, 
-      fun_fact: funFact, 
-      meanings: meanings.filter(data => Boolean(data.trim())).map(data => ({meaning: data})), 
-      sentences: sentences.filter(data => Boolean(data.trim())).map(data => ({sentence: data})),
-      mneumonics: mneumonics.filter(data => Boolean(data.trim())).map(data => ({mneumonic: data})),
+      title: word,
+      part_of_speech: partOfSpeech,
+      fun_fact: funFact,
+      meanings: meanings.filter(data => Boolean(data.trim())).map(data => ({ meaning: data })),
+      sentences: sentences.filter(data => Boolean(data.trim())).map(data => ({ sentence: data })),
+      mneumonics: mneumonics.filter(data => Boolean(data.trim())).map(data => ({ mneumonic: data })),
     };
     dispatch(addWord(payload));
   };
@@ -52,13 +52,18 @@ const AddWord = ({ }) => {
         Fill the form to add a word
       </p>
       <div className={styles["word-form__details"]}>
-        <InputField 
+        <InputField
           label={"Word"}
           placeholder={"Enter Word..."}
           value={word}
           onChange={setWord}
-          className={styles["word-form__word"]} />
-        <Select label={"Part of speech"} id="part-of-speech" value={partOfSpeech} onChange={(e) => setPartOfSpeech(e.target.value)}>
+          className={`${styles["word-form__word"]} necessary`} />
+        <Select 
+          label={"Part of speech"} 
+          id="part-of-speech" 
+          required={true}
+          value={partOfSpeech} 
+          onChange={(e) => setPartOfSpeech(e.target.value)}>
           <MenuItem>None</MenuItem>
           <MenuItem value={"verb"}>Verb</MenuItem>
           <MenuItem value={"noun"}>Noun</MenuItem>
@@ -66,34 +71,34 @@ const AddWord = ({ }) => {
         </Select>
       </div>
 
-      <DynamicInputs 
-        heading="Meanings" 
+      <DynamicInputs
+        heading="Meanings"
         inputs={meanings}
         setInputs={setMeanings}
         className={styles["word-form__inputs"]} />
-      <DynamicInputs 
+      <DynamicInputs
         heading="Sentences"
         inputs={sentences}
-        setInputs={setSentences} 
+        setInputs={setSentences}
         className={styles["word-form__inputs"]} />
-      <DynamicInputs 
-        heading="Mneumonics" 
+      <DynamicInputs
+        heading="Mneumonics"
         inputs={mneumonics}
         setInputs={setMneumonics}
         className={styles["word-form__inputs"]} />
 
-      <InputField 
+      <InputField
         label={"Fun Facts"}
         placeholder={"Enter fun facts...."}
-        multiline={true} 
-        minRows={4} 
+        multiline={true}
+        minRows={4}
         value={funFact}
         onChange={setFunFact}
         className={styles["word-form__fun-facts"]} />
 
       <div className={styles["word-form__action-btns"]}>
         <Button variant="outlined" onClick={handleResetClick}>Reset</Button>
-        <Button variant="contained" onClick={handleAddWordClick}>Submit</Button>
+        <Button variant="contained" onClick={handleAddWordClick} disabled={!word.length || !partOfSpeech.length}>Submit</Button>
       </div>
     </div>
   )
