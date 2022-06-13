@@ -1,0 +1,54 @@
+@import "../../../styles/colors.scss";
+
+:global(.add-word-screen) {
+  padding: 0px 0px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  background: url(../../../assets/images/backgroundMesh.svg);
+
+  .word-form {
+    padding: 16px 64px;
+    width: 100%;
+    height: fit-content;
+    min-height: 100vh;
+    width: 70%;
+    border-radius: 18px;
+    box-shadow: $boxShadowDark;
+    background-color: $white;
+
+    &__heading {
+      font-size: 24px;
+      font-weight: 500;
+      margin: 0px 0px 16px;
+    }
+
+    &__details {
+      margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      grid-gap: 16px;
+    }
+
+    &__word {
+      background: $white;
+    }
+
+    &__inputs {
+      background-color: $offWhite;
+      margin-bottom: 12px !important;
+      border-radius: 4px;
+    }
+
+    &__fun-facts {
+      margin-bottom: 12px;
+      background-color: $white;
+    }
+
+    &__action-btns {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+  }
+}

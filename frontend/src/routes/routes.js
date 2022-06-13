@@ -5,6 +5,7 @@ import Authentication from "../components/pages/login/Authentication";
 import Quiz from "../components/pages/quizzes/Quiz";
 import Results from "../components/pages/result/Result";
 import Leaderboard from "../components/pages/leaderboard/Leaderboard";
+import AddWord from "../components/pages/addWord/AddWord";
 
 export const routes = [
   {
@@ -52,9 +53,10 @@ export const routes = [
     path: "/add-word",
     exact: true,
     hideHeader: false,
-    component: <></>,
+    component: AddWord,
     id: 6,
     protected: true,
+    className: "add-word-screen"
   },
   {
     path: "/auth",
