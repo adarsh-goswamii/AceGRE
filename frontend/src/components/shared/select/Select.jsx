@@ -2,6 +2,7 @@ import { Select as MuiSelect, InputLabel, FormControl } from "@material-ui/core"
 import styles from "./select.module.scss";
 
 const Select = ({
+  classNameLabel,
   classNameForm,
   classNameSelect,
   id,
@@ -10,10 +11,12 @@ const Select = ({
   onChange = () => { },
   value,
   variant = "outlined",
+  required,
+  ...rest
 }) => {
   return (
     <>
-      <FormControl className={`${styles[classNameForm]} ${styles["select-form"]}`} size="small">
+      <FormControl className={`${styles[classNameForm]} ${styles["select-form"]}`} size="small" required={required}>
         <InputLabel id={id} classes={{
           shrink: styles["select-form__label--shrink"],
           root: styles["select-form__label"]
@@ -39,6 +42,7 @@ const Select = ({
             },
             getContentAnchorEl: null
           }}
+          {...rest}
         >
           {children}
         </MuiSelect>
