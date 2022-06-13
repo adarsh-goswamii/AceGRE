@@ -25,6 +25,9 @@
 
     &__details {
       margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      grid-gap: 16px;
     }
 
     &__word {

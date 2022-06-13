@@ -4,12 +4,15 @@ import InputField from "../../shared/inputField/InputField";
 import Button from "../../shared/button/Button";
 import {addWord} from "../../../store/action/addWord";
 import {useDispatch, useSelector} from "react-redux";
+import Select from "../../shared/select/Select";
+import { MenuItem } from "@material-ui/core";
 import styles from "./addWord.module.scss";
 
 const AddWord = ({ }) => {
   const dispatch = useDispatch();
   const [word, setWord] = useState("");
   const [funFact, setFunFact] = useState("");
+  const [partOfSpeech, setPartOfSpeech] = useState("");
   const [meanings, setMeanings] = useState([""]);
   const [sentences, setSentences] = useState([""]);
   const [mneumonics, setMneumonics] = useState([""]);
@@ -25,7 +28,7 @@ const AddWord = ({ }) => {
   function handleAddWordClick () {
     const payload = {
       title: word, 
-      part_of_speech: "verb", 
+      part_of_speech: partOfSpeech, 
       fun_fact: funFact, 
       meanings: meanings.filter(data => Boolean(data.trim())).map(data => ({meaning: data})), 
       sentences: sentences.filter(data => Boolean(data.trim())).map(data => ({sentence: data})),
@@ -37,6 +40,7 @@ const AddWord = ({ }) => {
   function handleResetClick() {
     setWord("");
     setFunFact("");
+    setPartOfSpeech("");
     setMeanings([""]);
     setSentences([""]);
     setMneumonics([""]);
@@ -54,7 +58,12 @@ const AddWord = ({ }) => {
           value={word}
           onChange={setWord}
           className={styles["word-form__word"]} />
-        {/** ! Add a drop down */}
+        <Select label={"Part of speech"} id="part-of-speech" value={partOfSpeech} onChange={(e) => setPartOfSpeech(e.target.value)}>
+          <MenuItem>None</MenuItem>
+          <MenuItem value={"verb"}>Verb</MenuItem>
+          <MenuItem value={"noun"}>Noun</MenuItem>
+          <MenuItem value={"adjective"}>Adjective</MenuItem>
+        </Select>
       </div>
 
       <DynamicInputs 
@@ -83,7 +92,7 @@ const AddWord = ({ }) => {
         className={styles["word-form__fun-facts"]} />
 
       <div className={styles["word-form__action-btns"]}>
-        <Button variant="outlined">Reset</Button>
+        <Button variant="outlined" onClick={handleResetClick}>Reset</Button>
         <Button variant="contained" onClick={handleAddWordClick}>Submit</Button>
       </div>
     </div>
