@@ -20,9 +20,9 @@ const login = async (req, res, next) => {
     if (userInfo) {
       const validPass = await bcrypt.compare(password, userInfo.password);
       if (validPass) {
-
-        const access_token = jwt.sign({ email, id: userInfo._id.toString() }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
-        const refresh_token = jwt.sign({ email, id: userInfo._id.toString() }, process.env.REFRESH_TOKEN_KEY, { expiresIn: `${rememberMe ? "30d" : '1d'}` });
+        const { admin } = userInfo;
+        const access_token = jwt.sign({ email, id: userInfo._id.toString(), admin }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
+        const refresh_token = jwt.sign({ email, id: userInfo._id.toString(), admin }, process.env.REFRESH_TOKEN_KEY, { expiresIn: `${rememberMe ? "30d" : '1d'}` });
 
         const newToken = new Token({ id: userInfo._id.toString(), token: refresh_token });
         await Token.deleteOne({ email }).exec();
@@ -34,6 +34,7 @@ const login = async (req, res, next) => {
             email: email,
             token: access_token,
             refresh_token: refresh_token,
+            role: admin ? "admin" : "user",
             message: "User successfully logged in"
           }
         });
@@ -88,8 +89,8 @@ const register = async (req, res, next) => {
     let newUser = new User({ email, password: hashedPass, admin: false });
     newUser = await newUser.save();
 
-    const generatedToken = jwt.sign({ email, id: newUser._id.toString() }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
-    const refresh_token = jwt.sign({ email, id: newUser._id.toString() }, process.env.REFRESH_TOKEN_KEY, { expiresIn: "1d" });
+    const generatedToken = jwt.sign({ email, id: newUser._id.toString(), admin: false }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
+    const refresh_token = jwt.sign({ email, id: newUser._id.toString(), admin: false }, process.env.REFRESH_TOKEN_KEY, { expiresIn: "1d" });
 
     const newRefreshToken = new Token({ token: refresh_token, id: newUser._id.toString() });
     await newRefreshToken.save();
@@ -103,7 +104,7 @@ const register = async (req, res, next) => {
         token: generatedToken,
         refresh_token: refresh_token,
         email: email,
-        admin: false,
+        role: "user",
       }
     });
   } catch (error) {
@@ -147,11 +148,11 @@ const refreshToken = async (req, res, next) => {
     jwt.verify(refresh_token, process.env.REFRESH_TOKEN_KEY, async (err, data) => {
       if (err) return res.status(403).json({ message: "Unauthorized Access", err });
 
-      const { id, email } = data;
+      const { id, email, admin } = data;
       const { token } = await Token.findOne({ id }).lean().exec();
       if (!token || token !== refresh_token) return res.status(403).json("Token expired, Unauthorized Access");
 
-      const newToken = jwt.sign({ email, id }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
+      const newToken = jwt.sign({ email, id, admin }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
 
       res.status(200).json({
         token: newToken,
