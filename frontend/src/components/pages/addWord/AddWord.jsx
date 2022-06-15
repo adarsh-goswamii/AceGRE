@@ -6,10 +6,12 @@ import { addWord } from "../../../store/action/addWord";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "../../shared/select/Select";
 import { MenuItem } from "@material-ui/core";
+import {useHistory} from "react-router-dom";
 import styles from "./addWord.module.scss";
 
 const AddWord = ({ }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [word, setWord] = useState("");
   const [funFact, setFunFact] = useState("");
   const [partOfSpeech, setPartOfSpeech] = useState("");
@@ -18,6 +20,12 @@ const AddWord = ({ }) => {
   const [mneumonics, setMneumonics] = useState([""]);
 
   const wordAdded = useSelector(state => state.addWord.wordAddedSuccessfully);
+
+  useEffect(() => {
+    if(localStorage.getItem("role") !== "admin") {
+      history.push("/");
+    }
+  }, []);
 
   useEffect(() => {
     if (wordAdded) {
