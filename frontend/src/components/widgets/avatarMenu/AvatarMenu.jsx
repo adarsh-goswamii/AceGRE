@@ -26,6 +26,8 @@ const AvatarMenu = ({ handlePopOverClose }) => {
     navigate.push(route);
   }
 
+  const role = localStorage.getItem("role");
+
   return (
     <>
       <div className="avatarMenu-container">
@@ -47,10 +49,10 @@ const AvatarMenu = ({ handlePopOverClose }) => {
           <LeaderboardIcon className="icon" />
           <p>Leaderboard</p>
         </MenuItem>
-        {/* <MenuItem className="menuItem stats">
+        {role === "admin" && <MenuItem className="menuItem stats" onClick={() => handleNavigation("/add-word")}>
           <StatsIcon className="icon" />
-          <p>Statistics</p>
-        </MenuItem> */}
+          <p>Add Word</p>
+        </MenuItem>}
         <MenuItem
           className="menuItem quiz"
           onClick={() => handleNavigation("/quiz")}
