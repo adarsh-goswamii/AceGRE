@@ -4,26 +4,38 @@ const UserData = require('../models/userDataSchema');
 const HttpError = require('../models/http-error');
 const jwt = require("jsonwebtoken")
 
-// TODO: clean ur shit 
 const addWord = async (req, res, next) => {
-    // add validations.
-    console.log("adding word");
-
-    const { title, part_of_speech, fun_fact, meanings, mneumonics, sentences } = req.body;
-
-    const word = new Word({
-        title,
-        part_of_speech,
-        fun_fact,
-        meanings,
-        mneumonics,
-        sentences,
-        "date_added": new Date()
-    });
-
+    // add validations
     try {
-        console.log(word);
-        await word.save();
+        let access_token = req.headers["authorization"];
+        if (access_token) access_token = req.headers["authorization"].split(" ")[1];
+        else return res.status(401).json({
+            message: "Token missing",
+        });
+
+        if (access_token) {
+            jwt.verify(access_token, process.env.ACCESS_TOKEN_KEY, async (err, data) => {
+                const { admin } = data;
+                if (err || !admin) return res.status(403).json("Unauthorized Access");
+
+                const { title, part_of_speech, fun_fact, meanings, mneumonics, sentences } = req.body;
+
+                const word = new Word({
+                    title,
+                    part_of_speech,
+                    fun_fact,
+                    meanings,
+                    mneumonics,
+                    sentences,
+                    "date_added": new Date()
+                });
+
+                await word.save();
+                res.status(201).json({ word: word });
+            });
+        } else return res.status(401).json({
+            message: "Token missing",
+        });
     } catch (err) {
         const error = new HttpError(
             err,
@@ -31,8 +43,6 @@ const addWord = async (req, res, next) => {
         );
         return next(error);
     }
-
-    res.status(201).json({ word: word });
 };
 
 const getWords = async (req, res, next) => {
@@ -66,9 +76,9 @@ const getWords = async (req, res, next) => {
                         size,
                         page_no: page_no + 1,
                         total_pages: Number(Math.ceil(wordsCount / size))
-                    }, 
+                    },
                     filter: {
-                        search, 
+                        search,
                         status
                     }
                 });
@@ -84,9 +94,9 @@ const getWords = async (req, res, next) => {
                     size,
                     page_no: page_no + 1,
                     total_pages: Number(Math.ceil(wordsCount / size))
-                }, 
+                },
                 filter: {
-                    search, 
+                    search,
                     status,
                 }
             });
@@ -99,8 +109,8 @@ const getWords = async (req, res, next) => {
 const updateWordStatus = async (req, res, next) => {
     try {
         const { status, id: word_id } = req.body;
-        if(!req.headers["authorization"]) return res.status(401).json({
-            message: "Token missing", 
+        if (!req.headers["authorization"]) return res.status(401).json({
+            message: "Token missing",
         });
         let access_token = req.headers["authorization"].split(" ")[1] || null;
         if (access_token) {
@@ -108,7 +118,7 @@ const updateWordStatus = async (req, res, next) => {
                 if (err) return res.status(403).json(err);
 
                 const { word_status } = await UserData.findOne({ id: data.id }).lean().exec();
-                if(word_status[word_id] !== status) {
+                if (word_status[word_id] !== status) {
                     word_status[word_id] = status;
                 } else word_status[word_id] = null;
                 await UserData.updateOne({ id: data.id }, { word_status });
@@ -139,7 +149,7 @@ module.exports = {
 function applyFilter(words, search, status,) {
     if (search) {
         words = words.filter(word => {
-            let ret= word.title.substring(0, search.length).toLowerCase() === search.toLowerCase()
+            let ret = word.title.substring(0, search.length).toLowerCase() === search.toLowerCase()
             return ret;
         });
     }
@@ -151,5 +161,5 @@ function applyFilter(words, search, status,) {
 
 function applyPagination(words, size, page_no) {
     console.log(words, size, page_no);
-    return [words.slice(size*page_no, size*page_no + size), words.length];
+    return [words.slice(size * page_no, size * page_no + size), words.length];
 }
