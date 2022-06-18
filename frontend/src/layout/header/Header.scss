@@ -37,13 +37,20 @@
     display: flex;
     align-items: center;
     height: inherit;
-    cursor: pointer;
     
     .avatar {
+      cursor: pointer;
       margin-left: 16px;
       background-color: $primary;
       width: 32px;
       height: 32px;
+      min-width: 32px;
+    }
+
+    .avatar__text {
+      max-width: 160px;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
     }
   }
 
@@ -67,4 +74,22 @@
 
 .menu-container {
   padding: 6px 0px;
+}
+
+@media only screen and (max-width: 1020px) {
+  .header-container {
+    padding: 32px 32px;
+    .navigation-tabs {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .header-container {
+    padding: 32px 16px;
+    .navigation-tabs {
+      display: none;
+    }
+  }
 }
