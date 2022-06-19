@@ -24,10 +24,9 @@ const Header = (props) => {
           setAnchorEl={setAnchorEl}
           handlePopOverClose={handlePopOverClose}
           setMenu={setMenu}
-          setPopover={setPopover} />
-        <CallForActions
           setPopover={setPopover}
-          setAnchorEl={setAnchorEl} />
+        />
+        <CallForActions setPopover={setPopover} setAnchorEl={setAnchorEl} />
       </div>
       <MuiMenu
         anchorEl={anchorEl}

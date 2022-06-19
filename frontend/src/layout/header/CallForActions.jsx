@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { showRightDrawer } from "../../store/action/common";
 import NavigationDrawer from "./NavigationDrawer";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 
 const CallForActions = ({ setAnchorEl, setPopover }) => {
   const navigate = useHistory();
@@ -20,19 +20,25 @@ const CallForActions = ({ setAnchorEl, setPopover }) => {
   };
 
   const handleMenuClick = () => {
-    dispatch(showRightDrawer({ open: true, children: <NavigationDrawer /> }))
+    dispatch(showRightDrawer({ open: true, children: <NavigationDrawer /> }));
   };
 
   if (loggedIn) {
     return (
       <>
-        <div className="avatar-container" >
-          {device === LAPTOP_VIEW && <p className="avatar__text">{localStorage.getItem("email")}</p>}
-          {device === LAPTOP_VIEW && <Avatar className="avatar" onClick={handleAvatarClick} />}
-          {device !== LAPTOP_VIEW && <MenuIcon onClick={handleMenuClick} className="nav-menu__icon" />}
+        <div className="avatar-container">
+          {device === LAPTOP_VIEW && (
+            <p className="avatar__text">{localStorage.getItem("email")}</p>
+          )}
+          {device === LAPTOP_VIEW && (
+            <Avatar className="avatar" onClick={handleAvatarClick} />
+          )}
+          {device !== LAPTOP_VIEW && (
+            <MenuIcon onClick={handleMenuClick} className="nav-menu__icon" />
+          )}
         </div>
       </>
-    )
+    );
   } else {
     return (
       <>
@@ -51,10 +57,12 @@ const CallForActions = ({ setAnchorEl, setPopover }) => {
           >
             SignUp
           </Button>
-          {device !== LAPTOP_VIEW && <MenuIcon onClick={handleMenuClick} className="nav-menu__icon" />}
-        </div >
+          {device !== LAPTOP_VIEW && (
+            <MenuIcon onClick={handleMenuClick} className="nav-menu__icon" />
+          )}
+        </div>
       </>
-    )
+    );
   }
 };
 

@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { showRightDrawer } from "../../store/action/common";
 import { handleLogout } from "../../store/action/auth";
 
-const NavigationDrawer = ({ }) => {
+const NavigationDrawer = ({}) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useHistory();
@@ -30,7 +30,11 @@ const NavigationDrawer = ({ }) => {
     <div className={styles["specificity"]}>
       <div className={styles["nav-menu"]}>
         <div className={styles["nav-menu__personal-info"]}>
-          <Avatar alt="Travis Howard" src="" className={styles["nav-menu__avatar"]} />
+          <Avatar
+            alt="Travis Howard"
+            src=""
+            className={styles["nav-menu__avatar"]}
+          />
           <span>
             <p className={styles["nav-menu__name"]}>{"Hello user, "}</p>
             <p className={styles["nav-menu__mail"]}>{email}</p>
@@ -38,32 +42,35 @@ const NavigationDrawer = ({ }) => {
         </div>
 
         <div className={styles["nav-menu__navigation-tabs"]}>
-          {
-            data?.map((menu, index) => {
-              return (
-                <MenuItem
-                  classes={{
-                    root: `${styles["nav-menu__tab"]} ${location.pathname === menu.pathname ? styles["active"] : ""
-                      } `
-                  }}
-                  onClick={() => handleTabClick(menu)}
-                >
-                  {<menu.icon className={styles["nav-menu__icons"]} />}
-                  <Body key={index} className={styles["menu-heading"]}>
-                    {menu?.heading}
-                  </Body>
-                </MenuItem>
-              );
-            })
-          }
+          {data?.map((menu, index) => {
+            return (
+              <MenuItem
+                classes={{
+                  root: `${styles["nav-menu__tab"]} ${
+                    location.pathname === menu.pathname ? styles["active"] : ""
+                  } `,
+                }}
+                onClick={() => handleTabClick(menu)}
+              >
+                {<menu.icon className={styles["nav-menu__icons"]} />}
+                <Body key={index} className={styles["menu-heading"]}>
+                  {menu?.heading}
+                </Body>
+              </MenuItem>
+            );
+          })}
         </div>
-        {loggedIn && <MenuItem className={`${styles["nav-menu__footer"]} ${styles["nav-menu__tab"]}`}>
-          <LogoutIcon className={styles["nav-menu__icons"]}/>
-          <Body onClick={logoutClickHandler}>Logout</Body>
-        </MenuItem>}
+        {loggedIn && (
+          <MenuItem
+            className={`${styles["nav-menu__footer"]} ${styles["nav-menu__tab"]}`}
+          >
+            <LogoutIcon className={styles["nav-menu__icons"]} />
+            <Body onClick={logoutClickHandler}>Logout</Body>
+          </MenuItem>
+        )}
       </div>
     </div>
-  )
+  );
 };
 
 export default NavigationDrawer;

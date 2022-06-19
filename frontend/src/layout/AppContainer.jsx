@@ -42,8 +42,8 @@ const AppContainer = () => {
       {headerVisible ? <Header /> : <></>}
       {loaderVisible ? <Loader /> : <></>}
       <Toaster />
-      <RightDrawer /> 
-          {/* {<Footer /> } */}
+      <RightDrawer />
+      {/* {<Footer /> } */}
       <Modal />
       <Switch>
         {routes?.map((route) => {

@@ -5,14 +5,18 @@ import { showRightDrawer } from "../../store/action/common";
 
 const RightDrawer = () => {
   const dispatch = useDispatch();
-  const { open, children, width = "500px" } = useSelector(state => state.common.rightDrawer);
+  const {
+    open,
+    children,
+    width = "500px",
+  } = useSelector((state) => state.common.rightDrawer);
 
   const closeDrawer = () => {
-    dispatch(showRightDrawer({open: false, children: null}));
-  }
+    dispatch(showRightDrawer({ open: false, children: null }));
+  };
 
   return (
-    <Drawer anchor={"right"} open={open} >
+    <Drawer anchor={"right"} open={open}>
       <ClickAwayListener onClickAway={closeDrawer}>
         <div>{children}</div>
       </ClickAwayListener>

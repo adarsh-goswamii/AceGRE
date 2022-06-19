@@ -4,7 +4,12 @@ import useGetDevice from "../../hooks/useGetDevice";
 import { MOBILE_VIEW, TABLET_VIEW, LAPTOP_VIEW } from "../../hooks/constants";
 import { Body } from "../../components/shared/typography/Typogrpahy";
 
-const NavigationTabs = ({ setAnchorEl, handlePopOverClose, setMenu, setPopover }) => {
+const NavigationTabs = ({
+  setAnchorEl,
+  handlePopOverClose,
+  setMenu,
+  setPopover,
+}) => {
   const device = useGetDevice();
   const location = useLocation();
   const navigate = useHistory();
@@ -30,21 +35,20 @@ const NavigationTabs = ({ setAnchorEl, handlePopOverClose, setMenu, setPopover }
 
   return (
     <div className="navigation-tabs">
-      {
-        data?.map((menu, index) => {
-          return (
-            <div
-              className={`heading-container ${location.pathname === menu.pathname ? "active" : ""
-                } `}
-              onClick={(e) => handleMenuClick(e, menu)}
-            >
-              <Body key={index} className={`menu-heading`}>
-                {menu?.heading}
-              </Body>
-            </div>
-          );
-        })
-      }
+      {data?.map((menu, index) => {
+        return (
+          <div
+            className={`heading-container ${
+              location.pathname === menu.pathname ? "active" : ""
+            } `}
+            onClick={(e) => handleMenuClick(e, menu)}
+          >
+            <Body key={index} className={`menu-heading`}>
+              {menu?.heading}
+            </Body>
+          </div>
+        );
+      })}
     </div>
   );
 };

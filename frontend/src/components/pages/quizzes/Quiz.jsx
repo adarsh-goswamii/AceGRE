@@ -217,7 +217,6 @@ const Quiz = ({}) => {
               quizEnd={() => handleEndQuiz(id)}
             />
           </div>
-
         ) : (
           <div className="background-modal"></div>
         )}

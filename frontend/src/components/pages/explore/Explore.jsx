@@ -49,7 +49,12 @@ const Explore = () => {
 
   function handleRightPaneOpen(word) {
     setOpenWord(word);
-    dispatch(action.showRightDrawer({ open: true, children: <WordDetails word={word} /> }));
+    dispatch(
+      action.showRightDrawer({
+        open: true,
+        children: <WordDetails word={word} />,
+      })
+    );
   }
 
   function handleFilterStatusChange(event) {
