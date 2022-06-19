@@ -49,11 +49,7 @@ const Explore = () => {
 
   function handleRightPaneOpen(word) {
     setOpenWord(word);
-    dispatch(action.showRightDrawer({ open: true }));
-  }
-
-  function handleRightPaneClose() {
-    dispatch(action.showRightDrawer({ open: false }));
+    dispatch(action.showRightDrawer({ open: true, children: <WordDetails word={word} /> }));
   }
 
   function handleFilterStatusChange(event) {
@@ -192,13 +188,6 @@ const Explore = () => {
           totalPage={pagination.total_pages}
         />
       </div>
-      <RightPane
-        open={rightDrawer?.open}
-        close={handleRightPaneClose}
-        className="word-details-pane"
-      >
-        <WordDetails word={openWord} />
-      </RightPane>
     </>
   );
 };

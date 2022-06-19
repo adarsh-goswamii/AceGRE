@@ -62,13 +62,18 @@
     .login-btn {
       margin-right: 16px;
       padding-inline: 32px !important;
-      color: $primary;
+      color: $white;
     }
 
     .signup-btn {
       color: $primary;
       border-color: $primary;
     }
+  }
+
+  .nav-menu__icon {
+    margin-left: 32px;
+    cursor: pointer;
   }
 }
 
@@ -79,17 +84,11 @@
 @media only screen and (max-width: 1020px) {
   .header-container {
     padding: 32px 32px;
-    .navigation-tabs {
-      display: none;
-    }
   }
 }
 
 @media only screen and (max-width: 640px) {
   .header-container {
     padding: 32px 16px;
-    .navigation-tabs {
-      display: none;
-    }
   }
 }

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UPDATE_USER_LOGGEDIN } from "../store/actionType";
 import Loader from "../components/widgets/loader/Loader";
 import Toaster from "./toaster/Toaster";
+import RightDrawer from "./rightDrawer/RightDrawer";
 
 const AppContainer = () => {
   const location = useLocation();
@@ -41,8 +42,8 @@ const AppContainer = () => {
       {headerVisible ? <Header /> : <></>}
       {loaderVisible ? <Loader /> : <></>}
       <Toaster />
-      {/*<RightDrawer />
-    <Footer /> */}
+      <RightDrawer /> 
+          {/* {<Footer /> } */}
       <Modal />
       <Switch>
         {routes?.map((route) => {

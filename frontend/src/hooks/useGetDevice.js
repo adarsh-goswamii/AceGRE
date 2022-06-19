@@ -7,6 +7,7 @@ export default function useGetDevice() {
   const [view, setView] = useState(LAPTOP_VIEW);
 
   useEffect(() => {
+    screenSizeChangeHandler();
     function screenSizeChangeHandler() {
       screenSize.current = window.innerWidth;
       const temp = screenSize.current <= MOBILE_SCREEN_SIZE ? MOBILE_VIEW : screenSize.current <= TABLET_SCREEN_SIZE ? TABLET_VIEW : LAPTOP_VIEW;
