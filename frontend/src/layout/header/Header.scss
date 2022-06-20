@@ -37,13 +37,20 @@
     display: flex;
     align-items: center;
     height: inherit;
-    cursor: pointer;
     
     .avatar {
+      cursor: pointer;
       margin-left: 16px;
       background-color: $primary;
       width: 32px;
       height: 32px;
+      min-width: 32px;
+    }
+
+    .avatar__text {
+      max-width: 160px;
+      text-overflow: ellipsis;
+      overflow-x: hidden;
     }
   }
 
@@ -55,7 +62,7 @@
     .login-btn {
       margin-right: 16px;
       padding-inline: 32px !important;
-      color: $primary;
+      color: $white;
     }
 
     .signup-btn {
@@ -63,8 +70,25 @@
       border-color: $primary;
     }
   }
+
+  .nav-menu__icon {
+    margin-left: 32px;
+    cursor: pointer;
+  }
 }
 
 .menu-container {
   padding: 6px 0px;
+}
+
+@media only screen and (max-width: 1020px) {
+  .header-container {
+    padding: 32px 32px;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .header-container {
+    padding: 32px 16px;
+  }
 }

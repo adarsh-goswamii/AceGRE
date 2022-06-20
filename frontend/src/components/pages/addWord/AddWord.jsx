@@ -6,10 +6,10 @@ import { addWord } from "../../../store/action/addWord";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "../../shared/select/Select";
 import { MenuItem } from "@material-ui/core";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styles from "./addWord.module.scss";
 
-const AddWord = ({ }) => {
+const AddWord = ({}) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [word, setWord] = useState("");
@@ -19,10 +19,10 @@ const AddWord = ({ }) => {
   const [sentences, setSentences] = useState([""]);
   const [mneumonics, setMneumonics] = useState([""]);
 
-  const wordAdded = useSelector(state => state.addWord.wordAddedSuccessfully);
+  const wordAdded = useSelector((state) => state.addWord.wordAddedSuccessfully);
 
   useEffect(() => {
-    if(localStorage.getItem("role") !== "admin") {
+    if (localStorage.getItem("role") !== "admin") {
       history.push("/");
     }
   }, []);
@@ -31,19 +31,25 @@ const AddWord = ({ }) => {
     if (wordAdded) {
       handleResetClick();
     }
-  }, [wordAdded])
+  }, [wordAdded]);
 
   function handleAddWordClick() {
     const payload = {
       title: word,
       part_of_speech: partOfSpeech,
       fun_fact: funFact,
-      meanings: meanings.filter(data => Boolean(data.trim())).map(data => ({ meaning: data })),
-      sentences: sentences.filter(data => Boolean(data.trim())).map(data => ({ sentence: data })),
-      mneumonics: mneumonics.filter(data => Boolean(data.trim())).map(data => ({ mneumonic: data })),
+      meanings: meanings
+        .filter((data) => Boolean(data.trim()))
+        .map((data) => ({ meaning: data })),
+      sentences: sentences
+        .filter((data) => Boolean(data.trim()))
+        .map((data) => ({ sentence: data })),
+      mneumonics: mneumonics
+        .filter((data) => Boolean(data.trim()))
+        .map((data) => ({ mneumonic: data })),
     };
     dispatch(addWord(payload));
-  };
+  }
 
   function handleResetClick() {
     setWord("");
@@ -65,13 +71,15 @@ const AddWord = ({ }) => {
           placeholder={"Enter Word..."}
           value={word}
           onChange={setWord}
-          className={`${styles["word-form__word"]} necessary`} />
-        <Select 
-          label={"Part of speech"} 
-          id="part-of-speech" 
+          className={`${styles["word-form__word"]} necessary`}
+        />
+        <Select
+          label={"Part of speech"}
+          id="part-of-speech"
           required={true}
-          value={partOfSpeech} 
-          onChange={(e) => setPartOfSpeech(e.target.value)}>
+          value={partOfSpeech}
+          onChange={(e) => setPartOfSpeech(e.target.value)}
+        >
           <MenuItem>None</MenuItem>
           <MenuItem value={"verb"}>Verb</MenuItem>
           <MenuItem value={"noun"}>Noun</MenuItem>
@@ -83,17 +91,20 @@ const AddWord = ({ }) => {
         heading="Meanings"
         inputs={meanings}
         setInputs={setMeanings}
-        className={styles["word-form__inputs"]} />
+        className={styles["word-form__inputs"]}
+      />
       <DynamicInputs
         heading="Sentences"
         inputs={sentences}
         setInputs={setSentences}
-        className={styles["word-form__inputs"]} />
+        className={styles["word-form__inputs"]}
+      />
       <DynamicInputs
         heading="Mneumonics"
         inputs={mneumonics}
         setInputs={setMneumonics}
-        className={styles["word-form__inputs"]} />
+        className={styles["word-form__inputs"]}
+      />
 
       <InputField
         label={"Fun Facts"}
@@ -102,14 +113,23 @@ const AddWord = ({ }) => {
         minRows={4}
         value={funFact}
         onChange={setFunFact}
-        className={styles["word-form__fun-facts"]} />
+        className={styles["word-form__fun-facts"]}
+      />
 
       <div className={styles["word-form__action-btns"]}>
-        <Button variant="outlined" onClick={handleResetClick}>Reset</Button>
-        <Button variant="contained" onClick={handleAddWordClick} disabled={!word.length || !partOfSpeech.length}>Submit</Button>
+        <Button variant="outlined" onClick={handleResetClick}>
+          Reset
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleAddWordClick}
+          disabled={!word.length || !partOfSpeech.length}
+        >
+          Submit
+        </Button>
       </div>
     </div>
-  )
+  );
 };
 
 export default AddWord;

@@ -13,8 +13,8 @@ function* handleAddWord(action) {
     yield* showLoader();
     const results = yield call(api.addWord, payload);
     yield put({
-      type: actionType.ADD_WORD_SUCCESSFULL, 
-      payload: results
+      type: actionType.ADD_WORD_SUCCESSFULL,
+      payload: results,
     });
     yield* showToaster({
       status: "success",
