@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   auth,
   explore,
   quiz,
-  addWord
+  addWord,
 });
 
 export default rootReducer;

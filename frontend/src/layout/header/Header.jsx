@@ -1,96 +1,32 @@
 import { useState } from "react";
-import { Avatar, ClickAwayListener } from "@material-ui/core";
-import {
-  Body,
-  H3,
-  Heading,
-} from "../../components/shared/typography/Typogrpahy";
+import { ClickAwayListener } from "@material-ui/core";
+import { H3 } from "../../components/shared/typography/Typogrpahy";
 import Menu from "../../components/shared/menu/MenuList";
-import Button from "../../components/shared/button/Button";
-import data from "../../data/headerNav";
-import { useLocation, useHistory } from "react-router-dom";
 import "./Header.scss";
 import AvatarMenu from "../../components/widgets/avatarMenu/AvatarMenu";
-import { useSelector } from "react-redux";
+import NavigationTabs from "./NavigationTabs";
+import CallForActions from "./CallForActions";
 import { Menu as MuiMenu } from "@material-ui/core";
 
 const Header = (props) => {
-  const location = useLocation();
-  const navigate = useHistory();
   const [anchorEl, setAnchorEl] = useState(null);
   const [menu, setMenu] = useState([]);
   const [popover, setPopover] = useState("");
   const handlePopOverClose = () => {
     setAnchorEl(null);
   };
-  const handleMenuClick = (e, menu) => {
-    if (menu.pathname) {
-      navigate.push(menu.pathname);
-    } else {
-      setAnchorEl(e.currentTarget);
-      let temp = menu?.submenu.map((data) => {
-        data.onClick = () => {
-          handlePopOverClose();
-          navigate.push(data.pathname);
-        };
-        return data;
-      });
-      setMenu(temp);
-      setPopover("menu");
-    }
-  };
-
-  const handleAvatarClick = (e) => {
-    setPopover("avatar");
-    setAnchorEl(e.currentTarget);
-  };
-
-  let loggedIn = Boolean(localStorage.getItem("token"));
 
   return (
     <>
       <div className="header-container" ref={props.headerRef}>
         <H3>AceGRE</H3>
-        <div className="navigation-tabs">
-          {data?.map((menu, index) => {
-            return (
-              <div
-                className={`heading-container ${
-                  location.pathname === menu.pathname ? "active" : ""
-                } `}
-                onClick={(e) => handleMenuClick(e, menu)}
-              >
-                <Body key={index} className={`menu-heading`}>
-                  {menu?.heading}
-                </Body>
-              </div>
-            );
-          })}
-        </div>
-        {loggedIn ? (
-          <div className="avatar-container" onClick={handleAvatarClick}>
-            {localStorage.getItem("email")}
-            <Avatar className="avatar" />
-          </div>
-        ) : (
-          <div className="call-for-actions">
-            <Button
-              className={"login-btn"}
-              variant="cont
-                            ained"
-              onClick={() => navigate.push("/auth?user=login")}
-            >
-              Login
-            </Button>
-            <Button
-              className={"signup-btn rounded-btn"}
-              variant="outlined"
-              onClick={() => navigate.push("/auth?user=register")}
-            >
-              SignUp
-            </Button>
-          </div>
-        )}
+        <NavigationTabs
+          setAnchorEl={setAnchorEl}
+          handlePopOverClose={handlePopOverClose}
+          setMenu={setMenu}
+          setPopover={setPopover}
+        />
+        <CallForActions setPopover={setPopover} setAnchorEl={setAnchorEl} />
       </div>
       <MuiMenu
         anchorEl={anchorEl}

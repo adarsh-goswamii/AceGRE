@@ -49,10 +49,15 @@ const AvatarMenu = ({ handlePopOverClose }) => {
           <LeaderboardIcon className="icon" />
           <p>Leaderboard</p>
         </MenuItem>
-        {role === "admin" && <MenuItem className="menuItem stats" onClick={() => handleNavigation("/add-word")}>
-          <StatsIcon className="icon" />
-          <p>Add Word</p>
-        </MenuItem>}
+        {role === "admin" && (
+          <MenuItem
+            className="menuItem stats"
+            onClick={() => handleNavigation("/add-word")}
+          >
+            <StatsIcon className="icon" />
+            <p>Add Word</p>
+          </MenuItem>
+        )}
         <MenuItem
           className="menuItem quiz"
           onClick={() => handleNavigation("/quiz")}
