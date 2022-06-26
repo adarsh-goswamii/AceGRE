@@ -47,7 +47,6 @@ const CustomPagination = ({
         shape="rounded"
         onChange={handlePageNumberChange}
       />
-      <div></div>
     </>
   );
 };

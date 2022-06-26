@@ -3,7 +3,7 @@
 .page-container {
     overflow-x: hidden;
     overflow-y: auto;
-    padding: 20px $gutters;
+    padding: 20px $guttersLaptop;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -18,4 +18,17 @@
 
 .page-container::-webkit-scrollbar-thumb {
     background: #888;
+}
+
+
+@media only screen and (max-width: 1020px) {
+    .page-container {
+        padding: 20px $guttersTablet;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .page-container {
+        padding: 20px $guttersMobile;
+    }
 }
