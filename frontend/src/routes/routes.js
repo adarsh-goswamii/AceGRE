@@ -56,7 +56,7 @@ export const routes = [
     component: AddWord,
     id: 6,
     protected: true,
-    className: "add-word-screen"
+    className: "add-word-screen",
   },
   {
     path: "/auth",

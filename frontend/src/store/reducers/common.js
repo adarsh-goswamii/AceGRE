@@ -3,6 +3,7 @@ import * as actionType from "../actionType/index";
 const INIT_INITIAL_STATE = {
   rightDrawer: {
     open: false,
+    children: null,
   },
   modal: {
     open: false,

@@ -1,4 +1,8 @@
-import { Select as MuiSelect, InputLabel, FormControl } from "@material-ui/core";
+import {
+  Select as MuiSelect,
+  InputLabel,
+  FormControl,
+} from "@material-ui/core";
 import styles from "./select.module.scss";
 
 const Select = ({
@@ -8,7 +12,7 @@ const Select = ({
   id,
   label,
   children,
-  onChange = () => { },
+  onChange = () => {},
   value,
   variant = "outlined",
   required,
@@ -16,11 +20,18 @@ const Select = ({
 }) => {
   return (
     <>
-      <FormControl className={`${styles[classNameForm]} ${styles["select-form"]}`} size="small" required={required}>
-        <InputLabel id={id} classes={{
-          shrink: styles["select-form__label--shrink"],
-          root: styles["select-form__label"]
-        }}>
+      <FormControl
+        className={`${styles[classNameForm]} ${styles["select-form"]}`}
+        size="small"
+        required={required}
+      >
+        <InputLabel
+          id={id}
+          classes={{
+            shrink: styles["select-form__label--shrink"],
+            root: styles["select-form__label"],
+          }}
+        >
           {label}
         </InputLabel>
         <MuiSelect
@@ -34,13 +45,13 @@ const Select = ({
           MenuProps={{
             anchorOrigin: {
               vertical: "bottom",
-              horizontal: "left"
+              horizontal: "left",
             },
             transformOrigin: {
               vertical: "top",
-              horizontal: "left"
+              horizontal: "left",
             },
-            getContentAnchorEl: null
+            getContentAnchorEl: null,
           }}
           {...rest}
         >
@@ -48,7 +59,7 @@ const Select = ({
         </MuiSelect>
       </FormControl>
     </>
-  )
-}
+  );
+};
 
 export default Select;
