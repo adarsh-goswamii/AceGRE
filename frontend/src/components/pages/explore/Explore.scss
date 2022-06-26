@@ -26,13 +26,13 @@
       box-shadow: $boxShadow;
       border: 0px;
       outline: 0px;
-      
+
       .icon {
         width: 24px;
         height: 24px;
       }
-      
-      .MuiInput-underline:before, 
+
+      .MuiInput-underline:before,
       .MuiInput-underline:after {
         border-bottom: 0px;
       }
@@ -71,10 +71,12 @@
         font-size: 14px !important;
         padding: 12px 14px;
       }
+
       .MuiSelect-root:focus {
         background-color: white;
         border-radius: 10px;
       }
+
       .MuiOutlinedInput-notchedOutline {
         border: none;
       }
@@ -112,6 +114,7 @@
         .MuiOutlinedInput-notchedOutline {
           border: none;
         }
+
         .MuiSelect-root {
           padding: 0px 0px 0px 16px;
           width: 70px;
@@ -120,6 +123,7 @@
           align-items: center;
           font-size: 14px !important;
         }
+
         .MuiSelect-root:focus {
           background-color: white;
         }
@@ -143,5 +147,48 @@
     }
 
     #card-per-page {}
+  }
+}
+
+@media only screen and (max-width: 1020px) {
+  .explore-page-container {
+    .word-grid-container {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 14px;
+    }
+
+    .pagination {
+      justify-content: space-between;
+
+      .MuiPagination-root {
+        position: relative;
+        left: 0px;
+        transform: none;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .explore-page-container {
+    .word-grid-container {
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 12px;
+    }
+
+    .pagination {
+      flex-direction: column-reverse;
+
+      .MuiPagination-root {
+        position: relative;
+        left: 0px;
+        transform: none;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 32px;
+      }
+    }
   }
 }
