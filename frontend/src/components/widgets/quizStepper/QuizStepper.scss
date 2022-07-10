@@ -3,6 +3,7 @@
 .stepper-container {
   width: 60%;
   height: fit-content;
+  max-height: 90%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -53,5 +54,17 @@
     .points {
       margin: 0px 0px 8px 16px;
     }
+  }
+}
+
+@media only screen and (max-width: 1020px) {
+  .stepper-container {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .stepper-container {
+    width: 90%;
   }
 }
