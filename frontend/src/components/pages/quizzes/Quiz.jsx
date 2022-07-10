@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Button from "../../shared/button/Button";
-import Modal from "../../../layout/modal/Modal";
 import "./Quiz.scss";
 import Option from "../../widgets/option/Option";
 import Timer from "../../widgets/timer/Timer";
@@ -146,7 +145,6 @@ const Quiz = ({}) => {
 
     return <div className="background-modal" />;
   } else {
-    console.log("reason for background quiz", questions.length, currQues);
     return (
       <>
         {questions.length > currQues ? (
