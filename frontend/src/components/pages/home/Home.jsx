@@ -37,18 +37,20 @@ const Home = () => {
       <div className="hero-section" ref={heroRef}>
         <Header headerRef={headerRef} />
         <div className="content">
-          <p className="tagline">{TAGLINE}</p>
-          <p className="sub-tagline">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-            aut natus eum consequatur perferendis.
-          </p>
-          <Button
-            onClick={() => history.push("/explore")}
-            className="outlined-btn"
-            variant="contained"
-          >
-            Start Learning today
-          </Button>
+          <div className="content-info">
+            <p className="tagline">{TAGLINE}</p>
+            <p className="sub-tagline">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
+              aut natus eum consequatur perferendis.
+            </p>
+            <Button
+              onClick={() => history.push("/explore")}
+              className="outlined-btn"
+              variant="contained"
+            >
+              Start Learning today
+            </Button>
+          </div>
           <img src={Girl} className="girl" />
           <img src={Boy} className="boy" />
           <Line1 className="line one" />
