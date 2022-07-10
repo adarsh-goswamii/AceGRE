@@ -121,3 +121,32 @@
   width: 100%;
   height: 100vh;
 }
+
+@media only screen and (max-width: 1020px) {
+  .quiz-screen {
+    .container {
+      .left {
+        .ques-container {
+          grid-template-columns: repeat(4, 1fr);
+          grid-gap: 24px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .quiz-screen {
+    .container {
+      flex-direction: column;
+
+      .left {
+        display: none; 
+      }
+
+      .right {
+        width: 100%;
+      }
+    }
+  }
+}
