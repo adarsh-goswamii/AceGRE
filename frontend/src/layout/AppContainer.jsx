@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import { routes } from "../routes/routes";
 import Container from "./container/Container";
@@ -50,7 +50,9 @@ const AppContainer = () => {
           return (
             <Route key={route?.id} path={route.path} exact={route.exact}>
               <Container className={route.className}>
-                <route.component />
+                <Suspense fallback={<Loader />}>
+                  <route.component />
+                </Suspense>
               </Container>
             </Route>
           );
