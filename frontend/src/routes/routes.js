@@ -1,11 +1,13 @@
-import Error404 from "../components/pages/404/Error404";
-import Home from "../components/pages/home/Home";
-import Explore from "../components/pages/explore/Explore";
-import Authentication from "../components/pages/login/Authentication";
-import Quiz from "../components/pages/quizzes/Quiz";
-import Results from "../components/pages/result/Result";
-import Leaderboard from "../components/pages/leaderboard/Leaderboard";
-import AddWord from "../components/pages/addWord/AddWord";
+import React from 'react';
+
+const Error404 = React.lazy(() => import("../components/pages/404/Error404"));
+const Home = React.lazy(() => import("../components/pages/home/Home"));
+const Explore = React.lazy(() => import("../components/pages/explore/Explore"));
+const Authentication = React.lazy(() => import("../components/pages/login/Authentication"));
+const Quiz = React.lazy(() => import("../components/pages/quizzes/Quiz"));
+const Results = React.lazy(() => import("../components/pages/result/Result"));
+const Leaderboard = React.lazy(() => import("../components/pages/leaderboard/Leaderboard"));
+const AddWord = React.lazy(() => import("../components/pages/addWord/AddWord"));
 
 export const routes = [
   {
