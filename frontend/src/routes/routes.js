@@ -92,5 +92,6 @@ export const routes = [
     component: Error404,
     id: 7,
     protected: false,
+    className: "error-screen"
   },
 ];

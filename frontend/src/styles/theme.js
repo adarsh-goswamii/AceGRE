@@ -41,6 +41,19 @@ const theme = createTheme({
         fontSize: "22px",
       },
     },
+    h4: {
+      fontSize: "18px",
+      fontWeight: 500,
+      "@media (min-width:500px)": {
+        fontSize: "18px",
+      },
+      "@media (min-width:1000px)": {
+        fontSize: "18px",
+      },
+      "@media (min-width:1500px)": {
+        fontSize: "18px",
+      },
+    },
     body1: {
       fontSize: "14px",
       fontWeight: 500,

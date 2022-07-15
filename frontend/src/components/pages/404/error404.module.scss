@@ -1,0 +1,49 @@
+@import "../../../styles/colors.scss";
+
+:global(.error-screen) {
+  width: 100%;
+  min-height: calc(100vh - $headerHeight);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .error404 {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    margin-left: $guttersLaptop;
+  
+    &__animation {
+      width: 400px;
+    }
+
+    &__heading {
+      margin-bottom: 16px;
+    }
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px 0px 64px 0px;
+    }
+
+    &__helper-text {
+      margin-bottom: 16px;
+    }
+
+
+    &__chip {
+      margin: 0px 16px 16px 0px;
+    }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  :global(.error-screen) {
+    .error404 {
+      flex-direction: column;
+      margin-left: $guttersMobile;
+    }
+  }
+}
