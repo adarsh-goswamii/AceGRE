@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { wordMenu } from "../../../data/words";
 import WordCard from "../../widgets/wordCard/WordCard";
 import "./Explore.scss";
-import RightPane from "../../../layout/rightDrawer/RightDrawer";
 import WordDetails from "../../widgets/wordDetails/WordDetails";
 import { useDispatch, useSelector } from "react-redux";
 import * as action from "../../../store/action/common";
@@ -11,18 +10,18 @@ import { H3 } from "../../shared/typography/Typogrpahy";
 import debounce from "lodash/debounce";
 import { TextField, InputAdornment, Select, MenuItem } from "@material-ui/core";
 import { ReactComponent as SearchIcon } from "../../../assets/images/search.svg";
-import { getWordList, updatePagination } from "../../../store/action/explore";
+import { getWordList } from "../../../store/action/explore";
 import { plainToClass } from "class-transformer";
 import { Word } from "../../../model/Word";
 import Lottie from "lottie-react";
 import secure from "../../../assets/lottie/noResults.json";
+import SpeechToText from "../../widgets/speechToText/SpeechToText";
 
 const Explore = () => {
   const [filterStatus, setFilterStatus] = useState(wordMenu[0]);
   const [words, setWords] = useState([]);
   const [openWord, setOpenWord] = useState({});
   const [search, setSearch] = useState("");
-  const rightDrawer = useSelector((state) => state.common.rightDrawer);
   const dispatch = useDispatch();
 
   const pagination = useSelector((state) => state.explore.pagination);
@@ -46,6 +45,10 @@ const Explore = () => {
       setWords(temp);
     }
   }, [wordList]);
+
+  useEffect(() => {
+    debouncedSearchCall(search);
+  }, [search]);
 
   function handleRightPaneOpen(word) {
     setOpenWord(word);
@@ -100,7 +103,6 @@ const Explore = () => {
 
   function handleSearchChange(event) {
     setSearch(event.target.value);
-    debouncedSearchCall(event.target.value);
   }
 
   const debouncedSearchCall = useCallback(
@@ -127,7 +129,7 @@ const Explore = () => {
       <div className="filters">
         <TextField
           className="search-autocomplete"
-          valeue={search}
+          value={search}
           onChange={handleSearchChange}
           size="small"
           placeholder="Enter to search words"
@@ -139,6 +141,8 @@ const Explore = () => {
             ),
           }}
         />
+
+        <SpeechToText setValue={setSearch} />
 
         {localStorage.getItem("token") && (
           <Select
