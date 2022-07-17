@@ -78,7 +78,7 @@ const AddWord = ({}) => {
           id="part-of-speech"
           required={true}
           value={partOfSpeech}
-          onChange={(e) => setPartOfSpeech(e.target.value)}
+          onChange={(e) => setPartOfSpeech(e.target.value || "")}
         >
           <MenuItem>None</MenuItem>
           <MenuItem value={"verb"}>Verb</MenuItem>
