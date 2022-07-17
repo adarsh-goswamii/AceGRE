@@ -16,6 +16,14 @@ export const H3 = ({ children, ...rest }) => {
   );
 };
 
+export const H4 = ({ children, ...rest }) => {
+  return (
+    <Typography variant="h4" {...rest}>
+      {children}
+    </Typography>
+  );
+};
+
 export const Heading = ({ children, ...rest }) => {
   return (
     <Typography variant="body1" {...rest}>
