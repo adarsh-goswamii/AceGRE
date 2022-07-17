@@ -1,11 +1,13 @@
+import Lottie from 'lottie-react';
+import loading from "../../../assets/lottie/loading.json";
 import "./Loader.scss";
-import { ReactComponent as LoaderIcon } from "../../../assets/images/loader.svg";
+
 
 const Loader = () => {
   return (
     <>
       <div className="loader-container">
-        <LoaderIcon className="icon" />
+        <Lottie animationData={loading} className="icon" />
       </div>
     </>
   );
