@@ -17,7 +17,7 @@
     background-size: cover;
     height: fit-content;
     width: 100%;
-    padding-top: 16px;
+    padding-top: 8.3vw;
 
     .header-container {
       position: fixed;
@@ -26,7 +26,7 @@
     }
 
     .content {
-      padding: 64px 0px;
+      padding: 0px 0px 64px 0px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -63,12 +63,13 @@
           width: fit-content;
           z-index: 2;
           padding: 8px 28px;
+          margin-top:  24px;
         }
       }
 
 
       .girl {
-        width: 44%;
+        width: 40%;
         height: auto;
         position: absolute;
         bottom: 0px;
@@ -80,7 +81,7 @@
         right: 22%;
         position: absolute;
         height: auto;
-        width: 30%;
+        width: 26%;
       }
 
       .line {
@@ -128,19 +129,21 @@
     }
 
     .heading {
-      color: $primary;
+      color: $black;
       @extend .headerSemiBold;
       font-size: 24px;
       margin-bottom: 32px;
     }
 
     .sub-heading {
-      color: $primary;
+      color: $black;
       width: 50%;
     }
 
     .cards-container {
       width: 100%;
+      max-width: 1920px;
+      margin: auto;
       display: flex;
       justify-content: center;
 
@@ -283,6 +286,7 @@
   .home-container {
     .hero-section {
       padding-inline: $guttersMobile;
+      padding-top: 64px;
 
       .content {
         align-items: center;

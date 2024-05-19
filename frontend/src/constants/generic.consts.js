@@ -1,5 +1,5 @@
 export const WELCOME_BACK_MESSAGE =
-  "To stay connected please enter you personal details.";
+  "We're thrilled to have you join our community of passionate learners. With WordMaster, you’ll embark on a journey to expand your vocabulary and master GRE words effortlessly. Track your progress, manage your learning, and engage in quizzes designed for active recall to make your preparation effective and fun. Ready to elevate your GRE prep? Let’s get started! 🚀";
 export const REGISTER_USER_MESSAGE =
   "Enter your personal details and start your journey with us.";
 export const TAGLINE =

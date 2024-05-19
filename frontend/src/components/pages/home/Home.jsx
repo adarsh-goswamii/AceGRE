@@ -1,4 +1,4 @@
-import "./Home.scss";
+import "./home.scss";
 import Girl from "../../../assets/images/girl.png";
 import Boy from "../../../assets/images/boy.png";
 import Button from "../../shared/button/Button";
@@ -39,10 +39,6 @@ const Home = () => {
         <div className="content">
           <div className="content-info">
             <p className="tagline">{TAGLINE}</p>
-            <p className="sub-tagline">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-              aut natus eum consequatur perferendis.
-            </p>
             <Button
               onClick={() => history.push("/explore")}
               className="outlined-btn"
@@ -62,8 +58,8 @@ const Home = () => {
       <div className="services-container">
         <p className="heading">Why AceGRE ?</p>
         <p className="sub-heading">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel expedita
-          mollitia culpa aliquam, necessitatibus magnam pariatur animi.
+        A scientific and fun way to improve vocabulary
+Play games and compete in activities on your own or with participants from around the globe. With our advanced teaching algorithm and study tools, get ready for your vocabulary to expand!
         </p>
         <div className="cards-container">
           <div className="card">

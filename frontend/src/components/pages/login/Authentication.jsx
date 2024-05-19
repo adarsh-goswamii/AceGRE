@@ -21,13 +21,12 @@ const Login = ({}) => {
         <div className="greeting-container">
           <div className="greetings">
             <p className="header-greeting">
-              {`Welcome ${showLoginForm ? "Back" : ""}`},
+              {`Welcome ${showLoginForm ? "Back" : ""}`}
             </p>
             <span className="sub-greeting">
-              {showLoginForm ? WELCOME_BACK_MESSAGE : REGISTER_USER_MESSAGE}
+              {WELCOME_BACK_MESSAGE}
             </span>
           </div>
-          <LoginWatermark className="watermark" />
         </div>
         <div className="form">
           <div
