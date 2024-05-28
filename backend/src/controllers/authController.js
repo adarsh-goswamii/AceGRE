@@ -71,7 +71,7 @@ const login = async (req, res, next) => {
  */
 const register = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, fullname } = req.body;
     const userInfo = await User.findOne({ email: email }).exec();
 
     if (userInfo) {
@@ -86,11 +86,11 @@ const register = async (req, res, next) => {
 
     const hashedPass = await bcrypt.hash(password, 16);
 
-    let newUser = new User({ email, password: hashedPass, admin: false });
+    let newUser = new User({ email, password: hashedPass, admin: false, fullname });
     newUser = await newUser.save();
 
-    const generatedToken = jwt.sign({ email, id: newUser._id.toString(), admin: false }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
-    const refresh_token = jwt.sign({ email, id: newUser._id.toString(), admin: false }, process.env.REFRESH_TOKEN_KEY, { expiresIn: "1d" });
+    const generatedToken = jwt.sign({ email, id: newUser._id.toString(), admin: false, fullname }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
+    const refresh_token = jwt.sign({ email, id: newUser._id.toString(), admin: false, fullname }, process.env.REFRESH_TOKEN_KEY, { expiresIn: "1d" });
 
     const newRefreshToken = new Token({ token: refresh_token, id: newUser._id.toString() });
     await newRefreshToken.save();

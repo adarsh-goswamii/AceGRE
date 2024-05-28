@@ -1,5 +1,6 @@
 import {
   ENTER_A_VALID_EMAIL,
+  NAME_IS_REQUIRED,
   PASSWORD_CASE_CHECK,
   PASSWORD_DIGITS_CHECK,
   PASSWORD_SYMBOL_CHECK,
@@ -32,3 +33,7 @@ export const passwordStrengthCheck = (password) => {
   if (symbol === 0) return PASSWORD_SYMBOL_CHECK;
   return "";
 };
+
+export const fullNameValidate = (value) => {
+  return value?.trim()?.length === 0 ? NAME_IS_REQUIRED : '';
+}
