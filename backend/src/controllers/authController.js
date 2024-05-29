@@ -1,10 +1,11 @@
-require('dotenv').config();
-const HttpError = require('../models/http-error');
+require("dotenv").config();
+const HttpError = require("../models/http-error");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userSchema");
 const Token = require("../models/tokenSchema");
 const UserData = require("../models/userDataSchema");
+const { getGoogleUserData } = require("../util/auth");
 
 /**
  * 1. Checks if a user exists with provided name
@@ -15,16 +16,37 @@ const UserData = require("../models/userDataSchema");
  */
 const login = async (req, res, next) => {
   try {
-    const { email, password, rememberMe } = req.body;
+    let { email, password, rememberMe, token } = req.body;
+
+    // google login
+    if (token) {
+      const userData = await getGoogleUserData(token);
+      email = userData?.email;
+    }
+
     const userInfo = await User.findOne({ email: email }).exec();
     if (userInfo) {
-      const validPass = await bcrypt.compare(password, userInfo.password);
+      let validPass = token ? true : false;
+      if (!validPass) {
+        validPass = await bcrypt.compare(password || '', userInfo.password);
+      }
       if (validPass) {
         const { admin } = userInfo;
-        const access_token = jwt.sign({ email, id: userInfo._id.toString(), admin }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
-        const refresh_token = jwt.sign({ email, id: userInfo._id.toString(), admin }, process.env.REFRESH_TOKEN_KEY, { expiresIn: `${rememberMe ? "30d" : '1d'}` });
+        const access_token = jwt.sign(
+          { email, id: userInfo._id.toString(), admin },
+          process.env.ACCESS_TOKEN_KEY,
+          { expiresIn: "1h" }
+        );
+        const refresh_token = jwt.sign(
+          { email, id: userInfo._id.toString(), admin },
+          process.env.REFRESH_TOKEN_KEY,
+          { expiresIn: `${rememberMe ? "30d" : "1d"}` }
+        );
 
-        const newToken = new Token({ id: userInfo._id.toString(), token: refresh_token });
+        const newToken = new Token({
+          id: userInfo._id.toString(),
+          token: refresh_token,
+        });
         await Token.deleteOne({ email }).exec();
         newToken.save();
 
@@ -35,8 +57,8 @@ const login = async (req, res, next) => {
             token: access_token,
             refresh_token: refresh_token,
             role: admin ? "admin" : "user",
-            message: "User successfully logged in"
-          }
+            message: "User successfully logged in",
+          },
         });
       } else {
         // user exists but password is wrong
@@ -44,8 +66,8 @@ const login = async (req, res, next) => {
           status: "failure",
           data: {
             email: email,
-            message: "Email or password is wrong"
-          }
+            message: "Email or password is wrong",
+          },
         });
       }
     } else {
@@ -54,9 +76,9 @@ const login = async (req, res, next) => {
         status: "failure",
         data: {
           email: email,
-          message: "No user with given email exists"
-        }
-      })
+          message: "No user with given email exists",
+        },
+      });
     }
   } catch (error) {
     return next(new HttpError(error, 500));
@@ -79,23 +101,42 @@ const register = async (req, res, next) => {
         status: "failure",
         data: {
           email: email,
-          message: "A user with given email already exists"
-        }
+          message: "A user with given email already exists",
+        },
       });
     }
 
     const hashedPass = await bcrypt.hash(password, 16);
 
-    let newUser = new User({ email, password: hashedPass, admin: false, fullname });
+    let newUser = new User({
+      email,
+      password: hashedPass,
+      admin: false,
+      fullname,
+    });
     newUser = await newUser.save();
 
-    const generatedToken = jwt.sign({ email, id: newUser._id.toString(), admin: false, fullname }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
-    const refresh_token = jwt.sign({ email, id: newUser._id.toString(), admin: false, fullname }, process.env.REFRESH_TOKEN_KEY, { expiresIn: "1d" });
+    const generatedToken = jwt.sign(
+      { email, id: newUser._id.toString(), admin: false, fullname },
+      process.env.ACCESS_TOKEN_KEY,
+      { expiresIn: "1h" }
+    );
+    const refresh_token = jwt.sign(
+      { email, id: newUser._id.toString(), admin: false, fullname },
+      process.env.REFRESH_TOKEN_KEY,
+      { expiresIn: "1d" }
+    );
 
-    const newRefreshToken = new Token({ token: refresh_token, id: newUser._id.toString() });
+    const newRefreshToken = new Token({
+      token: refresh_token,
+      id: newUser._id.toString(),
+    });
     await newRefreshToken.save();
 
-    const userData = new UserData({ id: newUser._id.toString(), word_status: {} });
+    const userData = new UserData({
+      id: newUser._id.toString(),
+      word_status: {},
+    });
     await userData.save();
 
     res.status(200).json({
@@ -105,7 +146,7 @@ const register = async (req, res, next) => {
         refresh_token: refresh_token,
         email: email,
         role: "user",
-      }
+      },
     });
   } catch (error) {
     return next(new HttpError(error, 500));
@@ -117,18 +158,22 @@ const logout = async (req, res, next) => {
     let access_token = req.headers["authorization"];
     if (access_token) access_token = req.headers["authorization"].split(" ")[1];
 
-    jwt.verify(access_token, process.env.ACCESS_TOKEN_KEY, async (err, data) => {
-      if (err) return res.status(403).json("Unauthorized Access");
+    jwt.verify(
+      access_token,
+      process.env.ACCESS_TOKEN_KEY,
+      async (err, data) => {
+        if (err) return res.status(403).json("Unauthorized Access");
 
-      const { id } = data;
-      const deletedToken = await Token.deleteOne({id}).exec();
-      console.log(deletedToken);
+        const { id } = data;
+        const deletedToken = await Token.deleteOne({ id }).exec();
+        console.log(deletedToken);
 
-      res.status(200).json({
+        res.status(200).json({
           status: "success",
-          message: "Successfully logged out user!"
-      });
-    });
+          message: "Successfully logged out user!",
+        });
+      }
+    );
   } catch (error) {
     return next(new HttpError(error, 500));
   }
@@ -143,21 +188,32 @@ const refreshToken = async (req, res, next) => {
   try {
     console.log("refreshing");
     const { refresh_token } = req.body;
-    if (!refresh_token) return res.status(401).json("Unauthorized Access, no token found");
+    if (!refresh_token)
+      return res.status(401).json("Unauthorized Access, no token found");
 
-    jwt.verify(refresh_token, process.env.REFRESH_TOKEN_KEY, async (err, data) => {
-      if (err) return res.status(403).json({ message: "Unauthorized Access", err });
+    jwt.verify(
+      refresh_token,
+      process.env.REFRESH_TOKEN_KEY,
+      async (err, data) => {
+        if (err)
+          return res.status(403).json({ message: "Unauthorized Access", err });
 
-      const { id, email, admin } = data;
-      const { token } = await Token.findOne({ id }).lean().exec();
-      if (!token || token !== refresh_token) return res.status(403).json("Token expired, Unauthorized Access");
+        const { id, email, admin } = data;
+        const { token } = await Token.findOne({ id }).lean().exec();
+        if (!token || token !== refresh_token)
+          return res.status(403).json("Token expired, Unauthorized Access");
 
-      const newToken = jwt.sign({ email, id, admin }, process.env.ACCESS_TOKEN_KEY, { expiresIn: "1h" });
+        const newToken = jwt.sign(
+          { email, id, admin },
+          process.env.ACCESS_TOKEN_KEY,
+          { expiresIn: "1h" }
+        );
 
-      res.status(200).json({
-        token: newToken,
-      });
-    });
+        res.status(200).json({
+          token: newToken,
+        });
+      }
+    );
   } catch (error) {
     return next(new HttpError(500, error));
   }
@@ -167,6 +223,5 @@ module.exports = {
   login,
   register,
   refreshToken,
-  logout
+  logout,
 };
-

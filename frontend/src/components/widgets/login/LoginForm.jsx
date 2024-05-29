@@ -8,6 +8,8 @@ import Error from "../error/Error";
 import { emailValidate } from "../../../utility/validations";
 import { handleLogin } from "../../../store/action/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { useGoogleLogin } from "@react-oauth/google";
+import { getUserProfileFromGoogle } from "../../../apis/auth";
 
 export const initInputField = {
   value: "",
@@ -26,6 +28,15 @@ const LoginForm = ({ toggleForm }) => {
 
   const loggedIn = Boolean(localStorage.getItem("token"));
   const failure = useSelector((state) => state.auth.loginUserFailure);
+
+  const login = useGoogleLogin({
+    onSuccess: async (response) => {
+      loginClickHandler({
+        token: response?.access_token
+      });
+    },
+    onError: (error) => console.log("Login Failed:", error),
+  });
 
   useEffect(() => {
     if (failure) {
@@ -65,8 +76,8 @@ const LoginForm = ({ toggleForm }) => {
     setPassword((prev) => Object.assign({}, prev, { value: value }));
   }
 
-  function loginClickHandler() {
-    const payload = {
+  function loginClickHandler(payload) {
+    payload = payload || {
       email: username.value,
       password: password.value,
       rememberMe: rememberMe,
@@ -83,7 +94,7 @@ const LoginForm = ({ toggleForm }) => {
         type="text"
         helperText={username.helperText}
         error={username.error}
-        label="Username / Email"
+        label="Email"
         onBlur={handleUsernameOnBlur}
         onChange={handleUsernameChange}
       />
@@ -111,14 +122,14 @@ const LoginForm = ({ toggleForm }) => {
           Register
         </span>
       </p>
-      <Button variant="outlined" className="btn" onClick={() => {}}>
+      <Button variant="outlined" className="btn" onClick={login}>
         Login in with google
       </Button>
       <Button
         variant="contained"
         className="btn"
         disabled={!username.value || username.error || !password.value}
-        onClick={loginClickHandler}
+        onClick={() => loginClickHandler()}
       >
         Login
       </Button>
