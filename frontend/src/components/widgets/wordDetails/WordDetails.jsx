@@ -35,7 +35,6 @@ const WordDetails = ({ word, className }) => {
         <div className="hero-section">
           <div className="top-row">
             <H3>{word?.title}</H3>
-            <Volume className="icon" onClick={() => {}} />
           </div>
           <Accordion
             className="accordion"

@@ -10,6 +10,7 @@ function* handleUserRegister(action) {
     yield* showLoader();
     const results = yield call(api.register, payload);
     localStorage.setItem("email", results?.data?.email);
+    localStorage.setItem("fullname", results?.data?.fullname);
     localStorage.setItem("role", results?.data?.role);
     localStorage.setItem("token", results?.data?.token);
     Cookies.set("refresh_token", results?.data?.refresh_token);
@@ -33,6 +34,7 @@ function* handleUserLogin(action) {
     yield* showLoader();
     const results = yield call(api.login, payload);
     localStorage.setItem("email", results?.data?.email);
+    localStorage.setItem("fullname", results?.data?.fullname);
     localStorage.setItem("role", results?.data?.role);
     localStorage.setItem("token", results?.data?.token);
     Cookies.set("refresh_token", results?.data?.refresh_token);

@@ -33,7 +33,7 @@ const AvatarMenu = ({ handlePopOverClose }) => {
       <div className="avatarMenu-container">
         <MenuItem className="menuItem username">
           <ProfileIcon className="icon" />
-          <p>{localStorage.getItem("email") || "UserName"}</p>
+          <p>{localStorage.getItem("fullname")}</p>
         </MenuItem>
         <MenuItem
           className="menuItem explore"

@@ -28,7 +28,7 @@ const CallForActions = ({ setAnchorEl, setPopover }) => {
       <>
         <div className="avatar-container">
           {device === LAPTOP_VIEW && (
-            <p className="avatar__text">{localStorage.getItem("email")}</p>
+            <p className="avatar__text">{localStorage.getItem("fullname")}</p>
           )}
           {device === LAPTOP_VIEW && (
             <Avatar className="avatar" onClick={handleAvatarClick} />

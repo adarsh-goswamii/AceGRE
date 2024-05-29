@@ -10,15 +10,16 @@ import {
 function* getWordList(action) {
   try {
     const payload = action.payload;
-    yield* showLoader();
+    yield put({
+      type: actionType.SET_EXPLORE_IS_LOADING,
+      payload: true
+    });
     const results = yield call(api.getWordList, payload);
     yield put({
       type: actionType.GET_WORD_LIST_SUCCESS,
       payload: results,
     });
-    yield* hideLoader();
   } catch (error) {
-    yield* hideLoader();
     yield put({
       type: actionType.GET_WORD_LIST_FAILURE,
       payload: error.response.data,

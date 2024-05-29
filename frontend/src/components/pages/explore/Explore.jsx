@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { wordMenu } from "../../../data/words";
 import WordCard from "../../widgets/wordCard/WordCard";
 import "./Explore.scss";
@@ -18,6 +18,7 @@ import secure from "../../../assets/lottie/noResults.json";
 import SpeechToText from "../../widgets/speechToText/SpeechToText";
 
 const Explore = () => {
+  const loaderRef = useRef();
   const [filterStatus, setFilterStatus] = useState(wordMenu[0]);
   const [words, setWords] = useState([]);
   const [openWord, setOpenWord] = useState({});
@@ -27,15 +28,9 @@ const Explore = () => {
   const pagination = useSelector((state) => state.explore.pagination);
   const filter = useSelector((state) => state.explore.filter);
   const wordList = useSelector((state) => state.explore.words);
-
+  const isLoading = useSelector((state) => state?.explore?.isLoading);
+  
   useEffect(() => {
-    const payload = {
-      pagination: {
-        size: 20,
-        page_no: 1,
-      },
-    };
-    dispatch(getWordList(payload));
     localStorage.removeItem("quiz");
   }, []);
 
@@ -46,9 +41,37 @@ const Explore = () => {
     }
   }, [wordList]);
 
+  const handlePageNumberChange = useCallback(() => {
+    if (isLoading || pagination.page_no >= pagination.total_pages) return;
+    dispatch(
+      getWordList({
+        pagination: {
+          page_no: pagination.page_no + 1,
+          size: pagination.size,
+        },
+        filter: filter,
+      })
+    );
+  }, [isLoading, pagination, filter, dispatch]);
+
   useEffect(() => {
-    debouncedSearchCall(search);
-  }, [search]);
+    const observer = new IntersectionObserver((entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        handlePageNumberChange();
+      }
+    });
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [handlePageNumberChange]);
 
   function handleRightPaneOpen(word) {
     setOpenWord(word);
@@ -77,32 +100,9 @@ const Explore = () => {
     );
   }
 
-  function handlePageNumberChange(event, currPage) {
-    dispatch(
-      getWordList({
-        pagination: {
-          page_no: currPage,
-          size: pagination.size,
-        },
-        filter: filter,
-      })
-    );
-  }
-
-  function handleCardPerPageChange(value) {
-    dispatch(
-      getWordList({
-        pagination: {
-          page_no: 1,
-          size: value,
-        },
-        filter,
-      })
-    );
-  }
-
   function handleSearchChange(event) {
     setSearch(event.target.value);
+    debouncedSearchCall(event.target.value);
   }
 
   const debouncedSearchCall = useCallback(
@@ -187,16 +187,7 @@ const Explore = () => {
       ) : (
         <></>
       )}
-      <div className="pagination">
-        <Pagination
-          page={pagination.page_no}
-          limit={pagination.size}
-          paginationOptions={[20, 40, 60, 80, 100]}
-          handlePageNumberChange={handlePageNumberChange}
-          handleCardPerPageChange={handleCardPerPageChange}
-          totalPage={pagination.total_pages}
-        />
-      </div>
+      <div ref={loaderRef} />
     </>
   );
 };

@@ -54,6 +54,7 @@ const login = async (req, res, next) => {
           status: "success",
           data: {
             email: email,
+            fullname: userInfo.fullname,
             token: access_token,
             refresh_token: refresh_token,
             role: admin ? "admin" : "user",
@@ -146,6 +147,7 @@ const register = async (req, res, next) => {
         refresh_token: refresh_token,
         email: email,
         role: "user",
+        fullname: newUser.fullname
       },
     });
   } catch (error) {
@@ -199,7 +201,7 @@ const refreshToken = async (req, res, next) => {
           return res.status(403).json({ message: "Unauthorized Access", err });
 
         const { id, email, admin } = data;
-        const { token } = await Token.findOne({ id }).lean().exec();
+        const { token } = await Token.findOne({ id }).lean().exec() || {};
         if (!token || token !== refresh_token)
           return res.status(403).json("Token expired, Unauthorized Access");
 
