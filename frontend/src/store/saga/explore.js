@@ -30,19 +30,12 @@ function* getWordList(action) {
 function* handleUpdateWordStatus(action) {
   try {
     const { payload } = action;
-    yield* showLoader();
     const results = yield call(api.updateWordStatus, payload);
     yield put({
       type: actionType.UPDATE_WORD_STATUS_BY_ID_SUCCESS,
       payload: results.data,
     });
-    yield* hideLoader();
-    yield* showToaster({
-      status: "success",
-      message: WORD_STATUS_UPDATED_SUCCESSFULLY,
-    });
   } catch (error) {
-    yield* hideLoader();
     yield put({
       type: actionType.UPDATE_WORD_STATUS_BY_ID_FAILURE,
       payload: error.response.data,

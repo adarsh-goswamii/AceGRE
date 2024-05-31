@@ -10,6 +10,7 @@ import { H3 } from "../../shared/typography/Typogrpahy";
 import debounce from "lodash/debounce";
 import { TextField, InputAdornment, Select, MenuItem } from "@material-ui/core";
 import { ReactComponent as SearchIcon } from "../../../assets/images/search.svg";
+import { ReactComponent as CrossIcon } from "../../../assets/images/clear.svg";
 import { getWordList } from "../../../store/action/explore";
 import { plainToClass } from "class-transformer";
 import { Word } from "../../../model/Word";
@@ -29,7 +30,7 @@ const Explore = () => {
   const filter = useSelector((state) => state.explore.filter);
   const wordList = useSelector((state) => state.explore.words);
   const isLoading = useSelector((state) => state?.explore?.isLoading);
-  
+
   useEffect(() => {
     localStorage.removeItem("quiz");
   }, []);
@@ -100,9 +101,9 @@ const Explore = () => {
     );
   }
 
-  function handleSearchChange(event) {
-    setSearch(event.target.value);
-    debouncedSearchCall(event.target.value);
+  function handleSearchChange(value) {
+    setSearch(value);
+    debouncedSearchCall(value);
   }
 
   const debouncedSearchCall = useCallback(
@@ -130,7 +131,7 @@ const Explore = () => {
         <TextField
           className="search-autocomplete"
           value={search}
-          onChange={handleSearchChange}
+          onChange={(e) => handleSearchChange(e?.target?.value)}
           size="small"
           placeholder="Enter to search words"
           InputProps={{
@@ -139,10 +140,18 @@ const Explore = () => {
                 <SearchIcon className="icon" />
               </InputAdornment>
             ),
+            endAdornment: search ? (
+              <InputAdornment
+                position="end"
+                onClick={() => handleSearchChange('')}
+              >
+                <CrossIcon className="clickable-icon" />
+              </InputAdornment>
+            ) : null,
           }}
         />
 
-        <SpeechToText setValue={setSearch} />
+        <SpeechToText setValue={handleSearchChange} />
 
         {localStorage.getItem("token") && (
           <Select
@@ -183,7 +192,10 @@ const Explore = () => {
           ))}
         </div>
       ) : filter.search || filter.status ? (
-        <Lottie animationData={secure} className="lottie" />
+        <>
+          <Lottie animationData={secure} className="lottie" />
+          <p className="no-result-text">No results found!</p>
+        </>
       ) : (
         <></>
       )}

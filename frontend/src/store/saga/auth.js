@@ -11,6 +11,7 @@ function* handleUserRegister(action) {
     const results = yield call(api.register, payload);
     localStorage.setItem("email", results?.data?.email);
     localStorage.setItem("fullname", results?.data?.fullname);
+    localStorage.setItem("image", results?.data?.image);
     localStorage.setItem("role", results?.data?.role);
     localStorage.setItem("token", results?.data?.token);
     Cookies.set("refresh_token", results?.data?.refresh_token);
@@ -35,6 +36,7 @@ function* handleUserLogin(action) {
     const results = yield call(api.login, payload);
     localStorage.setItem("email", results?.data?.email);
     localStorage.setItem("fullname", results?.data?.fullname);
+    localStorage.setItem("image", results?.data?.image);
     localStorage.setItem("role", results?.data?.role);
     localStorage.setItem("token", results?.data?.token);
     Cookies.set("refresh_token", results?.data?.refresh_token);
@@ -59,6 +61,8 @@ function* handleUserLogout(action) {
     localStorage.removeItem("email");
     localStorage.removeItem("role");
     localStorage.removeItem("token");
+    localStorage.removeItem("image");
+    localStorage.removeItem("fullname");
     Cookies.remove("refresh_token");
     yield put({
       type: actionType.LOGOUT_USER_SUCCESS,

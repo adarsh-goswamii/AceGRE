@@ -31,7 +31,7 @@ const CallForActions = ({ setAnchorEl, setPopover }) => {
             <p className="avatar__text">{localStorage.getItem("fullname")}</p>
           )}
           {device === LAPTOP_VIEW && (
-            <Avatar className="avatar" onClick={handleAvatarClick} />
+            <Avatar className="avatar" onClick={handleAvatarClick} src={localStorage.getItem('image')} />
           )}
           {device !== LAPTOP_VIEW && (
             <MenuIcon onClick={handleMenuClick} className="nav-menu__icon" />
@@ -46,14 +46,14 @@ const CallForActions = ({ setAnchorEl, setPopover }) => {
           <Button
             className={"login-btn"}
             variant="contained"
-            onClick={() => navigate.push("/auth?user=login")}
+            onClick={() => navigate.push("/auth?form=login")}
           >
             Login
           </Button>
           <Button
             className={"signup-btn rounded-btn"}
             variant="outlined"
-            onClick={() => navigate.push("/auth?user=register")}
+            onClick={() => navigate.push("/auth?form=register")}
           >
             SignUp
           </Button>

@@ -43,7 +43,8 @@ const SignUpForm = ({ toggleForm }) => {
       registerClickHandler({
         email: userData?.email,
         password: generateRandomPassword(),
-        fullname: userData?.name
+        fullname: userData?.name,
+        image: userData?.picture
       });
     },
     onError: (error) => console.log("Login Failed:", error),

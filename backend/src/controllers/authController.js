@@ -55,6 +55,7 @@ const login = async (req, res, next) => {
           data: {
             email: email,
             fullname: userInfo.fullname,
+            image: userInfo.image,
             token: access_token,
             refresh_token: refresh_token,
             role: admin ? "admin" : "user",
@@ -94,7 +95,7 @@ const login = async (req, res, next) => {
  */
 const register = async (req, res, next) => {
   try {
-    const { email, password, fullname } = req.body;
+    const { email, password, fullname, image } = req.body;
     const userInfo = await User.findOne({ email: email }).exec();
 
     if (userInfo) {
@@ -114,6 +115,7 @@ const register = async (req, res, next) => {
       password: hashedPass,
       admin: false,
       fullname,
+      image
     });
     newUser = await newUser.save();
 
@@ -147,7 +149,8 @@ const register = async (req, res, next) => {
         refresh_token: refresh_token,
         email: email,
         role: "user",
-        fullname: newUser.fullname
+        fullname: newUser.fullname,
+        image: image
       },
     });
   } catch (error) {
