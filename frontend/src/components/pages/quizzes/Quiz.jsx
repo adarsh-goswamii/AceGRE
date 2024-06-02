@@ -23,11 +23,11 @@ import { EndQuizAlert, EndQuizPrompt } from "../../widgets/endQuiz/EndQuiz";
 const Quiz = ({}) => {
   const dispatch = useDispatch();
   const navigate = useHistory();
+  const time = new Date();
   const [id, setId] = useState(undefined);
   const [currQues, setCurrQues] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [selectedAns, setSelectedAns] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(59);
   const [quizStarted, setQuizStarted] = useState(false);
   const [alertOpen, setAlertopen] = useState(false);
 
@@ -48,7 +48,6 @@ const Quiz = ({}) => {
       let data = JSON.parse(localStorage.getItem("quiz"));
       dispatch(fetchQuestions(data.id));
       setCurrQues(data.currQues);
-      setTimeLeft(data.timeLeft);
       setId(data.id);
       setQuizStarted(true);
     } else dispatch(resetQuiz());
@@ -103,7 +102,6 @@ const Quiz = ({}) => {
       JSON.stringify({
         id: id,
         currQues: currQues,
-        timeLeft: timeLeft,
       })
     );
   }
@@ -120,9 +118,6 @@ const Quiz = ({}) => {
       selected_ans: selectedAns,
     };
 
-    const test = questions?.[currQues]?.options.filter(({ id, meaning }) =>
-      selectedAns.includes(id)
-    );
     dispatch(patchSolution(payload));
   }
 
@@ -152,9 +147,8 @@ const Quiz = ({}) => {
             <div className="left">
               <Timer
                 onComplete={submitSolution}
-                duration={timeLeft}
+                duration={new Date()}
                 currQues={currQues}
-                setTimeLeft={setTimeLeft}
               />
 
               <div className="ques-container">

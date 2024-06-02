@@ -1,7 +1,8 @@
 @import "../../../styles/main.scss";
 
 .stepper-container {
-  width: 60%;
+  width: 90%;
+  max-width: 1700px;
   height: fit-content;
   max-height: 90%;
   position: absolute;
@@ -13,58 +14,83 @@
   outline: none;
   border-radius: 8px;
   padding: 16px 32px 32px 32px;
+  display: flex;
 
-  .MuiStepper-root {
-    padding-inline: 0px;
+  .stepper-left {
+    width: 40%;
+    height: 100%;
+    margin: auto;
   }
 
-  .btn-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 32px;
-
-    .MuiButtonBase-root {
-      width: fit-content;
-      padding: 4px 32px;
-    }
-
+  .stepper-right {
+    width: 60%;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    padding-left: 24px;
   }
 
-  .content {
-    margin-top: 16px;
+  .all-set {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+    text-align: center;
 
-    .all-set {
-      width: 100%;
+    .lottie {
+      height: 90%;
+      max-height: 600px;
+    }
+  }
+
+  .quiz-instructions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+
+    ul {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      text-align: center;
-
-      .lottie {
-        height: 300px;
-        transform: translateY(-32px);
-      }
+      margin-top: 6px;
+      margin-left: 36px;
     }
+  }
 
-    .points {
-      margin: 0px 0px 8px 16px;
-    }
+  .good-luck-text {
+    margin-top: 12px;
+  }
+
+  .quiz-start-btn {
+    margin-top: 24px;
   }
 }
 
 @media only screen and (max-width: 1020px) {
   .stepper-container {
-    width: 70%;
+    width: 90%;
+    flex-direction: column;
+    .stepper-left {
+      width: 100%;
+    }
+
+    .stepper-right {
+      width: 100%;
+    }
   }
 }
 
 @media only screen and (max-width: 640px) {
-  .stepper-container {
-    width: 90%;
-  }
+  // .stepper-container {
+  //   width: 90%;
+  //   flex-direction: column;
+  //   .stepper-left {
+  //     width: 100%;
+  //   }
+
+  //   .stepper-right {
+  //     width: 100%;
+  //   }
+  // }
 }
