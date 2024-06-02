@@ -2,107 +2,46 @@
 
 .quiz-screen {
   padding: 0px !important;
+}
 
-  .container {
+.quiz-questions {
+  width: 90%;
+  max-width: 1000px;
+  height: fit-content;
+  max-height: 90%;
+  // min-height: 70%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $offWhite;
+  border-radius: 8px;
+  padding: 16px 32px 32px 32px;
+
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  .question {
+    @extend .labelHeading;
+    margin-bottom: 24px;
+  }
+
+  .question-count {
+    @extend .labelSemiBold;
+    margin-bottom: 12px;
+  }
+
+  .btn-container {
+    width: 100%;
     display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    margin-top: 54px;
+  }
 
-    .left {
-      background: url("../../../assets/images/MeshQuiz.svg");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      width: 40%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      .timer-container {
-        position: absolute;
-        top: 0px;
-        width: 100vw;
-        height: fit-content;
-        left: 0px;
-      }
-
-      .ques-container {
-        margin-top: 64px;
-        display: grid;
-        grid-gap: 32px;
-        grid-template-columns: repeat(5, 1fr);
-        flex-wrap: wrap;
-        width: fit-content;
-        height: fit-content;
-        justify-content: center;
-        align-items: center;
-
-        .ques-box {
-          border-radius: 6px;
-          background-color: $white;
-          color: $black;
-          font-weight: 700;
-          width: 38px;
-          height: 38px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &.completed {
-            background-color: $green;
-            color: $white;
-          }
-        }
-      }
-    }
-
-    .right {
-      width: 60%;
-      min-height: 100vh;
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: flex-start;
-
-      .options-container {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: flex-start;
-      }
-
-      .btn-container {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-
-        .button {
-          padding: 4px 36px;
-          width: fit-content;
-
-          &.green {
-            background-color: $green;
-            color: $white;
-          }
-
-          &.red {
-            border-color: $red;
-            color: $red;
-          }
-        }
-      }
-
-      .heading {
-        @extend .bodyRegular;
-        color: $primary;
-      }
-
-      .question {
-        @extend .headerSemiBold;
-        font-size: 24px;
-        color: $primary;
-      }
-    }
+  .options-container {
+    text-align: left;
   }
 }
 
@@ -113,33 +52,4 @@
   background-repeat: repeat;
   width: 100%;
   height: 100vh;
-}
-
-@media only screen and (max-width: 1020px) {
-  .quiz-screen {
-    .container {
-      .left {
-        .ques-container {
-          grid-template-columns: repeat(4, 1fr);
-          grid-gap: 24px;
-        }
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 640px) {
-  .quiz-screen {
-    .container {
-      flex-direction: column;
-
-      .left {
-        display: none; 
-      }
-
-      .right {
-        width: 100%;
-      }
-    }
-  }
 }

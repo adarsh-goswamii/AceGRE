@@ -4,21 +4,17 @@ import "./Quiz.scss";
 import Option from "../../widgets/option/Option";
 import Timer from "../../widgets/timer/Timer";
 import { useDispatch, useSelector } from "react-redux";
-import Lottie from "lottie-react";
-import secureFeature from "../../../assets/lottie/secure.json";
 import QuizStepper from "../../widgets/quizStepper/QuizStepper";
 
 import {
   endQuiz,
   fetchQuestions,
-  generateQuiz,
   patchSolution,
   resetQuiz,
 } from "../../../store/action/quiz";
 import { openModal, closeModal } from "../../../store/action/common";
 import { useHistory } from "react-router-dom";
 import UnauthorizedAccess from "../../widgets/unauthorizedAccess/UnauthorizedAccess";
-import { EndQuizAlert, EndQuizPrompt } from "../../widgets/endQuiz/EndQuiz";
 
 const Quiz = ({}) => {
   const dispatch = useDispatch();
@@ -28,8 +24,6 @@ const Quiz = ({}) => {
   const [currQues, setCurrQues] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [selectedAns, setSelectedAns] = useState([]);
-  const [quizStarted, setQuizStarted] = useState(false);
-  const [alertOpen, setAlertopen] = useState(false);
 
   const quizId = useSelector((state) => state.quiz.quizGeneratedId);
   const quizQuestions = useSelector((state) => state.quiz.quizQuestions);
@@ -40,18 +34,8 @@ const Quiz = ({}) => {
   const url = window.location.pathname.split("/").pop();
 
   const quizState = useSelector((state) => state.quiz);
-
-  // will handle refresh.
+  
   useEffect(() => {
-    console.log("initialSttae", quizState);
-    if (localStorage.getItem("quiz")) {
-      let data = JSON.parse(localStorage.getItem("quiz"));
-      dispatch(fetchQuestions(data.id));
-      setCurrQues(data.currQues);
-      setId(data.id);
-      setQuizStarted(true);
-    } else dispatch(resetQuiz());
-
     if (localStorage.getItem("token") && !localStorage.getItem("quiz"))
       dispatch(
         openModal({
@@ -60,9 +44,7 @@ const Quiz = ({}) => {
         })
       );
 
-    setAlertopen(false);
     return () => {
-      localStorage.removeItem("quiz");
       dispatch(closeModal());
       dispatch(resetQuiz());
     };
@@ -70,7 +52,6 @@ const Quiz = ({}) => {
 
   useEffect(() => {
     return () => {
-      localStorage.removeItem("quiz");
       dispatch(closeModal());
       dispatch(resetQuiz());
     };
@@ -80,7 +61,6 @@ const Quiz = ({}) => {
     if (quizId) {
       dispatch(fetchQuestions(quizId));
       setId(quizId);
-      setQuizStarted(true);
     }
   }, [quizId]);
 
@@ -95,16 +75,6 @@ const Quiz = ({}) => {
       nextQues();
     }
   }, [solnSubmitted]);
-
-  if (id) {
-    localStorage.setItem(
-      "quiz",
-      JSON.stringify({
-        id: id,
-        currQues: currQues,
-      })
-    );
-  }
 
   function nextQues() {
     setCurrQues((prev) => prev + 1);
@@ -137,84 +107,52 @@ const Quiz = ({}) => {
         hideBackdrop: true,
       })
     );
-
-    return <div className="background-modal" />;
-  } else {
-    return (
-      <>
-        {questions.length > currQues ? (
-          <div className="container">
-            <div className="left">
-              <Timer
-                onComplete={submitSolution}
-                duration={new Date()}
-                currQues={currQues}
-              />
-
-              <div className="ques-container">
-                {[...Array(questions?.length).keys()].map((val) => (
-                  <div
-                    className={`ques-box ${currQues > val ? "completed" : ""}`}
-                  >
-                    {val + 1}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="right">
-              <div className="ques-container">
-                <p className="heading">
-                  Choose correct meaning for the given word <br /> Note: There
-                  can be more than one correct answer{" "}
-                </p>
-                <p className="question">{`Question : ${questions[currQues].word}`}</p>
-              </div>
-              <div className="options-container">
-                {questions?.[currQues]?.options.map((data) => (
-                  <Option
-                    setSelectedAns={setSelectedAns}
-                    text={data.meaning}
-                    key={data.id}
-                    id={data.id}
-                  />
-                ))}
-              </div>
-              <div className="btn-container">
-                <Button
-                  variant="outlined"
-                  className="red"
-                  onClick={(e) => {
-                    handleEndQuiz(id);
-                  }}
-                >
-                  End Quiz
-                </Button>
-                <Button
-                  variant="contained"
-                  className="green"
-                  onClick={submitSolution}
-                >
-                  Submit
-                </Button>
-              </div>
-            </div>
-            <EndQuizAlert
-              open={alertOpen}
-              setOpen={setAlertopen}
-              endQuiz={() => handleEndQuiz(id)}
-            />
-
-            <EndQuizPrompt
-              open={quizStarted && !alertOpen}
-              quizEnd={() => handleEndQuiz(id)}
-            />
-          </div>
-        ) : (
-          <div className="background-modal"></div>
-        )}
-      </>
-    );
   }
+  return (
+    <div className="background-modal">
+      {quizQuestions?.length > currQues && (
+        <Timer
+          onComplete={submitSolution}
+          duration={time}
+          currQues={currQues}
+        />
+      )}
+      {quizQuestions?.length > currQues && (
+        <div className="quiz-questions">
+          <p className="question-count">{`${currQues + 1} of 20`}</p>
+          <p className="question">{`Question : ${questions[currQues]?.word}`}</p>
+          <div className="options-container">
+            {questions?.[currQues]?.options.map((data) => (
+              <Option
+                setSelectedAns={setSelectedAns}
+                text={data.meaning}
+                key={`${currQues}-${data.id}`}
+                id={data.id}
+              />
+            ))}
+          </div>
+          <div className="btn-container">
+            <Button
+              variant="outlined"
+              className="red"
+              onClick={(e) => {
+                handleEndQuiz(id);
+              }}
+            >
+              End Quiz
+            </Button>
+            <Button
+              variant="contained"
+              className="green"
+              onClick={submitSolution}
+            >
+              Submit
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Quiz;
