@@ -58,7 +58,7 @@ const Result = ({}) => {
           percentage={Math.floor(
             (results?.results?.no_of_correct * 100) /
               results?.results?.total_ques
-          )}
+          ) || 0}
         />
         <p className="text">
           Congratulations on completing the quiz! Below you can see your results
