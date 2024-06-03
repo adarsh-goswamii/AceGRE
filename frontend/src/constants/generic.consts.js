@@ -17,3 +17,7 @@ export const LOGIN_FOR_THIS_FUTURE =
 
 export const LEADERBOARD_LIVE =
   "Available after we hit a milestone of 100 users.";
+
+export const QUIZ_END_MODAL_TITLE = "Are you sure you want to end the quiz?";
+export const QUIZ_END_MODAL_CONTENT =
+  "If you proceed, your current quiz session will end, and any unanswered questions will remain incomplete. Are you sure you want to continue?";

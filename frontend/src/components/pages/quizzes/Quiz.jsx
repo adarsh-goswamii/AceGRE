@@ -14,27 +14,29 @@ import {
 } from "../../../store/action/quiz";
 import { openModal, closeModal } from "../../../store/action/common";
 import { useHistory } from "react-router-dom";
+import useFullScreen from "../../../hooks/useFullScreen";
 import UnauthorizedAccess from "../../widgets/unauthorizedAccess/UnauthorizedAccess";
+import { EndQuizAlert } from "../../widgets/endQuiz/EndQuiz";
 
 const Quiz = ({}) => {
   const dispatch = useDispatch();
   const navigate = useHistory();
   const time = new Date();
+  const containerId = "quiz-container-modal";
   const [id, setId] = useState(undefined);
   const [currQues, setCurrQues] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [selectedAns, setSelectedAns] = useState([]);
-
+  const [alertOpen, setAlertopen] = useState(false);
+  const { toggleFullScreen, isFullScreen } =
+    useFullScreen(containerId);
   const quizId = useSelector((state) => state.quiz.quizGeneratedId);
   const quizQuestions = useSelector((state) => state.quiz.quizQuestions);
   const solnSubmitted = useSelector(
     (state) => state.quiz.patchQuizSolutionSuccess
   );
-  const quizEnd = useSelector((state) => state.quiz.endQuizSuccess);
   const url = window.location.pathname.split("/").pop();
 
-  const quizState = useSelector((state) => state.quiz);
-  
   useEffect(() => {
     if (localStorage.getItem("token") && !localStorage.getItem("quiz"))
       dispatch(
@@ -66,6 +68,7 @@ const Quiz = ({}) => {
 
   useEffect(() => {
     if (quizQuestions) {
+      toggleFullScreen();
       setQuestions(quizQuestions);
     }
   }, [quizQuestions]);
@@ -75,6 +78,12 @@ const Quiz = ({}) => {
       nextQues();
     }
   }, [solnSubmitted]);
+
+  useEffect(() => {
+    if (!isFullScreen && questions?.length) {
+      setAlertopen(true);
+    }
+  }, [isFullScreen]);
 
   function nextQues() {
     setCurrQues((prev) => prev + 1);
@@ -109,7 +118,7 @@ const Quiz = ({}) => {
     );
   }
   return (
-    <div className="background-modal">
+    <div className="background-modal" id={containerId}>
       {quizQuestions?.length > currQues && (
         <Timer
           onComplete={submitSolution}
@@ -136,7 +145,7 @@ const Quiz = ({}) => {
               variant="outlined"
               className="red"
               onClick={(e) => {
-                handleEndQuiz(id);
+                toggleFullScreen();
               }}
             >
               End Quiz
@@ -149,6 +158,11 @@ const Quiz = ({}) => {
               Submit
             </Button>
           </div>
+          <EndQuizAlert
+            open={alertOpen}
+            setOpen={setAlertopen}
+            endQuiz={() => handleEndQuiz(id)}
+          />
         </div>
       )}
     </div>

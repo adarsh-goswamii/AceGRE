@@ -14,7 +14,7 @@ const INIT_INITIAL_STATE = {
 };
 
 const reducerFn = (state = INIT_INITIAL_STATE, action) => {
-  console.log(action.type);
+  console.log(action);
   switch (action.type) {
     case actionType.GENERATE_QUIZ_SUCCESS:
       return Object.assign({}, state, { quizGeneratedId: action.payload });

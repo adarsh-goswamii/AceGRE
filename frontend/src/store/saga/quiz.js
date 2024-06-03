@@ -39,7 +39,7 @@ function* handleQuizQuesFetch(action) {
     yield* hideLoader();
     yield put({
       type: actionType.GET_QUIZ_QUESTIONS_FAILURE,
-      payload: error.response.data,
+      payload: error,
     });
   }
 }
