@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 
 const Option = ({ text, id, setSelectedAns, defaultState = "" }) => {
   function handleOptionClick(event) {
-    event.target.classList.toggle("selected");
+    event.target.classList.toggle("correct");
     setSelectedAns((prev) => {
       if (prev.includes(id)) return prev.filter((data) => data !== id);
       else return [...prev, id];

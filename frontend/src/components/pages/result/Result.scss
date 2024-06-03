@@ -1,7 +1,6 @@
 @import "../../../styles/main.scss";
 
 .result-screen {
-  padding: 0px !important;
   display: flex;
   background-color: $offWhite;
 
@@ -14,7 +13,6 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 20px;
-      padding: 32px 64px;
 
       .heading {
         @extend .headerSemiBold;
@@ -43,6 +41,7 @@
       background-size: cover;
       background-repeat: no-repeat;
       padding: 32px;
+      padding-top: 76px;
 
       .heading {
         @extend .headerSemiBold;

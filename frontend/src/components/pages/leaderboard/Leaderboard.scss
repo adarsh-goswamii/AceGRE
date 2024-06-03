@@ -6,11 +6,10 @@
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
-  height: calc(100vh - $headerHeight);
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0px !important;
 
   .content-container {
     display: flex;

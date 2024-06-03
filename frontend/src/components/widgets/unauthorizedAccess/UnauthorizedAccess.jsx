@@ -33,7 +33,7 @@ const UnauthorizedAccess = ({}) => {
         <Button
           variant="contained"
           onClick={() => {
-            navigate.push("/auth?user=login");
+            navigate.push("/auth?form=login");
             dispatch(closeModal());
           }}
         >

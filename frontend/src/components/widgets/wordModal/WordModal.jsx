@@ -6,14 +6,15 @@ import { plainToClass } from "class-transformer";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../../store/action/common";
 import Option from "../option/Option";
-import { checkIfCorrect } from "../../../utility/utils";
+import { checkIfCorrect, getOptionState } from "../../../utility/utils";
 import Button from "../../shared/button/Button";
 import { updateWordStatus } from "../../../store/action/explore";
+import { ReactComponent as CrossIcon } from "../../../assets/images/cross.svg";
 
 const WordModal = ({ index, ...quizQues }) => {
   const dispatch = useDispatch();
   const [ques, setQues] = useState({});
-
+  
   useEffect(() => {
     setQues(plainToClass(QuizQuestion, quizQues));
   }, [quizQues]);
@@ -36,6 +37,7 @@ const WordModal = ({ index, ...quizQues }) => {
     <>
       <ClickAwayListener onClickAway={handleModalClose}>
         <div className="word-modal-container">
+          <CrossIcon className="word-modal-cross" onClick={handleModalClose} />
           <p className="question-word">{`${index}. ${ques?.word}`}</p>
 
           <div className="options">
@@ -44,9 +46,11 @@ const WordModal = ({ index, ...quizQues }) => {
                 text={option.meaning}
                 setSelectedAns={() => {}}
                 id={option.id}
-                defaultState={`${
-                  ques.correctAns.includes(option.id) ? "selected" : ""
-                }`}
+                defaultState={getOptionState(
+                  option?.id,
+                  ques?.submittedAns,
+                  ques?.correctAns
+                )}
               />
             ))}
           </div>

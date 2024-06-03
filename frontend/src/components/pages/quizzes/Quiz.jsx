@@ -98,6 +98,8 @@ const Quiz = ({}) => {
     };
 
     dispatch(patchSolution(payload));
+
+    if (currQues === 19) handleEndQuiz(id);;
   }
 
   function handleEndQuiz(id) {

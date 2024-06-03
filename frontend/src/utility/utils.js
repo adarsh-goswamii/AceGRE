@@ -34,3 +34,9 @@ export const getTimeStamp = () => {
   const date = new Date();
   return date.getTime();
 };
+
+export const getOptionState = (id, submittedAns, correctAns) => {
+  if (correctAns?.includes(id)) return "correct";
+  else if (submittedAns?.includes(id)) return "wrong";
+  return "";
+}

@@ -81,7 +81,7 @@ export const routes = [
   {
     path: "/results",
     exact: false,
-    hideHeader: true,
+    hideHeader: false,
     component: Results,
     id: 10,
     protected: true,

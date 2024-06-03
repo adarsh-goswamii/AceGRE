@@ -14,11 +14,19 @@
   width: 100%;
   margin: 0px 0px 16px;
 
-  &.selected {
+  &.correct {
     background-color: $green;
 
     .info {
       background-color: $greenBackground;
+    }
+  }
+
+  &.wrong {
+    background-color: $red;
+
+    .info {
+      background-color: $redBackground;
     }
   }
 

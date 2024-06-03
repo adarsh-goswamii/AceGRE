@@ -13,15 +13,21 @@
   display: flex;
   flex-direction: column;
 
+  .word-modal-cross {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+  }
+
   .question-word {
     font-size: 24px;
     font-weight: 500;
   }
 
   .options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     width: 100%;
     margin-top: 16px;
     height: fit-content;

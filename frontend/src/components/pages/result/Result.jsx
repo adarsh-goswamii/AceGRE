@@ -9,19 +9,21 @@ import PercentageFill from "../../widgets/percentageFill/PercentageFill";
 import Button from "../../shared/button/Button";
 import WordModal from "../../widgets/wordModal/WordModal";
 import { openModal } from "../../../store/action/common";
+import useFullScreen from "../../../hooks/useFullScreen";
 
 const Result = ({}) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useHistory();
+  const containerId = "quiz-container-modal";
+  const { exitFullScreen } = useFullScreen(containerId);
   const id = new URLSearchParams(location.search).get("id");
-  console.log("result id", id);
 
   const results = useSelector((state) => state.quiz.quizResults);
-  localStorage.removeItem("quiz");
 
   useEffect(() => {
     if (id) {
+      exitFullScreen();
       dispatch(fetchResults(id));
     }
   }, [id]);
@@ -52,7 +54,6 @@ const Result = ({}) => {
       </div>
 
       <div className="right">
-        <p className="heading">Congratulations !!!</p>
         <PercentageFill
           percentage={Math.floor(
             (results?.results?.no_of_correct * 100) /
@@ -60,14 +61,14 @@ const Result = ({}) => {
           )}
         />
         <p className="text">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis,
-          tenetur! Facere provident doloremque ratione voluptates architecto
-          repellendus odit, aliquid sapiente soluta officia reiciendis in
-          tenetur dignissimos temporibus explicabo blanditiis ducimus.
+          Congratulations on completing the quiz! Below you can see your results
+          and review the correct answers.
         </p>
         <p className="text">
-          You can click on the question cards on the left to checkout the
-          expanded version of the problem.
+          You can click on the question cards on the left to check out the
+          expanded version of the problem. Thank you for participating! Feel
+          free to take the quiz again to improve your score or try another quiz
+          to test your knowledge further.
         </p>
         <Button
           variant="outlined"

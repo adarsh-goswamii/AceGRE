@@ -40,7 +40,6 @@ export const EndQuizAlert = ({ open, setOpen, endQuiz }) => {
 
   const handleEndQuiz = (e) => {
     endQuiz();
-    handleClose(e, "leave");
     setOpen(false);
   };
 
